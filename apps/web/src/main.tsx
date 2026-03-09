@@ -2,6 +2,7 @@ import { createRoot } from "react-dom/client";
 import "./style.css";
 import typescriptLogo from "/typescript.svg";
 import { Header, Counter } from "@repo/ui";
+import { add } from "@repo/math/add";
 
 const App = () => (
   <div>
@@ -18,6 +19,7 @@ const App = () => (
     <Header title="Web" />
     <div className="card">
       <Counter />
+      <div>{add(1, 2)}</div>
     </div>
   </div>
 );
