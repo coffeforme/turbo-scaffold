@@ -1,0 +1,21 @@
+{
+  "name": "@repo/state",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.0.0"
+  },
+  "peerDependencies": {
+    "react-redux": "^9.0.0"
+  },
+  "devDependencies": {
+    "@repo/types": "workspace:^",
+    "@repo/typescript-config": "workspace:*",
+    "typescript": "^5.9.3"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "@repo/hooks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@repo/state": "workspace:^",
+    "@repo/typescript-config": "workspace:^",
+    "react-redux": "^9.2.0",
+    "typescript": "^5.9.3"
+  }
+}

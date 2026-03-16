@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+type Props = {
+  value: number;
+  onIncrement: () => void;
+};
 
-export const Counter: React.FC = () => {
-  const [count, setCount] = useState(0);
-
+export function Counter({ value, onIncrement }: Props) {
   return (
-    <button id="counter" type="button" onClick={() => setCount(count + 1)}>
-      {count}
+    <button onClick={onIncrement}>
+      Count: {value}
     </button>
   );
-};
+}
