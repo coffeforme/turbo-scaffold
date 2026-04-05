@@ -1,1 +1,1 @@
-export * from "./src/counter/userCounter";
+export * from "./src/data/userCounter";

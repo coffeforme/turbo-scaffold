@@ -1,4 +1,4 @@
-import Home from "./Home";
+import Home from "./pages/static/Home/Home";
 
 function App() {
     console.log("App rendered");

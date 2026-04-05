@@ -36,6 +36,9 @@ importers:
         specifier: ^9.0.0
         version: 9.2.0(@types/react@19.1.0)(react@18.3.1)
     devDependencies:
+      '@repo/api':
+        specifier: workspace:*
+        version: link:../../packages/api
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../../packages/eslint-config
@@ -45,9 +48,15 @@ importers:
       '@repo/math':
         specifier: workspace:*
         version: link:../../packages/math
+      '@repo/persistence':
+        specifier: workspace:*
+        version: link:../../packages/persistence
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
+      '@repo/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
       '@types/react':
         specifier: ^19.0.1
         version: 19.1.0
@@ -66,6 +75,15 @@ importers:
       vite:
         specifier: ^5.1.4
         version: 5.4.17
+
+  packages/api:
+    devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      typescript:
+        specifier: 5.5.4
+        version: 5.5.4
 
   packages/eslint-config:
     dependencies:
@@ -102,6 +120,15 @@ importers:
       typescript:
         specifier: latest
         version: 5.9.3
+
+  packages/persistence:
+    devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      typescript:
+        specifier: 5.5.4
+        version: 5.5.4
 
   packages/state:
     dependencies:
@@ -157,6 +184,15 @@ importers:
       eslint:
         specifier: ^8.57.0
         version: 8.57.1
+      typescript:
+        specifier: 5.5.4
+        version: 5.5.4
+
+  packages/utils:
+    devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
       typescript:
         specifier: 5.5.4
         version: 5.5.4
@@ -1902,6 +1938,7 @@ packages:
   /typescript@5.5.4:
     resolution: {integrity: sha512-Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q==}
     engines: {node: '>=14.17'}
+    hasBin: true
     dev: true
 
   /typescript@5.9.3:

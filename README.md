@@ -24,6 +24,9 @@ This Turborepo includes the following packages and apps:
 - `@repo/math`: shared math utility package
 - `@repo/state`: shared Redux state package
 - `@repo/types`: shared type definitions package
+- `@repo/api`: shared API utilities package
+- `@repo/persistence`: shared persistence utilities package
+- `@repo/utils`: shared utility functions package
 
 Each package and app is 100% [TypeScript](https://www.typescriptlang.org/).
 
