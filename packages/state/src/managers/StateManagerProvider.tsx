@@ -1,7 +1,7 @@
 // Configuration-based State Manager
 // This avoids React dependencies in the state package
 
-import { StateManager, StateManagerType } from './StateManager';
+import type { StateManager, StateManagerType } from "../shared/StateManager";
 import { StateManagerFactory } from './StateManagerFactory';
 
 // Global state manager instance

@@ -1,16 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-export interface FeedbackFormData {
-  rating: number;
-  comment: string;
-  category: string;
-}
-
-export interface FeedbackState {
-  submitting: boolean;
-  submitted: boolean;
-  error: string | null;
-}
+import type { FeedbackState } from "../../shared/types";
 
 const initialState: FeedbackState = {
   submitting: false,

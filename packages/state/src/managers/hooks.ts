@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { getStateManager, getCurrentManagerType } from './StateManagerProvider';
-import { ContactFormData, FeedbackFormData } from '../store';
+import type { ContactFormData, FeedbackFormData } from '../shared/types';
 
 export interface UseAgnosticContactFormConfig {
   submitContact?: (data: ContactFormData) => Promise<void>;

@@ -6,6 +6,18 @@ This is a community-maintained example. If you experience a problem, please subm
 
 This project supports two state management libraries: **Redux Toolkit** and **Zustand**. You can switch between them to compare their approaches and performance characteristics.
 
+The `@repo/state` package is now organized by implementation:
+
+```text
+packages/state/src/
+  shared/    # shared RootState types, selectors, and StateManager contract
+  redux/     # Redux store, slices, hooks, and ReduxStateManager
+  zustand/   # Zustand store, hooks, and ZustandStateManager
+  managers/  # agnostic factory/provider/hooks built on the shared contract
+```
+
+Both implementations expose the same state shape and mutation surface through the shared `StateManager` interface, so you can choose Redux or Zustand on demand without changing the consuming code contract.
+
 ### Switching Between State Managers
 
 The application includes a toggle in the UI (top of the Home page) to switch between Redux and Zustand at runtime. This allows you to:
@@ -61,6 +73,23 @@ function MyComponent() {
     </button>
   );
 }
+```
+
+### Direct Implementation Selection
+
+If you want to choose an implementation explicitly, import the concrete manager or create one through the factory while still coding against the shared contract:
+
+```typescript
+import {
+  ReduxStateManager,
+  ZustandStateManager,
+  StateManager,
+  StateManagerFactory,
+} from "@repo/state";
+
+const reduxManager: StateManager = new ReduxStateManager();
+const zustandManager: StateManager = new ZustandStateManager();
+const dynamicManager = StateManagerFactory.create("zustand");
 ```
 
 ### Agnostic State Management (Recommended)

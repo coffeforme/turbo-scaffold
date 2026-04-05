@@ -1,16 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-export interface ContactFormData {
-  name: string;
-  email: string;
-  message: string;
-}
-
-export interface ContactState {
-  submitting: boolean;
-  submitted: boolean;
-  error: string | null;
-}
+import type { ContactState } from "../../shared/types";
 
 const initialState: ContactState = {
   submitting: false,

@@ -1,30 +1,29 @@
-// State Manager Interface for Agnostic State Management
+import type { ContactState, FeedbackState, RootState, UserState } from "./types";
+
 export interface StateManager {
-  // Counter operations
+  getState(): RootState;
+
   getCounterValue(): number;
   incrementCounter(): void;
   decrementCounter(): void;
 
-  // Contact form operations
-  getContactState(): { submitting: boolean; submitted: boolean; error: string | null };
+  getContactState(): ContactState;
   submitContactStart(): void;
   submitContactSuccess(): void;
   submitContactFailure(error: string): void;
   resetContactForm(): void;
 
-  // Feedback form operations
-  getFeedbackState(): { submitting: boolean; submitted: boolean; error: string | null };
+  getFeedbackState(): FeedbackState;
   submitFeedbackStart(): void;
   submitFeedbackSuccess(): void;
   submitFeedbackFailure(error: string): void;
   resetFeedbackForm(): void;
 
-  // User operations
-  getUserState(): { user: any; loading: boolean; error: string | null };
+  getUserState(): UserState;
   setUser(user: any): void;
   setUserLoading(loading: boolean): void;
   setUserError(error: string): void;
   clearUser(): void;
 }
 
-export type StateManagerType = 'redux' | 'zustand';
+export type StateManagerType = "redux" | "zustand";

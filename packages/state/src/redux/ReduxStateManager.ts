@@ -1,31 +1,25 @@
-import { StateManager } from './StateManager';
-import { reduxStore } from '../store';
-import {
-  increment,
-  decrement,
-} from '../slices/counterSlice';
-import {
-  setUser,
-  setLoading,
-  setError,
-  clearUser,
-} from '../slices/userSlice';
+import type { StateManager } from "../shared/StateManager";
+import { reduxStore } from "./store";
+import { increment, decrement } from "./slices/counterSlice";
+import { setUser, setLoading, setError, clearUser } from "./slices/userSlice";
 import {
   submitContactStart,
   submitContactSuccess,
   submitContactFailure,
   resetContactForm,
-} from '../slices/contactSlice';
+} from "./slices/contactSlice";
 import {
   submitFeedbackStart,
   submitFeedbackSuccess,
   submitFeedbackFailure,
   resetFeedbackForm,
-} from '../slices/feedbackSlice';
-import type { RootState } from '../store';
+} from "./slices/feedbackSlice";
 
 export class ReduxStateManager implements StateManager {
-  // Counter operations
+  getState() {
+    return reduxStore.getState();
+  }
+
   getCounterValue(): number {
     return reduxStore.getState().counter.value;
   }
@@ -38,14 +32,8 @@ export class ReduxStateManager implements StateManager {
     reduxStore.dispatch(decrement());
   }
 
-  // Contact form operations
   getContactState() {
-    const state = reduxStore.getState().contact;
-    return {
-      submitting: state.submitting,
-      submitted: state.submitted,
-      error: state.error,
-    };
+    return reduxStore.getState().contact;
   }
 
   submitContactStart(): void {
@@ -64,14 +52,8 @@ export class ReduxStateManager implements StateManager {
     reduxStore.dispatch(resetContactForm());
   }
 
-  // Feedback form operations
   getFeedbackState() {
-    const state = reduxStore.getState().feedback;
-    return {
-      submitting: state.submitting,
-      submitted: state.submitted,
-      error: state.error,
-    };
+    return reduxStore.getState().feedback;
   }
 
   submitFeedbackStart(): void {
@@ -90,14 +72,8 @@ export class ReduxStateManager implements StateManager {
     reduxStore.dispatch(resetFeedbackForm());
   }
 
-  // User operations
   getUserState() {
-    const state = reduxStore.getState().user;
-    return {
-      user: state.user,
-      loading: state.loading,
-      error: state.error,
-    };
+    return reduxStore.getState().user;
   }
 
   setUser(user: any): void {
