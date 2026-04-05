@@ -1,3 +1,0 @@
-docs(root): update commit message documentation
-
-Update commit message tools documentation and guides

@@ -31,16 +31,12 @@ This project follows the [Conventional Commits](https://conventionalcommits.org/
 For this monorepo, use the full package path as scope when the change is specific to a package:
 
 - `apps/web`: Changes to the web application
-- `packages/api`: Changes to the API package
-- `packages/state`: Changes to the state management package
-- `packages/ui`: Changes to the UI components package
-- `packages/hooks`: Changes to the hooks package
-- `packages/infrastructure`: Changes to the infrastructure package
-- `packages/types`: Changes to the types package
-- `packages/utils`: Changes to the utilities package
-- `packages/math`: Changes to the math utilities package
-- `packages/persistence`: Changes to the persistence utilities package
 - `packages/auth`: Changes to the auth package
+- `packages/hooks`: Changes to the hooks package
+- `packages/math`: Changes to the math utilities package
+- `packages/state`: Changes to the state management package
+- `packages/types`: Changes to the TypeScript definitions package
+- `packages/ui`: Changes to the UI components package
 - `packages/eslint-config`: Changes to the ESLint configuration package
 - `packages/typescript-config`: Changes to the TypeScript configuration package
 - `root`: Changes that affect the entire monorepo (root configuration, CI/CD, etc.)
@@ -51,12 +47,12 @@ For this monorepo, use the full package path as scope when the change is specifi
 feat: add user authentication
 fix: resolve memory leak in data fetching
 docs: update API documentation
-feat(packages/api): add contact form endpoint
+feat(packages/auth): add new OAuth provider
 fix(apps/web): correct button styling in mobile view
 refactor(packages/state): simplify Redux slice structure
 test: add unit tests for contact validation
-build: update TypeScript to version 5.5
-ci: add automated testing workflow
+build: update TypeScript configuration
+ci: update Husky git hooks
 chore: update dependencies
 ```
 
@@ -89,6 +85,7 @@ BREAKING CHANGE: The login method now requires an additional parameter
 This project uses:
 - **commitlint**: To validate commit messages
 - **husky**: To run git hooks automatically
+- **Local commit draft**: `COMMIT_MESSAGE.txt` is ignored by git and kept local to each contributor
 
 ## Validation
 

@@ -1,124 +1,70 @@
-# Commit Message Tools
+﻿# Commit Message Tools
 
-This project provides several tools to help you create properly formatted commit messages that follow our [Conventional Commits](COMMIT_CONVENTIONS.md) standards.
+This project provides tools to help you create commit messages that follow our [Conventional Commits](COMMIT_CONVENTIONS.md) standards.
 
-## Quick Start
+## Workflow
 
-### Option 1: Auto-Commit (Easiest)
-Stage your changes and use the auto-commit command:
+This repository uses a local draft file, `COMMIT_MESSAGE.txt`, which is ignored by git and kept local to each contributor.
 
-```bash
+### Recommended flow
+1. Stage your changes:
+   ```bash
 git add .
-pnpm run auto-commit-msg
 ```
-
-### Option 2: Manual Update & Commit
-Update the message and commit manually:
-
-```bash
+2. Generate or refresh the commit message:
+   ```bash
 pnpm run update-commit-msg
+```
+3. Commit using the generated message:
+   ```bash
 git commit -F COMMIT_MESSAGE.txt
 ```
 
-### Option 3: VS Code Tasks
-Use the VS Code Command Palette (`Ctrl+Shift+P`) and run:
-- **"Tasks: Run Task"** → **"Auto Commit"** - Updates message and commits automatically
-- **"Tasks: Run Task"** → **"Update Commit Message"** - Just updates the message
-- **"Tasks: Run Task"** → **"Generate Commit Message"** - Shows current message
-- **"Tasks: Run Task"** → **"Copy Commit Message to Clipboard"** - Copies to clipboard
-
-### Option 4: Git Aliases
-Use the convenient git aliases:
-
-```bash
-git update-msg  # Update commit message
-git cim          # Update message and commit
-```
-
-### Option 5: Watch Mode (Advanced)
-Automatically update commit messages when files change:
-
-```bash
-pnpm run watch-commit-msg
-```
-
-### Option 6: Manual Creation
-Follow the [commit conventions](COMMIT_CONVENTIONS.md) to write your own message:
-
+### Manual commit option
+If you prefer to write your own message instead of using the draft file:
 ```bash
 git commit -m "feat(scope): description of changes"
 ```
 
-## Automatic Updates
+## VS Code Tasks
+Use these tasks from the Command Palette or Tasks explorer:
+- **Generate Commit Message**: Display the current `COMMIT_MESSAGE.txt` contents
+- **Update Commit Message**: Regenerate the message based on staged changes
+- **Copy Commit Message to Clipboard**: Copy the generated message for manual commit
 
-The commit message system automatically updates in these scenarios:
+## Hooks and validation
+- **pre-commit**: Generates/updates the draft message for staged changes
+- **post-commit**: Regenerates the draft for any remaining staged changes
+- **commit-msg**: Validates the final commit message format
 
-- **Before each commit**: Pre-commit hook updates the message for staged changes
-- **After each commit**: Post-commit hook generates new messages for remaining changes
-- **On demand**: Run `pnpm run update-commit-msg` or `git update-msg` anytime
-- **Watch mode**: Run `pnpm run watch-commit-msg` for continuous updates
-- **Validation**: Successful commits save their message for future reference
-- **Smart analysis**: The system analyzes your actual changes to suggest appropriate commit types and scopes
+## What changed
+- Removed automatic commit behavior. You now choose when to commit.
+- `COMMIT_MESSAGE.txt` is intentionally ignored by git so each contributor keeps their own draft.
+- There is no watch mode or automatic auto-commit command in the current workflow.
 
-## Git Integration
+## Available tools
+- `COMMIT_MESSAGE.txt` — local draft commit message
+- `scripts/generate-commit-message.js` — message generator
+- `.vscode/tasks.json` — VS Code tasks for generating and viewing messages
+- `.husky/pre-commit` — updates the message before commit
+- `.husky/post-commit` — refreshes the message after a commit
+- `.husky/commit-msg` — validates commit format
 
-### Git Aliases
+## Example usage
+
+### Generate and commit
 ```bash
-git update-msg    # Update commit message
-git cim           # Update message and commit automatically
+git add .
+pnpm run update-commit-msg
+git commit -F COMMIT_MESSAGE.txt
 ```
 
-### Git Hooks
-- **pre-commit**: Updates commit message before committing
-- **post-commit**: Generates new message for remaining changes
-- **commit-msg**: Validates message format and saves successful messages
-
-## Available Tools
-
-- **`COMMIT_MESSAGE.txt`** - Auto-generated commit message that updates automatically
-- **`scripts/generate-commit-message.js`** - Script to analyze git status and generate messages
-- **`.vscode/tasks.json`** - VS Code tasks for easy access
-- **`generate-commit-message.sh`** - Shell script alternative
-- **`.husky/post-commit`** - Automatically generates new messages after commits
-
-## Smart Generation
-
-The generator is intelligent about your workflow:
-
-- ✅ **Checks for staged changes** before generating messages
-- ✅ **Warns about unstaged changes** and suggests staging them
-- ✅ **Analyzes file types** to suggest appropriate commit types
-- ✅ **Updates automatically** after successful commits
-- ✅ **Provides clear feedback** about next steps
-
-## Examples
-
-### For Feature Changes
-```
-feat(packages/api): add contact form validation
+### Write your own message
+```bash
+git commit -m "fix(packages/state): update counter reducer handling"
 ```
 
-### For Bug Fixes
-```
-fix(apps/web): resolve button hover state issue
-```
-
-### For Documentation
-```
-docs: update API usage examples
-```
-
-### For Infrastructure Changes
-```
-feat(packages/infrastructure): add axios http provider
-```
-
-## Validation
-
-All commit messages are automatically validated using commitlint. If your message doesn't follow the conventions, you'll see helpful error messages.
-
-## Need Help?
-
+## Need help?
 - Read the full [Commit Conventions Guide](COMMIT_CONVENTIONS.md)
-- Run `pnpm run commit-msg` to see examples
-- Check the generated `COMMIT_MESSAGE.txt` for suggestions
+- Open `COMMIT_MESSAGE.txt` to review the current suggested message
+- Run `pnpm run update-commit-msg` whenever staged changes change
