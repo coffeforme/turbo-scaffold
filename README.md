@@ -19,6 +19,12 @@ Or generate a new one anytime:
 pnpm run update-commit-msg
 ```
 
+### VS Code Integration
+Use the built-in VS Code tasks for commit message management:
+- **Update Commit Message**: Generate a new commit message
+- **Generate Commit Message**: View current message
+- **Copy Commit Message to Clipboard**: Copy message for manual commit
+
 The commit message automatically updates before and after each commit.
 
 ## Using this example
