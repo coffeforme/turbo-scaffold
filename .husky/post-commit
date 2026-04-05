@@ -1,12 +1,14 @@
 #!/bin/bash
 # Post-commit hook to generate new commit message for remaining changes
 
-# Check if there are any remaining changes
-if git status --porcelain | grep -q .; then
+# Check if there are any remaining staged changes (excluding COMMIT_MESSAGE.txt)
+if git diff --cached --name-only | grep -v COMMIT_MESSAGE.txt | grep -q .; then
   echo "🔄 Generating commit message for remaining changes..."
   # Run the script and suppress output since we're in a hook
   node scripts/generate-commit-message.js > /dev/null 2>&1
   if [ -f COMMIT_MESSAGE.txt ]; then
     echo "📝 New commit message ready in COMMIT_MESSAGE.txt"
   fi
+else
+  echo "✨ No additional changes to commit."
 fi

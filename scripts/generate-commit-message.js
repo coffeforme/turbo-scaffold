@@ -6,7 +6,8 @@ const path = require('path');
 
 function getGitStatus() {
   try {
-    return execSync('git status --porcelain', { encoding: 'utf8' });
+    // Get only staged changes for commit message generation
+    return execSync('git diff --cached --name-status', { encoding: 'utf8' });
   } catch (error) {
     console.error('Error getting git status:', error.message);
     process.exit(1);
@@ -51,12 +52,19 @@ function analyzeChanges(status) {
   };
 
   changes.forEach(change => {
-    const status = change.substring(0, 2);
-    const filePath = change.substring(3);
+    // git diff --name-status format: "A\tfilename" or "M\tfilename" or "D\tfilename"
+    const parts = change.split('\t');
+    if (parts.length !== 2) return;
 
-    if (status.includes('A') || status.includes('?')) analysis.added.push(filePath);
-    if (status.includes('M')) analysis.modified.push(filePath);
-    if (status.includes('D')) analysis.deleted.push(filePath);
+    const status = parts[0];
+    const filePath = parts[1];
+
+    // Skip COMMIT_MESSAGE.txt as it's generated and shouldn't trigger new messages
+    if (filePath === 'COMMIT_MESSAGE.txt') return;
+
+    if (status === 'A') analysis.added.push(filePath);
+    if (status === 'M') analysis.modified.push(filePath);
+    if (status === 'D') analysis.deleted.push(filePath);
 
     // Check for package-specific changes
     if (filePath.includes('packages/')) {
@@ -192,6 +200,14 @@ function main() {
   }
 
   const analysis = analyzeChanges(status);
+
+  // Check if there are any meaningful changes after filtering
+  const totalChanges = analysis.added.length + analysis.modified.length + analysis.deleted.length;
+  if (totalChanges === 0) {
+    console.log('✨ No meaningful changes to commit (only generated files modified).');
+    process.exit(0);
+  }
+
   const commitMessage = generateCommitMessage(analysis);
 
   console.log('📝 Generated Commit Message:');
