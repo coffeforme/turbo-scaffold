@@ -1,0 +1,7 @@
+docs(root): add commit message conventions and validation
+
+This commit adds:
+- Commit message conventions documentation
+- Commitlint configuration for automated validation
+- Husky git hooks for commit message linting
+- VS Code tasks for easy commit message generation

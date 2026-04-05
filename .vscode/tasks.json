@@ -1,0 +1,45 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Generate Commit Message",
+      "type": "shell",
+      "command": "cat",
+      "args": ["COMMIT_MESSAGE.txt"],
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Copy Commit Message to Clipboard",
+      "type": "shell",
+      "command": "Get-Content",
+      "args": ["COMMIT_MESSAGE.txt", "|", "Set-Clipboard"],
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false
+      },
+      "windows": {
+        "command": "powershell",
+        "args": ["-Command", "Get-Content COMMIT_MESSAGE.txt | Set-Clipboard"]
+      },
+      "problemMatcher": []
+    }
+  ]
+}
