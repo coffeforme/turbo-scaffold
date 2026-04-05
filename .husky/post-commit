@@ -1,0 +1,13 @@
+#!/bin/bash
+# Post-commit hook to generate new commit message for remaining changes
+
+# Check if there are any remaining changes
+if git status --porcelain | grep -q .; then
+  echo "🔄 Generating commit message for remaining changes..."
+  node scripts/generate-commit-message.js > /dev/null 2>&1
+  if [ -f COMMIT_MESSAGE.txt ]; then
+    echo "📝 New commit message ready in COMMIT_MESSAGE.txt"
+  fi
+else
+  echo "✨ No remaining changes - working directory is clean"
+fi

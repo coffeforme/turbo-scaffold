@@ -13,6 +13,24 @@ function getGitStatus() {
   }
 }
 
+function hasStagedChanges() {
+  try {
+    const staged = execSync('git diff --cached --name-only', { encoding: 'utf8' });
+    return staged.trim().length > 0;
+  } catch (error) {
+    return false;
+  }
+}
+
+function hasUnstagedChanges() {
+  try {
+    const status = execSync('git status --porcelain', { encoding: 'utf8' });
+    return status.trim().length > 0;
+  } catch (error) {
+    return false;
+  }
+}
+
 function analyzeChanges(status) {
   const changes = status.trim().split('\n').filter(line => line.trim());
   const analysis = {
@@ -95,10 +113,18 @@ BREAKING CHANGE: API client factory now supports provider switching`;
 
 function main() {
   const status = getGitStatus();
+  const hasStaged = hasStagedChanges();
+  const hasUnstaged = hasUnstagedChanges();
 
   if (!status.trim()) {
-    console.log('No changes to commit.');
+    console.log('✨ No changes to commit. Working directory is clean.');
     process.exit(0);
+  }
+
+  if (!hasStaged && hasUnstaged) {
+    console.log('⚠️  You have unstaged changes. Stage them first with: git add .');
+    console.log('   Or add specific files: git add <filename>');
+    process.exit(1);
   }
 
   const analysis = analyzeChanges(status);
@@ -108,12 +134,17 @@ function main() {
   console.log('=' .repeat(50));
   console.log(commitMessage);
   console.log('=' .repeat(50));
-  console.log('\n💡 Copy this message and use: git commit -m "..."');
+  console.log('\n💡 Quick commit: git commit -F COMMIT_MESSAGE.txt');
+  console.log('   Manual commit: git commit -m "..."');
 
   // Save to file for easy access
   const messageFile = path.join(process.cwd(), 'COMMIT_MESSAGE.txt');
   fs.writeFileSync(messageFile, commitMessage);
-  console.log(`💾 Message also saved to: ${messageFile}`);
+  console.log(`💾 Message saved to: ${messageFile}`);
+
+  if (hasStaged) {
+    console.log('\n🚀 Ready to commit! Run: git commit -F COMMIT_MESSAGE.txt');
+  }
 }
 
 if (require.main === module) {

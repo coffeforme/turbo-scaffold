@@ -1,13 +1,7 @@
-feat: add infrastructure package with http providers and auth providers
+docs(root): add commit message conventions and validation
 
 This commit adds:
-- HTTP providers (Fetch and Axios) in @repo/infrastructure
-- Authentication providers (MSAL, Backend, Mixed) in @repo/infrastructure
-- Enhanced API client with provider switching capability
-- Commit message conventions and automated validation
+- Commit message conventions documentation
+- Commitlint configuration for automated validation
 - Husky git hooks for commit message linting
 - VS Code tasks for easy commit message generation
-
-BREAKING CHANGE: API client factory now supports provider switching
-
-BREAKING CHANGE: API client factory now supports provider switching

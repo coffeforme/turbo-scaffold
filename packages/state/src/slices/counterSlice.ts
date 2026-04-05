@@ -6,9 +6,12 @@ const slice = createSlice({
   reducers: {
     increment: (state) => {
       state.value += 1;
+    },
+    decrement: (state) => {
+      state.value += 1;
     }
   }
 });
 
-export const { increment } = slice.actions;
+export const { increment, decrement } = slice.actions;
 export default slice.reducer;

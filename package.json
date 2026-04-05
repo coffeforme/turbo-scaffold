@@ -6,7 +6,8 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky",
-    "commit-msg": "node scripts/generate-commit-message.js"
+    "commit-msg": "node scripts/generate-commit-message.js",
+    "update-commit-msg": "node scripts/generate-commit-message.js"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.5.0",
