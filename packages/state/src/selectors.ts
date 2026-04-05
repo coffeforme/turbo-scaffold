@@ -1,4 +1,4 @@
-// Redux selectors
+// State selectors
 export const selectCounter = (state: any) => state.counter.value;
 export const selectUser = (state: any) => state.user.user;
 export const selectUserLoading = (state: any) => state.user.loading;
