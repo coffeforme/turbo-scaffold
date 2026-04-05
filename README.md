@@ -63,3 +63,35 @@ This Turborepo has some additional tools already setup for you:
 - [TypeScript](https://www.typescriptlang.org/) for static type checking
 - [ESLint](https://eslint.org/) for code linting
 - [Prettier](https://prettier.io) for code formatting
+
+### UI Components
+
+The `@repo/ui` package provides a component library organized using Atomic Design principles:
+
+#### Atoms (Basic UI Elements)
+- **Button**: Basic button component
+- **Rating**: Interactive star rating component (1-5 stars)
+
+#### Molecules (Simple Components)
+- **Counter**: Number display with increment functionality
+
+#### Organisms (Complex Components)
+- **Header**: Page header with title
+- **FeedbackForm**: Complete feedback form with rating, category selection, and comments
+
+#### Usage Example
+```tsx
+import { Button, Rating, FeedbackForm } from '@repo/ui';
+
+// Basic components
+<Button>Click me</Button>
+<Rating value={3} onChange={setRating} />
+
+// Complex organism
+<FeedbackForm
+  formData={feedbackData}
+  updateField={updateField}
+  onSubmit={handleSubmit}
+  // ... other props
+/>
+```

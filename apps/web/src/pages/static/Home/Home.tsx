@@ -1,10 +1,10 @@
 import typescriptLogo from "/typescript.svg";
-import { Header, Counter } from "@repo/ui";
+import { Header, Counter, FeedbackForm } from "@repo/ui";
 import { add } from "@repo/math/add";
 import { useHome } from "@repo/hooks";
 
 const Home = () => {
-  const { counter, contactForm } = useHome();
+  const { counter, contactForm, feedbackForm } = useHome();
 
   return (
     <div>
@@ -72,6 +72,16 @@ const Home = () => {
             </form>
           )}
         </div>
+
+        <FeedbackForm
+          formData={feedbackForm.formData}
+          updateField={feedbackForm.updateField}
+          resetForm={feedbackForm.resetForm}
+          submitting={feedbackForm.submitting}
+          submitted={feedbackForm.submitted}
+          error={feedbackForm.error}
+          onSubmit={feedbackForm.handleSubmit}
+        />
       </div>
     </div>
   );
