@@ -1,2 +1,8 @@
 // Redux selectors
 export const selectCounter = (state: any) => state.counter.value;
+export const selectUser = (state: any) => state.user.user;
+export const selectUserLoading = (state: any) => state.user.loading;
+export const selectUserError = (state: any) => state.user.error;
+export const selectContactSubmitting = (state: any) => state.contact.submitting;
+export const selectContactSubmitted = (state: any) => state.contact.submitted;
+export const selectContactError = (state: any) => state.contact.error;

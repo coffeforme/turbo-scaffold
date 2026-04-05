@@ -1,5 +1,5 @@
 // Shared API utilities
-export const apiBaseUrl = 'https://api.example.com';
+export const apiBaseUrl = 'https://jsonplaceholder.typicode.com';
 
 // Placeholder for API client
 export const apiClient = {
