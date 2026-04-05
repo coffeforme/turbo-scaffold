@@ -1,7 +1,3 @@
-docs(root): add commit message conventions and validation
+ci(root): add commit message tooling
 
-This commit adds:
-- Commit message conventions documentation
-- Commitlint configuration for automated validation
-- Husky git hooks for commit message linting
-- VS Code tasks for easy commit message generation
+Add commit message generation and validation tools

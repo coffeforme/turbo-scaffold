@@ -42,14 +42,19 @@ function analyzeChanges(status) {
     hasApi: false,
     hasBuild: false,
     hasDocs: false,
-    hasCi: false
+    hasCi: false,
+    hasState: false,
+    hasScripts: false,
+    hasHusky: false,
+    hasVsCode: false,
+    hasTests: false
   };
 
   changes.forEach(change => {
     const status = change.substring(0, 2);
     const filePath = change.substring(3);
 
-    if (status.includes('A')) analysis.added.push(filePath);
+    if (status.includes('A') || status.includes('?')) analysis.added.push(filePath);
     if (status.includes('M')) analysis.modified.push(filePath);
     if (status.includes('D')) analysis.deleted.push(filePath);
 
@@ -65,8 +70,13 @@ function analyzeChanges(status) {
     if (filePath.includes('infrastructure')) analysis.hasInfrastructure = true;
     if (filePath.includes('api')) analysis.hasApi = true;
     if (filePath.includes('package.json') || filePath.includes('tsconfig')) analysis.hasBuild = true;
-    if (filePath.includes('.md') || filePath.includes('COMMIT_CONVENTIONS')) analysis.hasDocs = true;
+    if (filePath.includes('.md') || filePath.includes('COMMIT_')) analysis.hasDocs = true;
     if (filePath.includes('husky') || filePath.includes('commitlint')) analysis.hasCi = true;
+    if (filePath.includes('state') || filePath.includes('redux')) analysis.hasState = true;
+    if (filePath.includes('scripts/')) analysis.hasScripts = true;
+    if (filePath.includes('.husky/')) analysis.hasHusky = true;
+    if (filePath.includes('.vscode/')) analysis.hasVsCode = true;
+    if (filePath.includes('test') || filePath.includes('spec')) analysis.hasTests = true;
   });
 
   return analysis;
@@ -78,33 +88,87 @@ function generateCommitMessage(analysis) {
   let description = '';
   let body = '';
 
-  // Determine primary type
-  if (analysis.hasInfrastructure && analysis.hasApi) {
-    type = 'feat';
-    scope = 'packages/infrastructure,packages/api';
-    description = 'add infrastructure package with HTTP and auth providers';
-    body = `This commit adds:
-- HTTP providers (Fetch and Axios) in @repo/infrastructure
-- Authentication providers (MSAL, Backend, Mixed) in @repo/infrastructure
-- Enhanced API client with provider switching capability
-- Commit message conventions and automated validation
-- Husky git hooks for commit message linting
+  // Determine primary type and scope based on changes
+  // Prioritize added files over modified ones for more accurate detection
 
-BREAKING CHANGE: API client factory now supports provider switching`;
-  } else if (analysis.hasDocs && analysis.hasCi) {
+  // Filter out commit-related files to focus on actual code changes
+  const nonCommitFiles = analysis.added.filter(file =>
+    !file.includes('COMMIT_MESSAGE') &&
+    !file.includes('commitlint') &&
+    !file.includes('.husky') &&
+    !file.includes('generate-commit-message') &&
+    !file.includes('auto-update-commit-msg')
+  );
+
+  if (nonCommitFiles.length > 0) {
+    // New non-commit files take priority
+    const newFile = nonCommitFiles[0];
+    if (newFile.includes('.md') && (newFile.includes('test') || newFile.includes('example'))) {
+      type = 'docs';
+      scope = 'root';
+      description = 'add documentation example';
+      body = `Add example documentation file: ${newFile}`;
+    } else if (newFile.includes('.test.') || newFile.includes('.spec.')) {
+      type = 'test';
+      scope = 'root';
+      description = 'add test file';
+      body = `Add test file: ${newFile}`;
+    } else {
+      type = 'feat';
+      scope = 'root';
+      description = 'add new file';
+      body = `Add new file: ${newFile}`;
+    }
+  } else if (analysis.added.length > 0) {
+    // If only commit-related files were added
+    type = 'ci';
+    scope = 'root';
+    description = 'add commit message tooling';
+    body = 'Add commit message generation and validation tools';
+  } else if (analysis.hasHusky || analysis.hasCi) {
+    type = 'ci';
+    scope = 'root';
+    description = 'update commit message tooling and hooks';
+    body = `This commit updates:
+- Husky git hooks configuration
+- Commit message validation setup
+- VS Code tasks for commit message generation
+- Commit message generation scripts`;
+  } else if (analysis.hasDocs) {
     type = 'docs';
     scope = 'root';
-    description = 'add commit message conventions and validation';
-    body = `This commit adds:
-- Commit message conventions documentation
-- Commitlint configuration for automated validation
-- Husky git hooks for commit message linting
-- VS Code tasks for easy commit message generation`;
-  } else if (analysis.hasInfrastructure) {
+    description = 'update commit message documentation';
+    body = 'Update commit message tools documentation and guides';
+  } else if (analysis.hasScripts) {
+    type = 'refactor';
+    scope = 'root';
+    description = 'improve commit message generation script';
+    body = 'Enhance the commit message generation script with better analysis and feedback';
+  } else if (analysis.hasVsCode) {
     type = 'feat';
-    scope = 'packages/infrastructure';
-    description = 'add HTTP and authentication providers';
-    body = 'Add infrastructure layer with HTTP providers (Fetch, Axios) and authentication providers (MSAL, Backend, Mixed)';
+    scope = 'root';
+    description = 'add vs code tasks for commit message workflow';
+    body = 'Add VS Code tasks to streamline the commit message creation process';
+  } else if (analysis.hasState) {
+    type = 'fix';
+    scope = 'packages/state';
+    description = 'update state management slice';
+    body = 'Update Redux state slice with latest changes';
+  } else if (analysis.packages.size > 0) {
+    type = 'feat';
+    scope = `packages/${Array.from(analysis.packages)[0]}`;
+    description = 'update package functionality';
+    body = `Update ${Array.from(analysis.packages)[0]} package with new features`;
+  } else if (analysis.added.length > 0) {
+    type = 'feat';
+    scope = 'root';
+    description = 'add new files and functionality';
+    body = `Add ${analysis.added.length} new file(s) to the project`;
+  } else {
+    type = 'refactor';
+    scope = 'root';
+    description = 'update project files';
+    body = 'General project file updates and improvements';
   }
 
   const header = scope ? `${type}(${scope}): ${description}` : `${type}: ${description}`;

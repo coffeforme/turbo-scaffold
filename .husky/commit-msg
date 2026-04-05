@@ -4,6 +4,5 @@ npx --no -- commitlint --edit $1
 
 # If validation passes, save the commit message for future use
 if [ $? -eq 0 ]; then
-  cp "$1" COMMIT_MESSAGE.txt
-  echo "💾 Commit message saved to COMMIT_MESSAGE.txt for future reference"
+  cp "$1" COMMIT_MESSAGE.txt 2>/dev/null || echo "Could not save commit message to file"
 fi

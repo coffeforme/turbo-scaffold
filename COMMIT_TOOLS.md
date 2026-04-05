@@ -4,29 +4,45 @@ This project provides several tools to help you create properly formatted commit
 
 ## Quick Start
 
-### Option 1: Use the Auto-Generated Message (Easiest)
-The `COMMIT_MESSAGE.txt` file is automatically updated when you commit or when you run the generator:
+### Option 1: Auto-Commit (Easiest)
+Stage your changes and use the auto-commit command:
 
 ```bash
-git commit -F COMMIT_MESSAGE.txt
+git add .
+pnpm run auto-commit-msg
 ```
 
-### Option 2: Generate/Update Message Manually
-Run the commit message generator anytime to update the suggestion:
+### Option 2: Manual Update & Commit
+Update the message and commit manually:
 
 ```bash
 pnpm run update-commit-msg
-# or
-pnpm run commit-msg
+git commit -F COMMIT_MESSAGE.txt
 ```
 
 ### Option 3: VS Code Tasks
 Use the VS Code Command Palette (`Ctrl+Shift+P`) and run:
-- **"Tasks: Run Task"** → **"Update Commit Message"** - Generates new message for current changes
-- **"Tasks: Run Task"** → **"Generate Commit Message"** - Shows current suggested message
-- **"Tasks: Run Task"** → **"Copy Commit Message to Clipboard"** - Copies message to clipboard
+- **"Tasks: Run Task"** → **"Auto Commit"** - Updates message and commits automatically
+- **"Tasks: Run Task"** → **"Update Commit Message"** - Just updates the message
+- **"Tasks: Run Task"** → **"Generate Commit Message"** - Shows current message
+- **"Tasks: Run Task"** → **"Copy Commit Message to Clipboard"** - Copies to clipboard
 
-### Option 4: Manual Creation
+### Option 4: Git Aliases
+Use the convenient git aliases:
+
+```bash
+git update-msg  # Update commit message
+git cim          # Update message and commit
+```
+
+### Option 5: Watch Mode (Advanced)
+Automatically update commit messages when files change:
+
+```bash
+pnpm run watch-commit-msg
+```
+
+### Option 6: Manual Creation
 Follow the [commit conventions](COMMIT_CONVENTIONS.md) to write your own message:
 
 ```bash
@@ -37,9 +53,25 @@ git commit -m "feat(scope): description of changes"
 
 The commit message system automatically updates in these scenarios:
 
-- **After each commit**: If there are remaining changes, a new message is generated
-- **On demand**: Run `pnpm run update-commit-msg` to refresh the suggestion
+- **Before each commit**: Pre-commit hook updates the message for staged changes
+- **After each commit**: Post-commit hook generates new messages for remaining changes
+- **On demand**: Run `pnpm run update-commit-msg` or `git update-msg` anytime
+- **Watch mode**: Run `pnpm run watch-commit-msg` for continuous updates
 - **Validation**: Successful commits save their message for future reference
+- **Smart analysis**: The system analyzes your actual changes to suggest appropriate commit types and scopes
+
+## Git Integration
+
+### Git Aliases
+```bash
+git update-msg    # Update commit message
+git cim           # Update message and commit automatically
+```
+
+### Git Hooks
+- **pre-commit**: Updates commit message before committing
+- **post-commit**: Generates new message for remaining changes
+- **commit-msg**: Validates message format and saves successful messages
 
 ## Available Tools
 

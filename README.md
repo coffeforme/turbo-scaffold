@@ -7,16 +7,19 @@ This is a community-maintained example. If you experience a problem, please subm
 This project follows [Conventional Commits](https://conventionalcommits.org/) for consistent and meaningful commit messages. See [COMMIT_CONVENTIONS.md](COMMIT_CONVENTIONS.md) for details.
 
 ### Quick Commit
-After making changes, use the auto-generated commit message:
+After making changes, use the auto-commit feature:
 
 ```sh
-git commit -F COMMIT_MESSAGE.txt
+git add .
+pnpm run auto-commit-msg
 ```
 
-Or generate a new one:
+Or generate a new one anytime:
 ```sh
-pnpm run commit-msg
+pnpm run update-commit-msg
 ```
+
+The commit message automatically updates before and after each commit.
 
 ## Using this example
 
