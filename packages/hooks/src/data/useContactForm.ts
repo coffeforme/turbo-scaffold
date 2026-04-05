@@ -1,6 +1,9 @@
 import { useCallback, useState } from "react";
-import { useAppDispatch, useAppSelector } from "@repo/state";
 import {
+  useAppDispatch,
+  useAppSelector,
+  useZustandDispatch,
+  useZustandSelector,
   submitContactStart,
   submitContactSuccess,
   submitContactFailure,
@@ -12,13 +15,19 @@ import {
 } from "@repo/state";
 import { useContactApi } from "../api/useContactApi";
 
-export const useContactForm = () => {
-  const dispatch = useAppDispatch();
+export const useContactForm = (useZustand = false) => {
+  const dispatch = useZustand ? useZustandDispatch() : useAppDispatch();
   const { submitContact: submitContactRequest } = useContactApi();
 
-  const submitting = useAppSelector(selectContactSubmitting);
-  const submitted = useAppSelector(selectContactSubmitted);
-  const error = useAppSelector(selectContactError);
+  const submitting = useZustand
+    ? useZustandSelector(selectContactSubmitting)
+    : useAppSelector(selectContactSubmitting);
+  const submitted = useZustand
+    ? useZustandSelector(selectContactSubmitted)
+    : useAppSelector(selectContactSubmitted);
+  const error = useZustand
+    ? useZustandSelector(selectContactError)
+    : useAppSelector(selectContactError);
 
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",

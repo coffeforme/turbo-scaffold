@@ -1,6 +1,9 @@
 import { useCallback, useState } from "react";
-import { useAppDispatch, useAppSelector } from "@repo/state";
 import {
+  useAppDispatch,
+  useAppSelector,
+  useZustandDispatch,
+  useZustandSelector,
   submitFeedbackStart,
   submitFeedbackSuccess,
   submitFeedbackFailure,
@@ -12,13 +15,19 @@ import {
 } from "@repo/state";
 import { useFeedbackApi } from "../api/useFeedbackApi";
 
-export const useFeedbackForm = () => {
-  const dispatch = useAppDispatch();
+export const useFeedbackForm = (useZustand = false) => {
+  const dispatch = useZustand ? useZustandDispatch() : useAppDispatch();
   const { submitFeedback: submitFeedbackRequest } = useFeedbackApi();
 
-  const submitting = useAppSelector(selectFeedbackSubmitting);
-  const submitted = useAppSelector(selectFeedbackSubmitted);
-  const error = useAppSelector(selectFeedbackError);
+  const submitting = useZustand
+    ? useZustandSelector(selectFeedbackSubmitting)
+    : useAppSelector(selectFeedbackSubmitting);
+  const submitted = useZustand
+    ? useZustandSelector(selectFeedbackSubmitted)
+    : useAppSelector(selectFeedbackSubmitted);
+  const error = useZustand
+    ? useZustandSelector(selectFeedbackError)
+    : useAppSelector(selectFeedbackError);
 
   const [formData, setFormData] = useState<FeedbackFormData>({
     rating: 0,

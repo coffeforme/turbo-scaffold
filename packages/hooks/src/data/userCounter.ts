@@ -1,16 +1,29 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector, useZustandDispatch, useZustandSelector } from "@repo/state";
 import { increment } from "@repo/state";
-import type { RootState } from "@repo/state";
 
-export function useCounter() {
-  const dispatch = useDispatch();
+// Hook that works with both Redux and Zustand
+export function useCounter(useZustand = false) {
+  if (useZustand) {
+    // Zustand implementation
+    const value = useZustandSelector((state) => state.counter.value);
+    const dispatch = useZustandDispatch();
 
-  const value = useSelector((state: RootState) => state.counter.value);
+    const increase = () => dispatch({ type: 'counter/increment' });
 
-  const increase = () => dispatch(increment());
+    return {
+      value,
+      increase,
+    };
+  } else {
+    // Redux implementation
+    const dispatch = useAppDispatch();
+    const value = useAppSelector((state) => state.counter.value);
 
-  return {
-    value,
-    increase,
-  };
+    const increase = () => dispatch(increment());
+
+    return {
+      value,
+      increase,
+    };
+  }
 }

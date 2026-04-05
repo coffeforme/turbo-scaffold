@@ -2,8 +2,8 @@ import { useCounter } from "../data/userCounter";
 import { useContactForm } from "../data/useContactForm";
 import { useFeedbackForm } from "../data/useFeedbackForm";
 
-export const useHome = () => {
-  const { value, increase } = useCounter();
+export const useHome = (useZustand = false) => {
+  const { value, increase } = useCounter(useZustand);
   const {
     formData: contactFormData,
     updateField: updateContactField,
@@ -12,7 +12,7 @@ export const useHome = () => {
     submitting: contactSubmitting,
     submitted: contactSubmitted,
     error: contactError,
-  } = useContactForm();
+  } = useContactForm(useZustand);
 
   const {
     formData: feedbackFormData,
@@ -22,7 +22,7 @@ export const useHome = () => {
     submitting: feedbackSubmitting,
     submitted: feedbackSubmitted,
     error: feedbackError,
-  } = useFeedbackForm();
+  } = useFeedbackForm(useZustand);
 
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
