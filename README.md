@@ -2,6 +2,22 @@
 
 This is a community-maintained example. If you experience a problem, please submit a pull request with a fix. GitHub Issues will be closed.
 
+## Commit Conventions
+
+This project follows [Conventional Commits](https://conventionalcommits.org/) for consistent and meaningful commit messages. See [COMMIT_CONVENTIONS.md](COMMIT_CONVENTIONS.md) for details.
+
+### Quick Commit
+After making changes, use the auto-generated commit message:
+
+```sh
+git commit -F COMMIT_MESSAGE.txt
+```
+
+Or generate a new one:
+```sh
+pnpm run commit-msg
+```
+
 ## Using this example
 
 Run the following command:
