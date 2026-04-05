@@ -27,6 +27,7 @@ This Turborepo includes the following packages and apps:
 - `@repo/api`: shared API utilities package
 - `@repo/persistence`: shared persistence utilities package
 - `@repo/utils`: shared utility functions package
+- `@repo/infrastructure`: shared infrastructure utilities package
 
 Each package and app is 100% [TypeScript](https://www.typescriptlang.org/).
 

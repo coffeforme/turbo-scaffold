@@ -45,6 +45,9 @@ importers:
       '@repo/hooks':
         specifier: workspace:^
         version: link:../../packages/hooks
+      '@repo/infrastructure':
+        specifier: workspace:*
+        version: link:../../packages/infrastructure
       '@repo/math':
         specifier: workspace:*
         version: link:../../packages/math
@@ -111,6 +114,22 @@ importers:
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
+
+  packages/infrastructure:
+    dependencies:
+      '@repo/api':
+        specifier: workspace:*
+        version: link:../api
+      '@repo/persistence':
+        specifier: workspace:*
+        version: link:../persistence
+    devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      typescript:
+        specifier: 5.5.4
+        version: 5.5.4
 
   packages/math:
     devDependencies:
