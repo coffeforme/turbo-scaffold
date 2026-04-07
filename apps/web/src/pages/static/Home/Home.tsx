@@ -3,7 +3,13 @@ import { Header, Counter, FeedbackForm } from "@repo/ui";
 import { add } from "@repo/math/add";
 import { useHome } from "@repo/hooks";
 import { useStateProvider } from "../../../components/StateProvider";
-import { useAgnosticCounter, useAgnosticContactForm, setStateManagerType, getCurrentManagerType } from "@repo/state";
+import {
+  useAgnosticCounter,
+  useAgnosticContactForm,
+  useAgnosticFeedbackForm,
+  setStateManagerType,
+  getCurrentManagerType,
+} from "@repo/state";
 
 const Home = () => {
   const { providerType, setProviderType } = useStateProvider();
@@ -12,11 +18,17 @@ const Home = () => {
   // Agnostic hooks - completely unaware of the state management implementation
   const agnosticCounter = useAgnosticCounter();
   const agnosticContact = useAgnosticContactForm();
+  const agnosticFeedback = useAgnosticFeedbackForm();
 
   // Sync the agnostic state manager with the provider toggle
   const handleProviderChange = (type: 'redux' | 'zustand') => {
     setProviderType(type);
     setStateManagerType(type);
+  };
+
+  const handleAgnosticFeedbackSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    agnosticFeedback.submitForm();
   };
 
   return (
@@ -103,6 +115,16 @@ const Home = () => {
             </div>
           )}
         </div>
+
+        <FeedbackForm
+          formData={agnosticFeedback.formData}
+          updateField={agnosticFeedback.updateField}
+          resetForm={agnosticFeedback.resetForm}
+          submitting={agnosticFeedback.submitting}
+          submitted={agnosticFeedback.submitted}
+          error={agnosticFeedback.error}
+          onSubmit={handleAgnosticFeedbackSubmit}
+        />
       </div>
 
       <div className="card">

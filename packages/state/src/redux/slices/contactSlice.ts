@@ -1,7 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { ContactState } from "../../shared/types";
+import {
+  createInitialContactFormData,
+  type ContactFormData,
+  type ContactState,
+} from "../../shared/types";
 
 const initialState: ContactState = {
+  formData: createInitialContactFormData(),
   submitting: false,
   submitted: false,
   error: null,
@@ -11,11 +16,20 @@ const contactSlice = createSlice({
   name: "contact",
   initialState,
   reducers: {
+    updateContactField: (
+      state,
+      action: PayloadAction<{ field: keyof ContactFormData; value: string }>,
+    ) => {
+      state.formData[action.payload.field] = action.payload.value;
+      state.submitted = false;
+      state.error = null;
+    },
     submitContactStart: (state) => {
       state.submitting = true;
       state.error = null;
     },
     submitContactSuccess: (state) => {
+      state.formData = createInitialContactFormData();
       state.submitting = false;
       state.submitted = true;
     },
@@ -24,6 +38,7 @@ const contactSlice = createSlice({
       state.error = action.payload;
     },
     resetContactForm: (state) => {
+      state.formData = createInitialContactFormData();
       state.submitting = false;
       state.submitted = false;
       state.error = null;
@@ -32,6 +47,7 @@ const contactSlice = createSlice({
 });
 
 export const {
+  updateContactField,
   submitContactStart,
   submitContactSuccess,
   submitContactFailure,

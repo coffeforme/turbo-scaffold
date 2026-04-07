@@ -11,12 +11,14 @@ export interface FeedbackFormData {
 }
 
 export interface ContactState {
+  formData: ContactFormData;
   submitting: boolean;
   submitted: boolean;
   error: string | null;
 }
 
 export interface FeedbackState {
+  formData: FeedbackFormData;
   submitting: boolean;
   submitted: boolean;
   error: string | null;
@@ -39,9 +41,31 @@ export interface RootState {
   feedback: FeedbackState;
 }
 
+export const createInitialContactFormData = (): ContactFormData => ({
+  name: "",
+  email: "",
+  message: "",
+});
+
+export const createInitialFeedbackFormData = (): FeedbackFormData => ({
+  rating: 0,
+  comment: "",
+  category: "general",
+});
+
 export const createInitialRootState = (): RootState => ({
   counter: { value: 0 },
   user: { user: null, loading: false, error: null },
-  contact: { submitting: false, submitted: false, error: null },
-  feedback: { submitting: false, submitted: false, error: null },
+  contact: {
+    formData: createInitialContactFormData(),
+    submitting: false,
+    submitted: false,
+    error: null,
+  },
+  feedback: {
+    formData: createInitialFeedbackFormData(),
+    submitting: false,
+    submitted: false,
+    error: null,
+  },
 });

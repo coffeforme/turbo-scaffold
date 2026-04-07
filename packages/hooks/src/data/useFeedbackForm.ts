@@ -1,23 +1,27 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import {
   useAppDispatch,
   useAppSelector,
   useZustandDispatch,
   useZustandSelector,
+  updateFeedbackField,
   submitFeedbackStart,
   submitFeedbackSuccess,
   submitFeedbackFailure,
   resetFeedbackForm,
+  selectFeedbackFormData,
   selectFeedbackSubmitting,
   selectFeedbackSubmitted,
   selectFeedbackError,
-  FeedbackFormData,
 } from "@repo/state";
 import { useFeedbackApi } from "../api/useFeedbackApi";
 
 export const useFeedbackForm = (useZustand = false) => {
   const dispatch = useZustand ? useZustandDispatch() : useAppDispatch();
   const { submitFeedback: submitFeedbackRequest } = useFeedbackApi();
+  const formData = useZustand
+    ? useZustandSelector(selectFeedbackFormData)
+    : useAppSelector(selectFeedbackFormData);
 
   const submitting = useZustand
     ? useZustandSelector(selectFeedbackSubmitting)
@@ -29,22 +33,15 @@ export const useFeedbackForm = (useZustand = false) => {
     ? useZustandSelector(selectFeedbackError)
     : useAppSelector(selectFeedbackError);
 
-  const [formData, setFormData] = useState<FeedbackFormData>({
-    rating: 0,
-    comment: "",
-    category: "general",
-  });
-
-  const updateField = useCallback((field: keyof FeedbackFormData, value: string | number) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  }, []);
+  const updateField = useCallback((field: "rating" | "comment" | "category", value: string | number) => {
+    dispatch(updateFeedbackField({ field, value }));
+  }, [dispatch]);
 
   const submitForm = useCallback(async () => {
     dispatch(submitFeedbackStart());
     try {
       await submitFeedbackRequest(formData);
       dispatch(submitFeedbackSuccess());
-      setFormData({ rating: 0, comment: "", category: "general" }); // Reset form
     } catch (error: any) {
       dispatch(submitFeedbackFailure(error?.message ?? "Failed to submit feedback"));
     }
@@ -52,7 +49,6 @@ export const useFeedbackForm = (useZustand = false) => {
 
   const resetForm = useCallback(() => {
     dispatch(resetFeedbackForm());
-    setFormData({ rating: 0, comment: "", category: "general" });
   }, [dispatch]);
 
   return {

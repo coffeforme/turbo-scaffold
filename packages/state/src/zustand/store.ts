@@ -1,7 +1,11 @@
 import { create } from "zustand";
 import { subscribeWithSelector } from "zustand/middleware";
-import { createInitialRootState } from "../shared/types";
-import type { RootState } from "../shared/types";
+import {
+  createInitialContactFormData,
+  createInitialFeedbackFormData,
+  createInitialRootState,
+} from "../shared/types";
+import type { ContactFormData, FeedbackFormData, RootState } from "../shared/types";
 
 export const useZustandStore = create<RootState>()(
   subscribeWithSelector(() => createInitialRootState()),
@@ -19,6 +23,24 @@ export const zustandDispatch = (action: { type: string; payload?: unknown }) => 
         counter: { ...state.counter, value: state.counter.value - 1 },
       }));
       break;
+    case "contact/updateContactField": {
+      const { field, value } = action.payload as {
+        field: keyof ContactFormData;
+        value: string;
+      };
+      useZustandStore.setState((state) => ({
+        contact: {
+          ...state.contact,
+          formData: {
+            ...state.contact.formData,
+            [field]: value,
+          },
+          submitted: false,
+          error: null,
+        },
+      }));
+      break;
+    }
     case "contact/submitContactStart":
       useZustandStore.setState((state) => ({
         contact: { ...state.contact, submitting: true, error: null },
@@ -26,7 +48,12 @@ export const zustandDispatch = (action: { type: string; payload?: unknown }) => 
       break;
     case "contact/submitContactSuccess":
       useZustandStore.setState((state) => ({
-        contact: { ...state.contact, submitting: false, submitted: true },
+        contact: {
+          ...state.contact,
+          formData: createInitialContactFormData(),
+          submitting: false,
+          submitted: true,
+        },
       }));
       break;
     case "contact/submitContactFailure":
@@ -36,9 +63,33 @@ export const zustandDispatch = (action: { type: string; payload?: unknown }) => 
       break;
     case "contact/resetContactForm":
       useZustandStore.setState((state) => ({
-        contact: { ...state.contact, submitting: false, submitted: false, error: null },
+        contact: {
+          ...state.contact,
+          formData: createInitialContactFormData(),
+          submitting: false,
+          submitted: false,
+          error: null,
+        },
       }));
       break;
+    case "feedback/updateFeedbackField": {
+      const { field, value } = action.payload as {
+        field: keyof FeedbackFormData;
+        value: string | number;
+      };
+      useZustandStore.setState((state) => ({
+        feedback: {
+          ...state.feedback,
+          formData: {
+            ...state.feedback.formData,
+            [field]: value,
+          },
+          submitted: false,
+          error: null,
+        },
+      }));
+      break;
+    }
     case "feedback/submitFeedbackStart":
       useZustandStore.setState((state) => ({
         feedback: { ...state.feedback, submitting: true, error: null },
@@ -46,7 +97,12 @@ export const zustandDispatch = (action: { type: string; payload?: unknown }) => 
       break;
     case "feedback/submitFeedbackSuccess":
       useZustandStore.setState((state) => ({
-        feedback: { ...state.feedback, submitting: false, submitted: true },
+        feedback: {
+          ...state.feedback,
+          formData: createInitialFeedbackFormData(),
+          submitting: false,
+          submitted: true,
+        },
       }));
       break;
     case "feedback/submitFeedbackFailure":
@@ -56,7 +112,13 @@ export const zustandDispatch = (action: { type: string; payload?: unknown }) => 
       break;
     case "feedback/resetFeedbackForm":
       useZustandStore.setState((state) => ({
-        feedback: { ...state.feedback, submitting: false, submitted: false, error: null },
+        feedback: {
+          ...state.feedback,
+          formData: createInitialFeedbackFormData(),
+          submitting: false,
+          submitted: false,
+          error: null,
+        },
       }));
       break;
     default:

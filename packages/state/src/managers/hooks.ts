@@ -64,25 +64,24 @@ export const useAgnosticCounter = () => {
 
 // Agnostic contact form hook
 export const useAgnosticContactForm = (config?: UseAgnosticContactFormConfig) => {
-  const [formData, setFormData] = useState<ContactFormData>({
-    name: '',
-    email: '',
-    message: '',
-  });
+  const [formData, setFormData] = useState<ContactFormData>(() => getStateManager().getContactFormData());
 
   const [contactState, setContactState] = useState(() => getStateManager().getContactState());
 
   useEffect(() => {
+    setFormData(getStateManager().getContactFormData());
     setContactState(getStateManager().getContactState());
   }, [getCurrentManagerType()]);
 
   const updateField = useCallback((field: keyof ContactFormData, value: string) => {
-    setFormData((prev: ContactFormData) => ({ ...prev, [field]: value }));
+    getStateManager().updateContactField(field, value);
+    setFormData(getStateManager().getContactFormData());
+    setContactState(getStateManager().getContactState());
   }, []);
 
   const resetForm = useCallback(() => {
     getStateManager().resetContactForm();
-    setFormData({ name: '', email: '', message: '' });
+    setFormData(getStateManager().getContactFormData());
     setContactState(getStateManager().getContactState());
   }, []);
 
@@ -119,25 +118,24 @@ export const useAgnosticContactForm = (config?: UseAgnosticContactFormConfig) =>
 
 // Agnostic feedback form hook
 export const useAgnosticFeedbackForm = (config?: UseAgnosticFeedbackFormConfig) => {
-  const [formData, setFormData] = useState<FeedbackFormData>({
-    rating: 0,
-    comment: '',
-    category: 'general',
-  });
+  const [formData, setFormData] = useState<FeedbackFormData>(() => getStateManager().getFeedbackFormData());
 
   const [feedbackState, setFeedbackState] = useState(() => getStateManager().getFeedbackState());
 
   useEffect(() => {
+    setFormData(getStateManager().getFeedbackFormData());
     setFeedbackState(getStateManager().getFeedbackState());
   }, [getCurrentManagerType()]);
 
   const updateField = useCallback((field: keyof FeedbackFormData, value: string | number) => {
-    setFormData((prev: FeedbackFormData) => ({ ...prev, [field]: value }));
+    getStateManager().updateFeedbackField(field, value);
+    setFormData(getStateManager().getFeedbackFormData());
+    setFeedbackState(getStateManager().getFeedbackState());
   }, []);
 
   const resetForm = useCallback(() => {
     getStateManager().resetFeedbackForm();
-    setFormData({ rating: 0, comment: '', category: 'general' });
+    setFormData(getStateManager().getFeedbackFormData());
     setFeedbackState(getStateManager().getFeedbackState());
   }, []);
 

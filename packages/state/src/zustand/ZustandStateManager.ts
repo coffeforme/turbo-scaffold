@@ -1,4 +1,5 @@
 import type { StateManager } from "../shared/StateManager";
+import type { ContactFormData, FeedbackFormData } from "../shared/types";
 import { useZustandStore, zustandDispatch } from "./store";
 
 export class ZustandStateManager implements StateManager {
@@ -16,6 +17,14 @@ export class ZustandStateManager implements StateManager {
 
   decrementCounter(): void {
     zustandDispatch({ type: "counter/decrement" });
+  }
+
+  getContactFormData() {
+    return useZustandStore.getState().contact.formData;
+  }
+
+  updateContactField(field: keyof ContactFormData, value: string): void {
+    zustandDispatch({ type: "contact/updateContactField", payload: { field, value } });
   }
 
   getContactState() {
@@ -36,6 +45,14 @@ export class ZustandStateManager implements StateManager {
 
   resetContactForm(): void {
     zustandDispatch({ type: "contact/resetContactForm" });
+  }
+
+  getFeedbackFormData() {
+    return useZustandStore.getState().feedback.formData;
+  }
+
+  updateFeedbackField(field: keyof FeedbackFormData, value: string | number): void {
+    zustandDispatch({ type: "feedback/updateFeedbackField", payload: { field, value } });
   }
 
   getFeedbackState() {

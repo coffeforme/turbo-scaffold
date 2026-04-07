@@ -1,23 +1,27 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import {
   useAppDispatch,
   useAppSelector,
   useZustandDispatch,
   useZustandSelector,
+  updateContactField,
   submitContactStart,
   submitContactSuccess,
   submitContactFailure,
   resetContactForm,
+  selectContactFormData,
   selectContactSubmitting,
   selectContactSubmitted,
   selectContactError,
-  ContactFormData,
 } from "@repo/state";
 import { useContactApi } from "../api/useContactApi";
 
 export const useContactForm = (useZustand = false) => {
   const dispatch = useZustand ? useZustandDispatch() : useAppDispatch();
   const { submitContact: submitContactRequest } = useContactApi();
+  const formData = useZustand
+    ? useZustandSelector(selectContactFormData)
+    : useAppSelector(selectContactFormData);
 
   const submitting = useZustand
     ? useZustandSelector(selectContactSubmitting)
@@ -29,22 +33,15 @@ export const useContactForm = (useZustand = false) => {
     ? useZustandSelector(selectContactError)
     : useAppSelector(selectContactError);
 
-  const [formData, setFormData] = useState<ContactFormData>({
-    name: "",
-    email: "",
-    message: "",
-  });
-
-  const updateField = useCallback((field: keyof ContactFormData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  }, []);
+  const updateField = useCallback((field: "name" | "email" | "message", value: string) => {
+    dispatch(updateContactField({ field, value }));
+  }, [dispatch]);
 
   const submitForm = useCallback(async () => {
     dispatch(submitContactStart());
     try {
       await submitContactRequest(formData);
       dispatch(submitContactSuccess());
-      setFormData({ name: "", email: "", message: "" }); // Reset form
     } catch (error: any) {
       dispatch(submitContactFailure(error?.message ?? "Failed to submit contact form"));
     }
@@ -52,7 +49,6 @@ export const useContactForm = (useZustand = false) => {
 
   const resetForm = useCallback(() => {
     dispatch(resetContactForm());
-    setFormData({ name: "", email: "", message: "" });
   }, [dispatch]);
 
   return {

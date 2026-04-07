@@ -1,4 +1,11 @@
-import type { ContactState, FeedbackState, RootState, UserState } from "./types";
+import type {
+  ContactFormData,
+  ContactState,
+  FeedbackFormData,
+  FeedbackState,
+  RootState,
+  UserState,
+} from "./types";
 
 export interface StateManager {
   getState(): RootState;
@@ -7,12 +14,16 @@ export interface StateManager {
   incrementCounter(): void;
   decrementCounter(): void;
 
+  getContactFormData(): ContactFormData;
+  updateContactField(field: keyof ContactFormData, value: string): void;
   getContactState(): ContactState;
   submitContactStart(): void;
   submitContactSuccess(): void;
   submitContactFailure(error: string): void;
   resetContactForm(): void;
 
+  getFeedbackFormData(): FeedbackFormData;
+  updateFeedbackField(field: keyof FeedbackFormData, value: string | number): void;
   getFeedbackState(): FeedbackState;
   submitFeedbackStart(): void;
   submitFeedbackSuccess(): void;
