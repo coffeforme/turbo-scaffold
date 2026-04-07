@@ -1,0 +1,29 @@
+@use "../../../styles/tokens" as *;
+@use "../../../styles/mixins" as *;
+
+.counter {
+  appearance: none;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  background: $color-surface;
+  color: $color-ink;
+  cursor: pointer;
+  font-family: $font-display;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0.9rem 1.25rem;
+  transition:
+    transform 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+
+  &:hover {
+    border-color: $color-primary;
+    transform: translateY(-1px);
+    box-shadow: 0 16px 30px -25px rgba(15, 23, 42, 0.45);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}

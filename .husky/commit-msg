@@ -1,0 +1,8 @@
+#!/bin/bash
+# Run commitlint validation
+npx --no -- commitlint --edit $1
+
+# If validation passes, save the commit message for future use
+if [ $? -eq 0 ]; then
+  cp "$1" COMMIT_MESSAGE.txt 2>/dev/null || echo "Could not save commit message to file"
+fi

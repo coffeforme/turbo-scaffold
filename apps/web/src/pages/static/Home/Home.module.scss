@@ -1,0 +1,118 @@
+@use "../../../../../../packages/ui/styles/tokens" as *;
+@use "../../../../../../packages/ui/styles/mixins" as *;
+
+.page {
+  display: grid;
+  gap: $space-8;
+}
+
+.hero {
+  text-align: center;
+}
+
+.logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.panel {
+  @include card-surface;
+  padding: $space-6;
+}
+
+.togglePanel {
+  display: grid;
+  gap: $space-4;
+}
+
+.panelTitle {
+  margin: 0;
+  color: $color-ink;
+  font-family: $font-display;
+}
+
+.toggleGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-4;
+}
+
+.toggleOption {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.muted {
+  margin: 0;
+  color: $color-slate;
+}
+
+.agnosticPanel {
+  @include card-surface;
+  display: grid;
+  gap: $space-6;
+  padding: $space-6;
+  background: linear-gradient(180deg, rgba(236, 253, 245, 0.95), rgba(244, 247, 251, 0.96));
+}
+
+.counterRow {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  flex-wrap: wrap;
+}
+
+.contactWrap {
+  display: grid;
+  gap: $space-4;
+}
+
+.contactForm {
+  display: grid;
+  gap: $space-4;
+}
+
+.field {
+  display: grid;
+  gap: $space-2;
+}
+
+.inlineActions {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  flex-wrap: wrap;
+}
+
+.success {
+  margin: 0;
+  color: $color-primary-strong;
+}
+
+.error {
+  margin: 0;
+  color: $color-danger;
+}
+
+.valueBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem;
+  padding: 0.55rem 0.8rem;
+  border-radius: 999px;
+  background: $color-primary-soft;
+  color: $color-primary-strong;
+  font-family: $font-display;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .panel,
+  .agnosticPanel {
+    padding: $space-5;
+  }
+}

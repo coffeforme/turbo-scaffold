@@ -1,0 +1,23 @@
+{
+  "name": "@repo/infrastructure",
+  "type": "module",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc",
+    "prepare": "husky"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "@azure/msal-browser": "^3.0.0"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "typescript": "5.5.4"
+  }
+}

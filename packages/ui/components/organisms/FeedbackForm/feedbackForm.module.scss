@@ -1,0 +1,92 @@
+@use "../../../styles/tokens" as *;
+@use "../../../styles/mixins" as *;
+
+.wrap {
+  @include card-surface;
+  margin-top: $space-8;
+  padding: $space-8;
+  text-align: left;
+}
+
+.title {
+  margin: 0 0 $space-5;
+  color: $color-ink;
+  font-family: $font-display;
+  font-size: 1.6rem;
+}
+
+.confirmation {
+  color: $color-slate;
+  font-family: $font-body;
+}
+
+.form {
+  display: grid;
+  gap: $space-5;
+}
+
+.field {
+  display: grid;
+  gap: $space-2;
+}
+
+.label {
+  color: $color-ink;
+  font-family: $font-display;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.select,
+.textarea {
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  background: $color-surface;
+  color: $color-ink;
+  font-family: $font-body;
+  font-size: 1rem;
+  padding: 0.85rem 1rem;
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.textarea {
+  min-height: 7rem;
+  resize: vertical;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: $space-4;
+  flex-wrap: wrap;
+}
+
+.submitButton {
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(135deg, $color-ink, #1d4d72);
+  color: $color-surface;
+  cursor: pointer;
+  font-family: $font-display;
+  font-weight: 700;
+  padding: 0.85rem 1.3rem;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.error {
+  margin: 0;
+  color: $color-danger;
+  font-family: $font-body;
+}

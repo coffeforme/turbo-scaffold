@@ -4,10 +4,16 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "prepare": "husky",
+    "commit-msg": "node scripts/generate-commit-message.js",
+    "update-commit-msg": "node scripts/generate-commit-message.js"
   },
   "devDependencies": {
+    "@commitlint/cli": "^20.5.0",
+    "@commitlint/config-conventional": "^20.5.0",
     "eslint": "^8.57.0",
+    "husky": "^9.1.7",
     "prettier": "^3.2.5",
     "turbo": "^2.8.14"
   },

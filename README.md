@@ -1,36 +1,150 @@
-# `Turborepo` Vite starter
+# My Turborepo
 
-This is a community-maintained example. If you experience a problem, please submit a pull request with a fix. GitHub Issues will be closed.
+Template scaffold for professional, highly decoupled web applications with React + Vite, shared UI, flexible state management, reusable infrastructure packages, and a dedicated Storybook app to start developing quickly.
 
-## Using this example
+## Quick Start
 
-Run the following command:
+Install dependencies:
 
 ```sh
-npx create-turbo@latest -e with-vite-react
+pnpm install
 ```
 
-## What's inside?
+Run the main app:
 
-This Turborepo includes the following packages and apps:
+```sh
+pnpm --filter web dev
+```
 
-### Apps and Packages
+Run Storybook:
 
-- `web`: React [Vite](https://vitejs.dev) TypeScript app
-- `@repo/ui`: shared UI component library used by `web`
-- `@repo/eslint-config`: shared ESLint configuration package
-- `@repo/typescript-config`: shared TypeScript config package
-- `@repo/hooks`: shared React hook utilities package
-- `@repo/math`: shared math utility package
-- `@repo/state`: shared Redux state package
-- `@repo/types`: shared type definitions package
+```sh
+pnpm --filter storybook dev
+```
 
-Each package and app is 100% [TypeScript](https://www.typescriptlang.org/).
+Build everything:
 
-### Utilities
+```sh
+pnpm build
+```
 
-This Turborepo has some additional tools already setup for you:
+## Workspace Layout
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+### Apps
+
+- `apps/web`: main React + Vite application
+- `apps/storybook`: isolated component showcase for `@repo/ui`
+
+### Packages
+
+- `packages/ui`: shared design system components and Sass styles
+- `packages/state`: shared state package with Redux and Zustand implementations
+- `packages/hooks`: shared business and UI hooks
+- `packages/api`: API helpers
+- `packages/auth`: auth-related utilities
+- `packages/infrastructure`: infrastructure adapters and providers
+- `packages/persistence`: persistence helpers
+- `packages/math`: sample shared utilities
+- `packages/types`: shared TypeScript types
+- `packages/utils`: general utilities
+- `packages/eslint-config`: shared ESLint configuration
+- `packages/typescript-config`: shared TypeScript configuration
+
+## State Management
+
+This workspace supports two state management libraries: **Redux Toolkit** and **Zustand**.
+
+The `@repo/state` package is organized by implementation:
+
+```text
+packages/state/src/
+  shared/    # shared RootState types, selectors, and StateManager contract
+  redux/     # Redux store, slices, hooks, and ReduxStateManager
+  zustand/   # Zustand store, hooks, and ZustandStateManager
+  managers/  # agnostic factory/provider/hooks built on the shared contract
+```
+
+The app includes a runtime toggle on the Home page so you can compare Redux and Zustand with the same features.
+
+### Recommended Usage
+
+Use the agnostic hooks from `@repo/state` when you want components to stay independent from the underlying implementation:
+
+```ts
+import {
+  useAgnosticCounter,
+  useAgnosticContactForm,
+  useAgnosticFeedbackForm,
+} from "@repo/state";
+```
+
+If you want to choose an implementation directly:
+
+```ts
+import {
+  ReduxStateManager,
+  ZustandStateManager,
+  StateManagerFactory,
+} from "@repo/state";
+```
+
+## UI and Styling
+
+The shared UI library lives in `packages/ui` and follows Atomic Design.
+
+Current UI layers:
+
+- Atoms: `Button`, `Input`, `Label`, `Rating`, `Select`, `Textarea`
+- Molecules: `Counter`
+- Organisms: `Header`, `FeedbackForm`
+
+Styling is based on **Sass/SCSS**:
+
+- `packages/ui` uses **SCSS Modules** for reusable component styles
+- `apps/web` uses app-level SCSS for page and layout styling
+- shared tokens and mixins live under `packages/ui/styles`
+
+## Storybook
+
+Storybook runs as its own app in `apps/storybook` and loads stories colocated with components in `packages/ui`.
+
+Common commands:
+
+```sh
+pnpm --filter storybook dev
+pnpm --filter storybook build
+```
+
+More guidance is available in `apps/storybook/README.md`.
+
+## Tooling
+
+This workspace uses:
+
+- TypeScript
+- Vite
+- Turbo
+- Sass
+- ESLint
+- Prettier
+- Storybook
+
+## Commit Conventions
+
+This project follows [Conventional Commits](https://conventionalcommits.org/). See [COMMIT_CONVENTIONS.md](COMMIT_CONVENTIONS.md) for details.
+
+Generate or refresh the local draft commit message with:
+
+```sh
+pnpm run update-commit-msg
+```
+
+Recommended commit flow:
+
+```sh
+git add .
+pnpm run update-commit-msg
+git commit -F COMMIT_MESSAGE.txt
+```
+
+`COMMIT_MESSAGE.txt` is a local draft file used by the repository tooling and is intentionally ignored by git.

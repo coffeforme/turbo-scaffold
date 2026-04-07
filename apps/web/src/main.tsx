@@ -1,11 +1,10 @@
 import { createRoot } from "react-dom/client";
-import "./style.css";
-import { Provider } from "react-redux";
+import "./styles/globals.scss";
 import App from "./App";
-import { store } from "@repo/state";
+import { StateProvider } from "./components/StateProvider";
 
 createRoot(document.getElementById("app")!).render(
-  <Provider store={store}>
+  <StateProvider>
     <App />
-  </Provider>,
+  </StateProvider>,
 );

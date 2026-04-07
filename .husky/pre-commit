@@ -1,0 +1,12 @@
+#!/bin/bash
+# Pre-commit hook to update commit message before committing
+
+echo "🔄 Updating commit message for staged changes..."
+# Run the script and suppress output since we're in a hook
+node scripts/generate-commit-message.js > /dev/null 2>&1
+
+if [ -f COMMIT_MESSAGE.txt ]; then
+  echo "📝 Commit message updated in COMMIT_MESSAGE.txt"
+else
+  echo "⚠️  Could not generate commit message"
+fi
