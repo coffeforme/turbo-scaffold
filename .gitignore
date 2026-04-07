@@ -10,3 +10,5 @@ dist-ssr
 server/dist
 COMMIT_MESSAGE.txt
 public/dist
+apps/storybook/storybook-static/
+_tmp_*
