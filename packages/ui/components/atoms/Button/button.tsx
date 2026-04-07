@@ -1,11 +1,13 @@
-type Props = {
-  children: React.ReactNode;
-  onClick?: () => void;
-};
+import type { ButtonHTMLAttributes } from "react";
+import styles from "./button.module.scss";
 
-export function Button({ children, onClick }: Props) {
+type Props = ButtonHTMLAttributes<HTMLButtonElement>;
+
+export function Button({ children, className, type = "button", ...props }: Props) {
+  const mergedClassName = className ? `${styles.button} ${className}` : styles.button;
+
   return (
-    <button onClick={onClick}>
+    <button {...props} className={mergedClassName} type={type}>
       {children}
     </button>
   );

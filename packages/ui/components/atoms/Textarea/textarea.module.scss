@@ -1,0 +1,31 @@
+@use "../../../styles/tokens" as *;
+@use "../../../styles/mixins" as *;
+
+.textarea {
+  width: 100%;
+  min-height: 7rem;
+  resize: vertical;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  background: $color-surface;
+  color: $color-ink;
+  font-family: $font-body;
+  font-size: 1rem;
+  line-height: 1.5;
+  padding: 0.85rem 1rem;
+
+  &::placeholder {
+    color: $color-slate;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+    border-color: rgba(15, 118, 110, 0.5);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+    background: $color-surface-soft;
+  }
+}

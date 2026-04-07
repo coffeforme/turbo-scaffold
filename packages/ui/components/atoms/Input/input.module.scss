@@ -1,0 +1,39 @@
+@use "../../../styles/tokens" as *;
+@use "../../../styles/mixins" as *;
+
+.input {
+  width: 100%;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  background: $color-surface;
+  color: $color-ink;
+  font-family: $font-body;
+  font-size: 1rem;
+  line-height: 1.4;
+  padding: 0.85rem 1rem;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    background-color 150ms ease;
+
+  &::placeholder {
+    color: $color-slate;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+    border-color: rgba(15, 118, 110, 0.5);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+    background: $color-surface-soft;
+  }
+}
+
+.choice {
+  accent-color: $color-primary;
+  inline-size: 1rem;
+  block-size: 1rem;
+}

@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import "./styles/style.css";
+import "./styles/globals.scss";
 import App from "./App";
 import { StateProvider } from "./components/StateProvider";
 

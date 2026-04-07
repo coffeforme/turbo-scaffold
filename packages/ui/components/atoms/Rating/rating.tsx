@@ -1,3 +1,5 @@
+import styles from "./rating.module.scss";
+
 type Props = {
   value: number;
   onChange: (rating: number) => void;
@@ -7,9 +9,9 @@ type Props = {
 };
 
 const starSizes = {
-  sm: "text-lg",
-  md: "text-xl",
-  lg: "text-2xl",
+  sm: styles.starSm,
+  md: styles.starMd,
+  lg: styles.starLg,
 };
 
 export function Rating({
@@ -17,7 +19,7 @@ export function Rating({
   onChange,
   maxRating = 5,
   size = "md",
-  disabled = false
+  disabled = false,
 }: Props) {
   const handleClick = (rating: number) => {
     if (!disabled) {
@@ -26,7 +28,7 @@ export function Rating({
   };
 
   return (
-    <div className="flex gap-1">
+    <div className={styles.rating}>
       {Array.from({ length: maxRating }, (_, index) => {
         const rating = index + 1;
         const isActive = rating <= value;
@@ -37,16 +39,11 @@ export function Rating({
             type="button"
             onClick={() => handleClick(rating)}
             disabled={disabled}
-            className={`
-              ${starSizes[size]}
-              ${disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer hover:scale-110"}
-              transition-all duration-150
-              focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded
-            `}
+            className={[styles.star, starSizes[size], disabled ? styles.disabled : ""].join(" ").trim()}
             aria-label={`Rate ${rating} star${rating !== 1 ? "s" : ""}`}
           >
-            <span className={isActive ? "text-yellow-400" : "text-gray-300"}>
-              {isActive ? "★" : "☆"}
+            <span className={isActive ? styles.active : styles.inactive}>
+              {isActive ? "?" : "?"}
             </span>
           </button>
         );

@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./header.module.scss";
 
 interface HeaderProps {
   title: string;
@@ -6,8 +7,8 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ title }) => {
   return (
-    <header id="header">
-      <h1>{title}</h1>
+    <header className={styles.header}>
+      <h1 className={styles.title}>{title}</h1>
     </header>
   );
 };

@@ -1,0 +1,52 @@
+@use "../../../styles/tokens" as *;
+@use "../../../styles/mixins" as *;
+
+.rating {
+  display: flex;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.star {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  border-radius: 999px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.1rem;
+  transition: transform 140ms ease, opacity 140ms ease;
+
+  &:hover {
+    transform: scale(1.08);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.starSm {
+  font-size: 1.2rem;
+}
+
+.starMd {
+  font-size: 1.45rem;
+}
+
+.starLg {
+  font-size: 1.8rem;
+}
+
+.active {
+  color: $color-accent;
+}
+
+.inactive {
+  color: #cbd5e1;
+}
+
+.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

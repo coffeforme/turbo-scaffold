@@ -1,0 +1,100 @@
+:root {
+  --font-display: "Space Grotesk", "Segoe UI", sans-serif;
+  --font-body: "DM Sans", "Segoe UI", sans-serif;
+  --color-page: #f5f7fb;
+  --color-ink: #132238;
+  --color-muted: #61708a;
+  --color-surface: rgba(255, 255, 255, 0.9);
+  --color-border: rgba(148, 163, 184, 0.24);
+  --color-accent: #0f766e;
+  --color-accent-soft: rgba(15, 118, 110, 0.14);
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background:
+    radial-gradient(circle at top, rgba(15, 118, 110, 0.12), transparent 34%),
+    linear-gradient(180deg, #fbfcfe 0%, var(--color-page) 100%);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
+body,
+button,
+input,
+textarea,
+select {
+  font-family: var(--font-body);
+}
+
+a {
+  color: var(--color-accent);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.logo {
+  height: 5.5rem;
+  padding: 1rem;
+  transition: transform 180ms ease, filter 180ms ease;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2rem rgba(15, 118, 110, 0.24));
+  transform: translateY(-2px);
+}
+
+.logo.vanilla:hover {
+  filter: drop-shadow(0 0 2rem rgba(245, 158, 11, 0.28));
+}
+
+.card {
+  margin-top: 2rem;
+  padding: 2rem;
+  border: 1px solid var(--color-border);
+  border-radius: 1.75rem;
+  background: var(--color-surface);
+  box-shadow: 0 28px 60px -36px rgba(15, 23, 42, 0.35);
+  backdrop-filter: blur(10px);
+}
+
+@media (max-width: 768px) {
+  #app {
+    padding: 1.25rem;
+  }
+
+  .card {
+    padding: 1.25rem;
+  }
+
+  .logo {
+    height: 4.2rem;
+    padding: 0.6rem;
+  }
+}

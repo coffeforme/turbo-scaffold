@@ -1,3 +1,5 @@
+import styles from "./counter.module.scss";
+
 type Props = {
   value: number;
   onIncrement: () => void;
@@ -5,7 +7,7 @@ type Props = {
 
 export function Counter({ value, onIncrement }: Props) {
   return (
-    <button onClick={onIncrement}>
+    <button className={styles.counter} onClick={onIncrement}>
       Count: {value}
     </button>
   );

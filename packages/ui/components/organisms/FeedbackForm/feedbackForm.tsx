@@ -1,4 +1,9 @@
+import { Button } from "../../atoms/Button/button";
+import { Label } from "../../atoms/Label/label";
 import { Rating } from "../../atoms/Rating/rating";
+import { Select } from "../../atoms/Select/select";
+import { Textarea } from "../../atoms/Textarea/textarea";
+import styles from "./feedbackForm.module.scss";
 
 interface FeedbackFormData {
   rating: number;
@@ -27,65 +32,72 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
 }) => {
   if (submitted) {
     return (
-      <div style={{ marginTop: "2rem" }}>
-        <h2>Rate Your Experience</h2>
-        <div>
+      <div className={styles.wrap}>
+        <h2 className={styles.title}>Rate Your Experience</h2>
+        <div className={styles.confirmation}>
           <p>Thank you for your feedback!</p>
-          <button onClick={resetForm}>Submit Another Rating</button>
+          <Button onClick={resetForm}>Submit Another Rating</Button>
         </div>
       </div>
     );
   }
 
   return (
-    <div style={{ marginTop: "2rem" }}>
-      <h2>Rate Your Experience</h2>
-      <form onSubmit={onSubmit}>
-        <div style={{ marginBottom: "1rem" }}>
-          <label style={{ display: "block", marginBottom: "0.5rem" }}>
+    <div className={styles.wrap}>
+      <h2 className={styles.title}>Rate Your Experience</h2>
+      <form className={styles.form} onSubmit={onSubmit}>
+        <div className={styles.field}>
+          <Label className={styles.label}>
             How would you rate your experience?
-          </label>
+          </Label>
           <Rating
             value={formData.rating}
             onChange={(rating) => updateField("rating", rating)}
             disabled={submitting}
           />
         </div>
-        <div style={{ marginBottom: "1rem" }}>
-          <label htmlFor="category">Category:</label>
-          <select
+        <div className={styles.field}>
+          <Label className={styles.label} htmlFor="category">
+            Category:
+          </Label>
+          <Select
+            className={styles.select}
             id="category"
             value={formData.category}
             onChange={(e) => updateField("category", e.target.value)}
             disabled={submitting}
-            style={{ marginLeft: "0.5rem" }}
           >
             <option value="general">General</option>
             <option value="ui">User Interface</option>
             <option value="performance">Performance</option>
             <option value="features">Features</option>
             <option value="support">Support</option>
-          </select>
+          </Select>
         </div>
-        <div style={{ marginBottom: "1rem" }}>
-          <label htmlFor="comment">Comments (optional):</label>
-          <textarea
+        <div className={styles.field}>
+          <Label className={styles.label} htmlFor="comment">
+            Comments (optional):
+          </Label>
+          <Textarea
+            className={styles.textarea}
             id="comment"
             value={formData.comment}
             onChange={(e) => updateField("comment", e.target.value)}
             disabled={submitting}
             rows={3}
             placeholder="Tell us more about your experience..."
-            style={{ width: "100%", marginTop: "0.5rem" }}
           />
         </div>
-        <button
-          type="submit"
-          disabled={submitting || formData.rating === 0}
-        >
-          {submitting ? "Submitting..." : "Submit Feedback"}
-        </button>
-        {error && <p style={{ color: "red" }}>Error: {error}</p>}
+        <div className={styles.actions}>
+          <Button
+            className={styles.submitButton}
+            type="submit"
+            disabled={submitting || formData.rating === 0}
+          >
+            {submitting ? "Submitting..." : "Submit Feedback"}
+          </Button>
+          {error && <p className={styles.error}>Error: {error}</p>}
+        </div>
       </form>
     </div>
   );
