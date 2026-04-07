@@ -1,6 +1,6 @@
 # My Turborepo
 
-Monorepo for a React + Vite workspace with shared UI, state management, hooks, infrastructure packages, and a dedicated Storybook app for component demos.
+Template scaffold for professional, highly decoupled web applications with React + Vite, shared UI, flexible state management, reusable infrastructure packages, and a dedicated Storybook app to start developing quickly.
 
 ## Quick Start
 
