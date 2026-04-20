@@ -33,7 +33,17 @@ export class FetchHttpProvider implements HttpProvider {
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
 
-    return response.json();
+    if (response.status === 204) {
+      return undefined as T;
+    }
+
+    const contentType = response.headers.get('content-type') ?? '';
+
+    if (contentType.includes('application/json')) {
+      return response.json();
+    }
+
+    return (await response.text()) as T;
   }
 
   async get<T>(url: string, options?: RequestInit): Promise<T> {

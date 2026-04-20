@@ -1,0 +1,18 @@
+@use "../../../../../packages/ui/styles/tokens" as *;
+
+.page {
+  display: grid;
+  gap: $space-5;
+}
+
+.meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: $space-4;
+}
+
+@media (max-width: 768px) {
+  .meta {
+    grid-template-columns: 1fr;
+  }
+}

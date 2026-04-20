@@ -16,6 +16,12 @@ Run the main app:
 pnpm --filter web dev
 ```
 
+Run the sample auth API:
+
+```sh
+pnpm --filter auth-api dev
+```
+
 Run Storybook:
 
 ```sh
@@ -33,6 +39,7 @@ pnpm build
 ### Apps
 
 - `apps/web`: main React + Vite application
+- `apps/auth-api`: sample Express API for custom and mixed authentication flows
 - `apps/storybook`: isolated component showcase for `@repo/ui`
 
 ### Packages
@@ -40,8 +47,8 @@ pnpm build
 - `packages/ui`: shared design system components and Sass styles
 - `packages/state`: shared state package with Redux and Zustand implementations
 - `packages/hooks`: shared business and UI hooks
-- `packages/api`: API helpers
-- `packages/auth`: auth-related utilities
+- `packages/api`: API client helpers with pluggable fetch and axios providers
+- `packages/auth`: shared auth providers for Azure, Firebase, and custom API backends
 - `packages/infrastructure`: infrastructure adapters and providers
 - `packages/persistence`: persistence helpers
 - `packages/math`: sample shared utilities
@@ -103,6 +110,24 @@ Styling is based on **Sass/SCSS**:
 - `packages/ui` uses **SCSS Modules** for reusable component styles
 - `apps/web` uses app-level SCSS for page and layout styling
 - shared tokens and mixins live under `packages/ui/styles`
+
+## API and Auth Providers
+
+This workspace now includes a provider-based auth layer:
+
+- `AzureAuthProvider` for Microsoft / Azure SSO
+- `FirebaseAuthProvider` for Firebase Auth popup flows
+- `CustomApiAuthProvider` for your own backend, implemented on top of `createFetchApiClient` from `@repo/api`
+- `MixedAuthProvider` for SSO identity plus backend authorization claims
+
+All auth providers now persist the normalized session through `@repo/persistence`, so access control can evaluate the last known user, roles, permissions, claims, and tokens from local storage.
+
+The web app includes a dedicated login demo page that exercises those providers through a shared login component, while Home stays focused as the quick view.
+
+Useful package docs:
+
+- `packages/api/README.md`
+- `packages/auth/README.md`
 
 ## Storybook
 

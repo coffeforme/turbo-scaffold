@@ -1,0 +1,37 @@
+@use "../../../../../packages/ui/styles/tokens" as *;
+
+.page {
+  display: grid;
+  gap: $space-6;
+}
+
+.intro {
+  display: grid;
+  gap: $space-2;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: $space-5;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: $space-4;
+}
+
+.statValue {
+  color: $color-ink;
+  font-family: $font-display;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+@media (max-width: 960px) {
+  .grid,
+  .stats {
+    grid-template-columns: 1fr;
+  }
+}

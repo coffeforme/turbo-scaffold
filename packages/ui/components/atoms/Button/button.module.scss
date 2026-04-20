@@ -27,4 +27,13 @@
   &:focus-visible {
     @include focus-ring;
   }
+
+  &:disabled,
+  &[aria-disabled="true"] {
+    cursor: not-allowed;
+    filter: grayscale(0.18);
+    opacity: 0.55;
+    transform: none;
+    box-shadow: none;
+  }
 }

@@ -1,0 +1,27 @@
+@use "../../../packages/ui/styles/tokens" as *;
+
+.appShell {
+  display: grid;
+  gap: $space-6;
+  padding: $space-6 0 $space-8;
+}
+
+.content {
+  display: grid;
+  gap: $space-5;
+}
+
+.accessMessage {
+  display: grid;
+  gap: $space-3;
+  padding: $space-6;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: $radius-lg;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 16px 40px -28px $color-shadow;
+}
+
+.accessMessage h2,
+.accessMessage p {
+  margin: 0;
+}

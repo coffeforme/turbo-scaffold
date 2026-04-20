@@ -1,0 +1,50 @@
+@use "../../../styles/tokens" as *;
+
+.wrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.caption {
+  margin-bottom: $space-3;
+  color: $color-slate;
+  font-size: 0.92rem;
+  text-align: left;
+}
+
+.table th,
+.table td {
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid rgba(90, 106, 133, 0.15);
+}
+
+.table th {
+  color: $color-ink;
+  font-family: $font-display;
+  font-size: 0.92rem;
+}
+
+.table td {
+  color: $color-slate;
+}
+
+.left {
+  text-align: left;
+}
+
+.center {
+  text-align: center;
+}
+
+.right {
+  text-align: right;
+}
+
+.empty {
+  color: $color-slate;
+  text-align: center;
+}

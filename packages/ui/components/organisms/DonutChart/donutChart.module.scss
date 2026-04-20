@@ -1,0 +1,65 @@
+@use "../../../styles/tokens" as *;
+
+.wrap {
+  display: grid;
+  gap: $space-4;
+}
+
+.chart {
+  width: min(15rem, 100%);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  margin: 0 auto;
+}
+
+.center {
+  width: 62%;
+  height: 62%;
+  border-radius: 50%;
+  background: white;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  box-shadow: inset 0 0 0 1px rgba(90, 106, 133, 0.08);
+}
+
+.totalLabel {
+  color: $color-slate;
+  font-size: 0.8rem;
+}
+
+.totalValue {
+  color: $color-ink;
+  font-family: $font-display;
+  font-size: 1.5rem;
+}
+
+.legend {
+  display: grid;
+  gap: $space-2;
+}
+
+.legendItem {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: $space-2;
+  align-items: center;
+}
+
+.swatch {
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 999px;
+}
+
+.legendLabel {
+  color: $color-slate;
+}
+
+.legendValue {
+  color: $color-ink;
+  font-family: $font-display;
+  font-weight: 700;
+}

@@ -1,38 +1,53 @@
-## `@repo/state`
+# `@repo/state`
 
 Shared state package with parallel Redux Toolkit and Zustand implementations behind one common contract.
 
-### Structure
+## What It Solves
 
-```text
-src/
-  shared/
-  redux/
-  zustand/
-  managers/
-```
+This package lets the app use one normalized state surface while choosing the underlying implementation.
 
-### Shared Contract
+- `src/redux` contains the Redux Toolkit version
+- `src/zustand` contains the Zustand version
+- `src/managers` contains the agnostic provider and hooks
+- `src/shared` holds contracts, selectors, and shared state types
 
-Use the shared `StateManager` interface when you want the same mutations and state access regardless of implementation:
+## Current Features
 
-```ts
-import { StateManager, ReduxStateManager, ZustandStateManager } from "@repo/state";
+The package currently supports:
 
-const reduxManager: StateManager = new ReduxStateManager();
-const zustandManager: StateManager = new ZustandStateManager();
-```
+- counter state
+- contact form state
+- feedback form state
+- implementation-agnostic hooks for app consumption
 
-Or select one dynamically:
+## AI Context
 
-```ts
-import { StateManagerFactory } from "@repo/state";
-
-const manager = StateManagerFactory.create("redux");
-```
-
-### Install
-
-```sh
-pnpm add typescript @repo/state --filter .
+```yaml
+package: "@repo/state"
+purpose: "Expose one normalized state surface while allowing Redux, Zustand, or an agnostic manager layer."
+entrypoints:
+  - "src/index.ts"
+look_here_first:
+  - "src/shared"
+  - "src/redux"
+  - "src/zustand"
+  - "src/managers"
+structure:
+  - "src/shared: contracts, selectors, shared types"
+  - "src/redux: Redux implementation"
+  - "src/zustand: Zustand implementation"
+  - "src/managers: implementation-agnostic hooks and provider"
+runtime_dependencies:
+  - "react"
+  - "@reduxjs/toolkit"
+  - "zustand"
+used_by:
+  - "@repo/hooks"
+  - "apps/web"
+capabilities:
+  - "Counter state"
+  - "Contact form state"
+  - "Feedback form state"
+  - "Runtime switching between Redux and Zustand"
+  - "Agnostic hooks hiding the underlying implementation"
 ```

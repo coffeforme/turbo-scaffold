@@ -11,20 +11,20 @@ export class ApiClient {
     this.httpProvider = httpProvider;
   }
 
-  async get<T>(endpoint: string): Promise<T> {
-    return this.httpProvider.get<T>(endpoint);
+  async get<T>(endpoint: string, options?: any): Promise<T> {
+    return this.httpProvider.get<T>(endpoint, options);
   }
 
-  async post<T>(endpoint: string, data: any): Promise<T> {
-    return this.httpProvider.post<T>(endpoint, data);
+  async post<T>(endpoint: string, data?: any, options?: any): Promise<T> {
+    return this.httpProvider.post<T>(endpoint, data, options);
   }
 
-  async put<T>(endpoint: string, data: any): Promise<T> {
-    return this.httpProvider.put<T>(endpoint, data);
+  async put<T>(endpoint: string, data: any, options?: any): Promise<T> {
+    return this.httpProvider.put<T>(endpoint, data, options);
   }
 
-  async delete<T>(endpoint: string): Promise<T> {
-    return this.httpProvider.delete<T>(endpoint);
+  async delete<T>(endpoint: string, options?: any): Promise<T> {
+    return this.httpProvider.delete<T>(endpoint, options);
   }
 }
 
@@ -64,6 +64,8 @@ export const createAxiosApiClient = (baseUrl: string = apiBaseUrl) => {
 export const createApiClientWithProvider = (httpProvider: HttpProvider) => {
   return new ApiClient(httpProvider);
 };
+
+export type { HttpProvider } from '@repo/infrastructure';
 
 // Backward compatibility - default instance using fetch
 export const apiClient = createApiClient();
