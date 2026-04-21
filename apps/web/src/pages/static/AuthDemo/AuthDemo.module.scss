@@ -20,8 +20,8 @@
 .providerPanel,
 .sessionCard,
 .accessCard {
-  @include card-surface;
-  padding: $space-6;
+  display: grid;
+  gap: $space-4;
 }
 
 .providerHeader {
@@ -37,12 +37,6 @@
   display: grid;
   gap: $space-2;
   min-width: 14rem;
-}
-
-.sectionTitle {
-  margin: 0;
-  color: $color-ink;
-  font-family: $font-display;
 }
 
 .muted {
@@ -94,13 +88,14 @@
 }
 
 .codeBlock {
-  margin: $space-4 0 0;
+  margin: 0;
   padding: $space-4;
   border-radius: $radius-md;
   background: #0f172a;
   color: #d8f3ff;
   font-size: 0.85rem;
   overflow: auto;
+  white-space: pre-wrap;
 }
 
 .accessGrid {
@@ -112,6 +107,10 @@
 
 .accessButton {
   min-width: 11rem;
+}
+
+.uploadField {
+  margin-top: $space-4;
 }
 
 .customError {
@@ -139,6 +138,6 @@
   .providerPanel,
   .sessionCard,
   .accessCard {
-    padding: $space-5;
+    gap: $space-3;
   }
 }

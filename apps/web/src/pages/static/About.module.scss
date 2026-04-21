@@ -1,0 +1,58 @@
+@use "../../../../../packages/ui/styles/tokens" as *;
+
+.page {
+  display: grid;
+  gap: $space-6;
+}
+
+.intro {
+  display: grid;
+  gap: $space-3;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: $space-5;
+}
+
+.copy,
+.links {
+  display: grid;
+  gap: $space-3;
+}
+
+.linkCard {
+  display: grid;
+  gap: 0.35rem;
+  padding: $space-4;
+  border: 1px solid rgba(15, 118, 110, 0.14);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.86);
+  color: $color-ink;
+  text-decoration: none;
+}
+
+.iframeWrap {
+  overflow: hidden;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(15, 118, 110, 0.12);
+  background: #f8fafc;
+}
+
+.iframe {
+  width: 100%;
+  height: 42rem;
+  border: 0;
+  background: #fff;
+}
+
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .iframe {
+    height: 30rem;
+  }
+}

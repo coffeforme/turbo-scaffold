@@ -6,4 +6,5 @@ export * from './providers/FirebaseAuthProvider';
 export * from './providers/CustomApiAuthProvider';
 export * from './providers/MixedAuthProvider';
 export * from './react/AuthSessionProvider';
+export * from './react/AuthProviderSystem';
 export * from './react/AccessRight';

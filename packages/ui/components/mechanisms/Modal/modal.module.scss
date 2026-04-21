@@ -8,8 +8,20 @@
   display: grid;
   place-items: center;
   padding: $space-5;
-  background: rgba(15, 23, 42, 0.56);
-  backdrop-filter: blur(6px);
+  background: rgba(15, 23, 42, var(--overlay-opacity, 0.56));
+}
+
+.blur {
+  backdrop-filter: blur(8px);
+}
+
+.transparent {
+  backdrop-filter: none;
+  --overlay-opacity: 0.18;
+}
+
+.plain {
+  backdrop-filter: none;
 }
 
 .modal {

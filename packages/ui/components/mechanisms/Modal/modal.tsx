@@ -13,6 +13,8 @@ interface ModalProps {
   closeOnOverlayClick?: boolean;
   showCloseButton?: boolean;
   size?: "sm" | "md" | "lg";
+  backdropMode?: "blur" | "transparent" | "plain";
+  overlayOpacity?: number;
 }
 
 export function Modal({
@@ -26,6 +28,8 @@ export function Modal({
   closeOnOverlayClick = true,
   showCloseButton = true,
   size = "md",
+  backdropMode = "blur",
+  overlayOpacity,
 }: ModalProps) {
   useEffect(() => {
     if (!open || !closeOnEscape) {
@@ -62,13 +66,14 @@ export function Modal({
   return createPortal(
     <div
       aria-modal="true"
-      className={styles.overlay}
+      className={`${styles.overlay} ${styles[backdropMode]}`}
       onMouseDown={(event) => {
         if (closeOnOverlayClick && event.target === event.currentTarget) {
           onClose();
         }
       }}
       role="dialog"
+      style={overlayOpacity !== undefined ? ({ ["--overlay-opacity" as string]: `${overlayOpacity}` }) : undefined}
     >
       <div className={`${styles.modal} ${styles[size]}`}>
         <div className={styles.header}>
@@ -78,13 +83,8 @@ export function Modal({
           </div>
 
           {showCloseButton ? (
-            <button
-              aria-label="Close modal"
-              className={styles.closeButton}
-              onClick={onClose}
-              type="button"
-            >
-              ×
+            <button aria-label="Close modal" className={styles.closeButton} onClick={onClose} type="button">
+              x
             </button>
           ) : null}
         </div>
