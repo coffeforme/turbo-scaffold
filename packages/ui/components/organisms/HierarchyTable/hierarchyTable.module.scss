@@ -1,0 +1,46 @@
+@use "../../../styles/tokens" as *;
+
+.wrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 0.95rem 1rem;
+  border-bottom: 1px solid rgba(90, 106, 133, 0.12);
+}
+
+.table th {
+  color: $color-ink;
+  font-family: $font-display;
+  text-align: left;
+}
+
+.cell,
+.primaryCell {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  color: $color-slate;
+}
+
+.primaryCell {
+  color: $color-ink;
+}
+
+.branch {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-left: 1px solid rgba(90, 106, 133, 0.32);
+  border-bottom: 1px solid rgba(90, 106, 133, 0.32);
+}
+
+.empty {
+  color: $color-slate;
+  text-align: center;
+}

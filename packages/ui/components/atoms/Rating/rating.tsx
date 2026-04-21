@@ -42,8 +42,8 @@ export function Rating({
             className={[styles.star, starSizes[size], disabled ? styles.disabled : ""].join(" ").trim()}
             aria-label={`Rate ${rating} star${rating !== 1 ? "s" : ""}`}
           >
-            <span className={isActive ? styles.active : styles.inactive}>
-              {isActive ? "?" : "?"}
+            <span aria-hidden="true" className={isActive ? styles.active : styles.inactive}>
+              {isActive ? "\u2605" : "\u2606"}
             </span>
           </button>
         );

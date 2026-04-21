@@ -1,0 +1,144 @@
+@use "../../../../../../packages/ui/styles/tokens" as *;
+@use "../../../../../../packages/ui/styles/mixins" as *;
+
+.page {
+  display: grid;
+  gap: $space-6;
+}
+
+.intro {
+  display: grid;
+  gap: $space-3;
+}
+
+.lead {
+  margin: 0;
+  color: $color-slate;
+  max-width: 62rem;
+}
+
+.providerPanel,
+.sessionCard,
+.accessCard {
+  @include card-surface;
+  padding: $space-6;
+}
+
+.providerHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: $space-4;
+  flex-wrap: wrap;
+}
+
+.providerField,
+.inlineField {
+  display: grid;
+  gap: $space-2;
+  min-width: 14rem;
+}
+
+.sectionTitle {
+  margin: 0;
+  color: $color-ink;
+  font-family: $font-display;
+}
+
+.muted {
+  margin: 0;
+  color: $color-slate;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
+  gap: $space-6;
+  align-items: start;
+}
+
+.actions {
+  display: flex;
+  gap: $space-3;
+  flex-wrap: wrap;
+  margin: $space-4 0;
+}
+
+.connectedButton {
+  background: linear-gradient(135deg, #15803d, #166534);
+  box-shadow: 0 16px 30px -20px rgba(21, 128, 61, 0.72);
+}
+
+.disconnectedButton {
+  background: linear-gradient(135deg, #0f766e, #115e59);
+}
+
+.neutralButton {
+  background: linear-gradient(135deg, #334155, #1e293b);
+  box-shadow: 0 16px 30px -20px rgba(30, 41, 59, 0.62);
+}
+
+.dangerButton {
+  background: linear-gradient(135deg, #b91c1c, #991b1b);
+  box-shadow: 0 16px 30px -20px rgba(153, 27, 27, 0.62);
+}
+
+.details {
+  display: grid;
+  gap: $space-2;
+}
+
+.detailRow {
+  margin: 0;
+  color: $color-ink;
+}
+
+.codeBlock {
+  margin: $space-4 0 0;
+  padding: $space-4;
+  border-radius: $radius-md;
+  background: #0f172a;
+  color: #d8f3ff;
+  font-size: 0.85rem;
+  overflow: auto;
+}
+
+.accessGrid {
+  display: flex;
+  gap: $space-3;
+  flex-wrap: wrap;
+  margin-top: $space-4;
+}
+
+.accessButton {
+  min-width: 11rem;
+}
+
+.customError {
+  padding: $space-3 $space-4;
+  border: 1px solid rgba(220, 38, 38, 0.18);
+  border-radius: $radius-md;
+  background: rgba(254, 242, 242, 0.92);
+  color: $color-danger;
+}
+
+.redirectHint {
+  display: inline-flex;
+  align-items: center;
+  color: $color-slate;
+  min-height: 2.5rem;
+}
+
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .providerPanel,
+  .sessionCard,
+  .accessCard {
+    padding: $space-5;
+  }
+}
