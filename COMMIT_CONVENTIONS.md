@@ -25,6 +25,7 @@ This project follows the [Conventional Commits](https://conventionalcommits.org/
 - **ci**: Changes to our CI configuration files and scripts
 - **chore**: Other changes that don't modify src or test files
 - **revert**: Reverts a previous commit
+- **enhance**: Enhance a funtionality
 
 ## Scopes
 
