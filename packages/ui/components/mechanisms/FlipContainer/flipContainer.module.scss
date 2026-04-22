@@ -1,0 +1,157 @@
+@use "../../../styles/tokens" as *;
+@use "../../../styles/mixins" as *;
+
+.shell {
+  @include card-surface;
+  position: relative;
+  display: grid;
+  gap: $space-4;
+  padding: $space-6;
+}
+
+.header {
+  display: flex;
+  gap: $space-4;
+  justify-content: space-between;
+  align-items: start;
+  flex-wrap: wrap;
+}
+
+.copy {
+  display: grid;
+  gap: $space-2;
+}
+
+.title {
+  margin: 0;
+  color: $color-ink;
+  font-family: $font-display;
+}
+
+.description {
+  margin: 0;
+  color: $color-slate;
+}
+
+.toggle {
+  position: absolute;
+  top: $space-4;
+  right: $space-4;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.85rem;
+  height: 2.85rem;
+  border: 0;
+  border-radius: 0.9rem;
+  background: transparent;
+  color: $color-ink;
+  box-shadow: none;
+  cursor: pointer;
+  transition: transform 160ms ease, color 220ms ease;
+
+  &:hover {
+    transform: translateY(-1px) scale(1.02);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.toggleActive {
+  color: $color-primary-strong;
+}
+
+.toggleIcon {
+  width: 1.45rem;
+  height: 1.45rem;
+}
+
+.activeRect,
+.outlineRect {
+  transition: fill 180ms ease, stroke 180ms ease;
+}
+
+.activeRect {
+  fill: rgba(15, 118, 110, 0.16);
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+
+.outlineRect {
+  fill: transparent;
+  stroke: currentColor;
+  stroke-dasharray: 2.2 2.2;
+  stroke-width: 1.5;
+}
+
+.viewport {
+  perspective: 1400px;
+}
+
+.inner {
+  position: relative;
+  min-height: 22rem;
+  transform-style: preserve-3d;
+  transition: transform 420ms ease;
+}
+
+.flipped {
+  transform: rotateY(180deg);
+}
+
+.face {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  gap: $space-4;
+  align-content: start;
+  padding: $space-5;
+  border-radius: $radius-lg;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(240, 249, 255, 0.94));
+  border: 1px solid rgba(15, 118, 110, 0.14);
+  backface-visibility: hidden;
+  overflow: auto;
+}
+
+.back {
+  background: #0f172a;
+  border-color: rgba(148, 163, 184, 0.22);
+  color: #dbeafe;
+  transform: rotateY(180deg);
+}
+
+.faceBadge {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(15, 118, 110, 0.12);
+  color: $color-ink;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.back .faceBadge {
+  background: rgba(148, 163, 184, 0.16);
+  color: #dbeafe;
+}
+
+@media (max-width: 768px) {
+  .shell {
+    padding: $space-5;
+  }
+
+  .toggle {
+    top: $space-3;
+    right: $space-3;
+  }
+
+  .inner {
+    min-height: 24rem;
+  }
+}

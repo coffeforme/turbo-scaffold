@@ -22,14 +22,51 @@
   gap: $space-3;
 }
 
+.surfaceStack {
+  display: grid;
+  gap: $space-5;
+}
+
+.mechanismStack {
+  display: grid;
+  gap: $space-4;
+}
+
+.chartGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: $space-4;
+}
+
+.ratingRow {
+  display: flex;
+  gap: $space-3;
+  align-items: center;
+}
+
 .actions {
   display: flex;
   gap: $space-3;
   flex-wrap: wrap;
 }
 
+.codeBlock {
+  margin: 0;
+  padding: $space-4;
+  border-radius: 1rem;
+  background: #0f172a;
+  color: #dbeafe;
+  font-size: 0.85rem;
+  overflow: auto;
+  white-space: pre-wrap;
+}
+
 @media (max-width: 960px) {
   .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .chartGrid {
     grid-template-columns: 1fr;
   }
 }

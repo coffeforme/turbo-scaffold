@@ -1,0 +1,120 @@
+@use "../../../styles/tokens" as *;
+
+.hiddenInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.panel {
+  position: fixed;
+  right: $space-4;
+  bottom: $space-4;
+  z-index: 950;
+  width: min(24rem, calc(100vw - 2rem));
+  border-radius: 1.25rem;
+  border: 1px solid rgba(15, 118, 110, 0.18);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 24px 48px -26px rgba(15, 23, 42, 0.34);
+  backdrop-filter: blur(14px);
+}
+
+.expanded {
+  padding: $space-4;
+}
+
+.collapsed {
+  padding: $space-3 $space-4;
+}
+
+.panelHeader,
+.panelActions,
+.uploadActions,
+.badges {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.panelHeader {
+  justify-content: space-between;
+}
+
+.panelTitle {
+  color: $color-ink;
+  font-family: $font-display;
+}
+
+.toggle,
+.linkAction {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  color: $color-primary-strong;
+}
+
+.toggle {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: rgba(15, 118, 110, 0.1);
+  font-size: 1.2rem;
+}
+
+.uploadList {
+  display: grid;
+  gap: $space-3;
+  margin-top: $space-4;
+  max-height: 24rem;
+  overflow: auto;
+}
+
+.uploadCard {
+  display: grid;
+  gap: $space-2;
+  padding: $space-3;
+  border-radius: 1rem;
+  background: rgba(248, 250, 252, 0.94);
+  border: 1px solid rgba(90, 106, 133, 0.12);
+}
+
+.uploadMeta {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.fileName {
+  color: $color-ink;
+}
+
+.fileInfo {
+  color: $color-slate;
+  font-size: 0.84rem;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.28rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(15, 118, 110, 0.1);
+  color: $color-primary-strong;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.uploadActions {
+  justify-content: space-between;
+}
+
+.removeButton {
+  padding-inline: 0.9rem;
+}
+
+.emptyState {
+  padding: $space-3;
+  border-radius: 1rem;
+  background: rgba(248, 250, 252, 0.94);
+}

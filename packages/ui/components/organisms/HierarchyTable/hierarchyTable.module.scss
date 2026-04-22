@@ -33,7 +33,34 @@
   color: $color-ink;
 }
 
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(15, 118, 110, 0.12);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.chevron {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-right: 2px solid $color-ink;
+  border-bottom: 2px solid $color-ink;
+  transform: rotate(-45deg);
+  transition: transform 180ms ease;
+}
+
+.open {
+  transform: rotate(45deg);
+}
+
 .branch {
+  flex-shrink: 0;
   width: 0.8rem;
   height: 0.8rem;
   border-left: 1px solid rgba(90, 106, 133, 0.32);

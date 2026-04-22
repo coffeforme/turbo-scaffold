@@ -13,6 +13,8 @@ interface ConfirmDialogProps {
   cancelLabel?: string;
   pending?: boolean;
   children?: ReactNode;
+  backdropMode?: "blur" | "transparent" | "plain";
+  overlayOpacity?: number;
 }
 
 export function ConfirmDialog({
@@ -25,9 +27,12 @@ export function ConfirmDialog({
   cancelLabel = "Cancel",
   pending = false,
   children,
+  backdropMode = "blur",
+  overlayOpacity,
 }: ConfirmDialogProps) {
   return (
     <Modal
+      backdropMode={backdropMode}
       description={description}
       footer={
         <div className={styles.actions}>
@@ -41,6 +46,7 @@ export function ConfirmDialog({
       }
       onClose={onClose}
       open={open}
+      overlayOpacity={overlayOpacity}
       size="sm"
       title={title}
     >
