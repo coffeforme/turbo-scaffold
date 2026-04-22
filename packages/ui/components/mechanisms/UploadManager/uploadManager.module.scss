@@ -9,9 +9,6 @@
 }
 
 .panel {
-  position: fixed;
-  right: $space-4;
-  bottom: $space-4;
   z-index: 950;
   width: min(24rem, calc(100vw - 2rem));
   border-radius: 1.25rem;
@@ -19,6 +16,20 @@
   background: rgba(255, 255, 255, 0.96);
   box-shadow: 0 24px 48px -26px rgba(15, 23, 42, 0.34);
   backdrop-filter: blur(14px);
+}
+
+.fixed {
+  position: fixed;
+  right: $space-4;
+  bottom: $space-4;
+}
+
+.inline {
+  position: relative;
+  right: auto;
+  bottom: auto;
+  width: 100%;
+  box-shadow: 0 16px 32px -26px rgba(15, 23, 42, 0.25);
 }
 
 .expanded {
@@ -48,19 +59,74 @@
 }
 
 .toggle,
-.linkAction {
+.linkAction,
+.minimizedTrigger {
   border: 0;
-  background: transparent;
   cursor: pointer;
+}
+
+.linkAction {
+  background: transparent;
   color: $color-primary-strong;
 }
 
-.toggle {
-  width: 2rem;
-  height: 2rem;
+.toggle,
+.minimizedTrigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 999px;
-  background: rgba(15, 118, 110, 0.1);
-  font-size: 1.2rem;
+  background: rgba(15, 118, 110, 0.12);
+  color: $color-primary-strong;
+  transition: transform 160ms ease, background 160ms ease;
+}
+
+.toggle {
+  width: 2.2rem;
+  height: 2.2rem;
+}
+
+.toggle:hover,
+.minimizedTrigger:hover {
+  background: rgba(15, 118, 110, 0.18);
+  transform: translateY(-1px);
+}
+
+.minimizedTrigger {
+  position: fixed;
+  right: $space-4;
+  bottom: $space-4;
+  z-index: 950;
+  width: 3.25rem;
+  height: 3.25rem;
+  box-shadow: 0 20px 36px -22px rgba(15, 23, 42, 0.45);
+}
+
+.inlineMinimizedTrigger {
+  position: relative;
+  right: auto;
+  bottom: auto;
+}
+
+.triggerCount {
+  position: absolute;
+  top: -0.15rem;
+  right: -0.1rem;
+  min-width: 1.2rem;
+  height: 1.2rem;
+  padding-inline: 0.2rem;
+  border-radius: 999px;
+  background: $color-primary-strong;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1.2rem;
+  text-align: center;
+}
+
+.chevronIcon {
+  width: 1.15rem;
+  height: 1.15rem;
 }
 
 .uploadList {

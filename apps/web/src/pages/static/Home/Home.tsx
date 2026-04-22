@@ -1,4 +1,3 @@
-import typescriptLogo from "/typescript.svg";
 import {
   Button,
   Counter,
@@ -21,6 +20,8 @@ import {
 import styles from "./Home.module.scss";
 
 const Home = () => {
+  const viteLogo = `${import.meta.env.BASE_URL}vite.svg`;
+  const typescriptLogo = `${import.meta.env.BASE_URL}typescript.svg`;
   const { providerType, setProviderType } = useStateProvider();
   const { counter, contactForm, feedbackForm } = useHome(providerType === "zustand");
 
@@ -48,7 +49,7 @@ const Home = () => {
       <div className={styles.hero}>
         <div className={styles.logos}>
           <a href="https://vitejs.dev" target="_blank">
-            <img src="/vite.svg" className="logo" alt="Vite logo" />
+            <img src={viteLogo} className="logo" alt="Vite logo" />
           </a>
           <a href="https://www.typescriptlang.org/" target="_blank">
             <img
