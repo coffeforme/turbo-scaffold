@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting...</title>
+    <script>
+      // GitHub Pages SPA redirect
+      const segments = window.location.pathname.split("/").filter(Boolean);
+      const basePath = segments.length > 0 ? "/" + segments[0] : "";
+      const path = basePath
+        ? window.location.pathname.replace(basePath, "")
+        : window.location.pathname;
+      const search = window.location.search;
+      const hash = window.location.hash;
+      const redirectUrl = basePath + "/?" + path + search + hash;
+
+      window.location.replace(redirectUrl);
+    </script>
+  </head>
+  <body></body>
+</html>

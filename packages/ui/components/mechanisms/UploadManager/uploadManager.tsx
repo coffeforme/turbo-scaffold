@@ -20,7 +20,9 @@ export interface ManagedUpload {
   source: UploadSource;
 }
 
-type UploadManagerMode = "internal" | "controlled" | "zustand";
+export type UploadManagerMode = "internal" | "controlled" | "zustand";
+export type UploadManagerViewType = "resumeView" | "minimizedView";
+export type UploadManagerPlacement = "fixed" | "inline";
 
 interface OpenUploadPickerOptions {
   source: UploadSource;
@@ -40,6 +42,12 @@ interface UploadManagerProviderProps extends PropsWithChildren {
   mode?: UploadManagerMode;
   uploads?: ManagedUpload[];
   onUploadsChange?: (uploads: ManagedUpload[]) => void;
+}
+
+interface UploadManagerPanelProps {
+  placement?: UploadManagerPlacement;
+  title?: string;
+  viewType?: UploadManagerViewType;
 }
 
 interface PendingSelection {
@@ -82,6 +90,24 @@ const formatFileSize = (size: number) => {
 
   return `${(size / (1024 * 1024)).toFixed(1)} MB`;
 };
+
+function ChevronIcon({ direction = "up" }: { direction?: "up" | "down" }) {
+  const rotation = direction === "up" ? 0 : 180;
+
+  return (
+    <svg aria-hidden="true" className={styles.chevronIcon} viewBox="0 0 24 24">
+      <path
+        d="M6 14.5 12 8.5 18 14.5"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        transform={`rotate(${rotation} 12 12)`}
+      />
+    </svg>
+  );
+}
 
 export function UploadManagerProvider({
   children,
@@ -182,16 +208,37 @@ export function useUploadManager() {
   return context;
 }
 
-export function UploadManagerPanel() {
-  const [open, setOpen] = useState(true);
+export function UploadManagerPanel({
+  placement = "fixed",
+  title = "Upload Manager",
+  viewType = "resumeView",
+}: UploadManagerPanelProps) {
+  const [expanded, setExpanded] = useState(viewType === "resumeView");
   const { uploads, removeUpload, clearUploads } = useUploadManager();
+  const trackedUploadsLabel = `${uploads.length} file${uploads.length === 1 ? "" : "s"} tracked`;
+
+  if (!expanded && viewType === "minimizedView") {
+    return (
+      <button
+        aria-label={`Open ${title}`}
+        className={`${styles.minimizedTrigger} ${placement === "inline" ? styles.inlineMinimizedTrigger : ""}`}
+        onClick={() => setExpanded(true)}
+        type="button"
+      >
+        <ChevronIcon />
+        <span className={styles.triggerCount}>{uploads.length}</span>
+      </button>
+    );
+  }
 
   return (
-    <aside className={`${styles.panel} ${open ? styles.expanded : styles.collapsed}`}>
+    <aside
+      className={`${styles.panel} ${styles[placement]} ${expanded ? styles.expanded : styles.collapsed}`}
+    >
       <div className={styles.panelHeader}>
         <div>
-          <strong className={styles.panelTitle}>Upload Manager</strong>
-          <Text tone="muted">{uploads.length} file{uploads.length === 1 ? "" : "s"} tracked</Text>
+          <strong className={styles.panelTitle}>{title}</strong>
+          <Text tone="muted">{trackedUploadsLabel}</Text>
         </div>
         <div className={styles.panelActions}>
           {uploads.length > 0 ? (
@@ -199,13 +246,18 @@ export function UploadManagerPanel() {
               Clear
             </button>
           ) : null}
-          <button className={styles.toggle} onClick={() => setOpen((current) => !current)} type="button">
-            {open ? "-" : "+"}
+          <button
+            aria-label={expanded ? `Collapse ${title}` : `Expand ${title}`}
+            className={styles.toggle}
+            onClick={() => setExpanded((current) => !current)}
+            type="button"
+          >
+            <ChevronIcon direction={expanded ? "down" : "up"} />
           </button>
         </div>
       </div>
 
-      {open ? (
+      {expanded ? (
         <div className={styles.uploadList}>
           {uploads.length === 0 ? (
             <div className={styles.emptyState}>

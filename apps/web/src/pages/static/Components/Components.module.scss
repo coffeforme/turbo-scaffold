@@ -32,6 +32,10 @@
   gap: $space-4;
 }
 
+.previewPanelWrap {
+  width: 100%;
+}
+
 .chartGrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

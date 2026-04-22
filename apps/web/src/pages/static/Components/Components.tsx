@@ -17,6 +17,7 @@ import {
   Text,
   Textarea,
   UploadInput,
+  UploadManagerPanel,
   useUploadManager,
 } from "@repo/ui";
 import styles from "./Components.module.scss";
@@ -71,6 +72,9 @@ const mechanismsCode = `<Modal backdropMode="blur" open={modalOpen} />
 <Modal backdropMode="plain" overlayOpacity={0.35} open={modalOpen} />
 
 <ConfirmDialog backdropMode="transparent" open={confirmOpen} />
+
+<UploadManagerPanel viewType="resumeView" />
+<UploadManagerPanel viewType="minimizedView" />
 
 openUploadPicker({
   source: {
@@ -330,6 +334,10 @@ const ComponentsPage = () => {
                 The upload manager is running globally with a Zustand-backed provider, so uploads triggered here remain
                 visible from any page.
               </Text>
+
+              <div className={styles.previewPanelWrap}>
+                <UploadManagerPanel placement="inline" title="Resume View Preview" viewType="resumeView" />
+              </div>
             </div>
           </Card>
         }

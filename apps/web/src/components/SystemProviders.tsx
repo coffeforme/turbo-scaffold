@@ -12,7 +12,7 @@ export function SystemProviders({ children }: PropsWithChildren) {
         <AuthSessionProvider>
           <UploadManagerProvider mode="zustand">
             <StateProvider>{children}</StateProvider>
-            <UploadManagerPanel />
+            <UploadManagerPanel viewType="minimizedView" />
           </UploadManagerProvider>
         </AuthSessionProvider>
       </AuthProviderSystem>
