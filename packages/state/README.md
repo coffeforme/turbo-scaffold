@@ -31,6 +31,7 @@ Use this package when feature code should stay stable even if the underlying sta
 - counter state
 - contact form state
 - feedback form state
+- Zustand-backed TODOs provider for page-level workflow state
 - implementation-agnostic hooks for app consumption
 
 ## AI Context
@@ -61,8 +62,10 @@ capabilities:
   - "Counter state"
   - "Contact form state"
   - "Feedback form state"
+  - "Zustand-backed TODOs provider for page-level workflow state"
   - "Runtime switching between Redux and Zustand"
   - "Agnostic hooks hiding the underlying implementation"
 implementation_refs:
   - "apps/web/src/pages/static/Home/Home.tsx"
+  - "apps/web/src/pages/static/Todos/Todos.tsx"
 ```

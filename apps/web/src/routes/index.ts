@@ -2,6 +2,7 @@
 export const routes = {
   home: '/',
   quickView: '/quick-view',
+  todos: '/todos',
   components: '/components',
   authDemo: '/auth-demo',
   about: '/about',

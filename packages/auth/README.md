@@ -15,6 +15,7 @@ Use this package when apps need one consistent auth surface even though sign-in 
 - persisted normalized sessions via `@repo/persistence`
 - React system providers for provider creation and session state
 - `AccessRight` for hide, disable, redirect, and error effects
+- shared idle-session timeout handling with warning window support
 
 ## Consumed By
 
@@ -75,8 +76,15 @@ export function SystemProviders({ children }: { children: React.ReactNode }) {
 
 - hydrating persisted session data on startup
 - exposing `session`, `setSession`, `clearSession`, and `refreshSession`
+- exposing `continueSession`, `signOutNow`, and `idleWarning` for idle-session flows
 - synchronizing session changes with browser storage
 - making authorization-aware UI checks possible through the shared context
+
+It also supports idle-session behavior through component props such as:
+
+- `closeOnIdleTime`
+- `idleTime`
+- `idleWarningTime`
 
 ## Persistence
 
@@ -174,6 +182,7 @@ capabilities:
   - "Mixed SSO plus backend-authorization provider"
   - "App-level auth provider system context"
   - "Persisted normalized sessions"
+  - "Idle session timeout and warning window handling"
   - "Role, permission, and claim checks"
   - "AccessRight, AuthSessionProvider, useAuthSession, useAuthProviderSystem"
 implementation_refs:

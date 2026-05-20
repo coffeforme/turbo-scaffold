@@ -41,6 +41,11 @@ This scaffold is opinionated about structure, but flexible about implementation 
 
 ## Quick Start
 
+Prerequisites:
+
+- [Node.js](https://nodejs.org/) installed
+- [`pnpm`](https://pnpm.io/installation) installed globally or through your preferred package manager setup
+
 Install dependencies:
 
 ```sh

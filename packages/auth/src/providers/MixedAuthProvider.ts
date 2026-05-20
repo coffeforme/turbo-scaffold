@@ -50,6 +50,10 @@ export class MixedAuthProvider<TIdentityInput = unknown>
     return this.authorizationProvider.getAccessToken();
   }
 
+  async refreshSession(): Promise<AuthSession> {
+    return this.authorizationProvider.refreshSession();
+  }
+
   async isAuthenticated(): Promise<boolean> {
     return this.authorizationProvider.isAuthenticated();
   }

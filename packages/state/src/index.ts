@@ -1,6 +1,7 @@
 export * from "./redux";
 export * from "./zustand";
 export * from "./shared/selectors";
+export { TodosStoreProvider, useTodosStore } from "./zustand/todosStore";
 
 export type { StateManager, StateManagerType } from "./shared/StateManager";
 export type {
@@ -12,6 +13,7 @@ export type {
   ContactFormData,
   FeedbackFormData,
 } from "./shared/types";
+export type { TodoItem, TodoDraft, TodoPriority } from "./zustand/todosStore";
 
 export { StateManagerFactory } from "./managers/StateManagerFactory";
 export {
