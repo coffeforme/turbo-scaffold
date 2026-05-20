@@ -1,0 +1,143 @@
+@use "../../../../../../packages/ui/styles/tokens" as *;
+
+.page {
+  display: grid;
+  gap: $space-6;
+}
+
+.intro {
+  display: grid;
+  gap: $space-3;
+}
+
+.grid {
+  display: grid;
+  gap: $space-5;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.stack {
+  display: grid;
+  gap: $space-4;
+}
+
+.formGrid {
+  display: grid;
+  gap: $space-4;
+}
+
+.field {
+  display: grid;
+  gap: $space-2;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-3;
+}
+
+.helper {
+  margin: 0;
+}
+
+.metricGrid {
+  display: grid;
+  gap: $space-3;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.metricCard {
+  display: grid;
+  gap: $space-2;
+  padding: $space-4;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: $radius-lg;
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.metricValue {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: $color-ink;
+}
+
+.priority {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 4.5rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.priorityLow {
+  background: rgba(14, 165, 233, 0.14);
+  color: #0369a1;
+}
+
+.priorityMedium {
+  background: rgba(245, 158, 11, 0.16);
+  color: #b45309;
+}
+
+.priorityHigh {
+  background: rgba(220, 38, 38, 0.14);
+  color: #b91c1c;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 6rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.statusOpen {
+  background: rgba(14, 165, 233, 0.14);
+  color: #0f766e;
+}
+
+.statusDone {
+  background: rgba(34, 197, 94, 0.16);
+  color: #15803d;
+}
+
+.rowActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+}
+
+.secondaryButton {
+  background: rgba(15, 23, 42, 0.08);
+  color: $color-ink;
+}
+
+.dangerButton {
+  background: linear-gradient(135deg, #ef4444, #b91c1c);
+}
+
+.snippet {
+  margin: 0;
+  overflow-x: auto;
+  padding: $space-4;
+  border-radius: $radius-lg;
+  background: rgba(15, 23, 42, 0.94);
+  color: #e2e8f0;
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 720px) {
+  .metricGrid {
+    grid-template-columns: 1fr;
+  }
+}

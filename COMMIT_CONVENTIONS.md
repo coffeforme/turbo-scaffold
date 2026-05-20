@@ -45,16 +45,16 @@ For this monorepo, use the full package path as scope when the change is specifi
 ## Examples
 
 ```
-feat: add user authentication
-fix: resolve memory leak in data fetching
-docs: update API documentation
-feat(packages/auth): add new OAuth provider
-fix(apps/web): correct button styling in mobile view
-refactor(packages/state): simplify Redux slice structure
-test: add unit tests for contact validation
-build: update TypeScript configuration
-ci: update Husky git hooks
-chore: update dependencies
+feat: Add user authentication
+fix: Resolve memory leak in data fetching
+docs: Update API documentation
+feat(packages/auth): Add new OAuth provider
+fix(apps/web): Correct button styling in mobile view
+refactor(packages/state): Simplify Redux slice structure
+test: Add unit tests for contact validation
+build: Update TypeScript configuration
+ci: Update Husky git hooks
+chore: Update dependencies
 ```
 
 ## Breaking Changes

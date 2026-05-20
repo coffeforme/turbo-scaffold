@@ -21,12 +21,19 @@ export interface AuthSession {
   raw?: unknown;
 }
 
+export interface AuthIdleWarningState {
+  isOpen: boolean;
+  expiresAt: number | null;
+  remainingMs: number;
+}
+
 export interface AuthProvider<TLoginInput = void, TSession extends AuthSession = AuthSession> {
   readonly name: string;
   initialize?(): Promise<void>;
   signIn(input: TLoginInput): Promise<TSession>;
   signOut(): Promise<void>;
   getSession(): Promise<TSession | null>;
+  refreshSession?(): Promise<TSession>;
   getAccessToken(): Promise<string | null>;
   isAuthenticated(): Promise<boolean> | boolean;
 }

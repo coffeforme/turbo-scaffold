@@ -1,6 +1,43 @@
 # `@repo/auth`
 
-`@repo/auth` provides a shared authentication abstraction for web apps in this workspace.
+Shared authentication and authorization package for the workspace, designed to normalize sessions and access checks across multiple identity providers.
+
+## Purpose
+
+Use this package when apps need one consistent auth surface even though sign-in may come from Azure, Firebase, a custom backend, or a mixed SSO-plus-authorization flow.
+
+## Tech Highlights
+
+- Azure provider built on `@azure/msal-browser`
+- Firebase provider built on `firebase/auth`
+- custom API provider built on `@repo/api`
+- mixed provider for SSO identity plus backend authorization claims
+- persisted normalized sessions via `@repo/persistence`
+- React system providers for provider creation and session state
+- `AccessRight` for hide, disable, redirect, and error effects
+- shared idle-session timeout handling with warning window support
+
+## Consumed By
+
+- `apps/web`
+
+## Implementation References
+
+- provider system: `src/react/AuthProviderSystem.tsx`
+- session system: `src/react/AuthSessionProvider.tsx`
+- access checks: `src/react/AccessRight.tsx`, `src/access.ts`
+- provider implementations: `src/providers`
+- persisted session helpers: `src/sessionStorage.ts`
+- web demo page: `apps/web/src/pages/static/AuthDemo/AuthDemo.tsx`
+- custom backend sample: `apps/auth-api/src/index.ts`
+
+## Architecture
+
+The package is split into three practical layers:
+
+- provider implementations that know how to authenticate with Azure, Firebase, your own backend, or a mixed flow
+- session utilities that normalize and persist the current auth session
+- React helpers that expose the session and provider system to app code
 
 ## Architecture
 
@@ -14,10 +51,50 @@ That means app pages can focus on user flows while the package keeps provider-sp
 
 ## Included Providers
 
-- `AzureAuthProvider` for Azure AD / Microsoft Entra sign-in with MSAL
-- `FirebaseAuthProvider` for Firebase Auth popup sign-in flows
-- `CustomApiAuthProvider` for your own backend using the fetch-based client from `@repo/api`
-- `MixedAuthProvider` for SSO sign-in followed by backend authorization claims
+- `AzureAuthProvider`
+- `FirebaseAuthProvider`
+- `CustomApiAuthProvider`
+- `MixedAuthProvider`
+
+## System Provider Layer
+
+`AuthProviderSystem` owns app-level provider creation for the current runtime session.
+
+It keeps:
+
+- the active provider kind
+- provider configuration
+- helpers to `createProvider()`, `prepareProvider()`, `getActiveProvider()`, and `resetProvider()`
+
+Typical app setup:
+
+```tsx
+import { AuthProviderSystem, AuthSessionProvider } from "@repo/auth";
+
+export function SystemProviders({ children }: { children: React.ReactNode }) {
+  return (
+    <AuthProviderSystem>
+      <AuthSessionProvider>{children}</AuthSessionProvider>
+    </AuthProviderSystem>
+  );
+}
+```
+
+## Session Layer
+
+`AuthSessionProvider` owns the normalized session for the app and is responsible for:
+
+- hydrating persisted session data on startup
+- exposing `session`, `setSession`, `clearSession`, and `refreshSession`
+- exposing `continueSession`, `signOutNow`, and `idleWarning` for idle-session flows
+- synchronizing session changes with browser storage
+- making authorization-aware UI checks possible through the shared context
+
+It also supports idle-session behavior through component props such as:
+
+- `closeOnIdleTime`
+- `idleTime`
+- `idleWarningTime`
 
 ## System Provider Layer
 
@@ -223,6 +300,7 @@ capabilities:
   - "Mixed SSO plus backend-authorization provider"
   - "App-level auth provider system context"
   - "Persisted normalized sessions"
+  - "Idle session timeout and warning window handling"
   - "Role, permission, and claim checks"
   - "AccessRight, AuthSessionProvider, useAuthSession, useAuthProviderSystem"
 session_storage_key: "repo.auth.session"

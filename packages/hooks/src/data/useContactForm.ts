@@ -61,3 +61,5 @@ export const useContactForm = (useZustand = false) => {
     error,
   };
 };
+
+export type ContactFormModel = ReturnType<typeof useContactForm>;

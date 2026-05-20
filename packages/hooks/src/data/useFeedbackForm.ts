@@ -61,3 +61,5 @@ export const useFeedbackForm = (useZustand = false) => {
     error,
   };
 };
+
+export type FeedbackFormModel = ReturnType<typeof useFeedbackForm>;
