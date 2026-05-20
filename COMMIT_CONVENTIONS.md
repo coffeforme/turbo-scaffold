@@ -12,6 +12,8 @@ This project follows the [Conventional Commits](https://conventionalcommits.org/
 [optional footer(s)]
 ```
 
+Keep the full commit header at 100 characters or fewer.
+
 ## Types
 
 - **feat**: A new feature

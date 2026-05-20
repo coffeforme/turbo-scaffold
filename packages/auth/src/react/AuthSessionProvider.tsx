@@ -14,7 +14,13 @@ import {
   getPersistedSession,
   persistSession,
 } from "../sessionStorage";
-import type { AccessRequirements, AuthIdleWarningState, AuthProvider, AuthSession } from "../types";
+import type {
+  AccessRequirements,
+  AuthIdleStatus,
+  AuthIdleWarningState,
+  AuthProvider,
+  AuthSession,
+} from "../types";
 import { useAuthProviderSystem } from "./AuthProviderSystem";
 
 const DEFAULT_IDLE_TIME = 12 * 60 * 60 * 1000;
@@ -35,6 +41,7 @@ interface AuthSessionContextValue {
   signOutNow: () => Promise<void>;
   hasAccess: (requirements: AccessRequirements) => boolean;
   idleWarning: AuthIdleWarningState;
+  idleStatus: AuthIdleStatus;
 }
 
 const defaultIdleWarning: AuthIdleWarningState = {
@@ -42,6 +49,16 @@ const defaultIdleWarning: AuthIdleWarningState = {
   expiresAt: null,
   remainingMs: 0,
 };
+
+const createIdleStatus = (overrides?: Partial<AuthIdleStatus>): AuthIdleStatus => ({
+  enabled: false,
+  idleTime: DEFAULT_IDLE_TIME,
+  idleWarningTime: DEFAULT_IDLE_WARNING_TIME,
+  expiresAt: null,
+  lastActivityAt: null,
+  remainingMs: 0,
+  ...overrides,
+});
 
 const AuthSessionContext = createContext<AuthSessionContextValue | undefined>(undefined);
 
@@ -54,6 +71,16 @@ export function AuthSessionProvider({
   const { createProvider, getActiveProvider, resolveKindFromSessionProvider } = useAuthProviderSystem();
   const [session, setSessionState] = useState<AuthSession | null>(() => getPersistedSession());
   const [idleWarning, setIdleWarning] = useState<AuthIdleWarningState>(defaultIdleWarning);
+  const [idleStatus, setIdleStatus] = useState<AuthIdleStatus>(() =>
+    createIdleStatus({
+      enabled: closeOnIdleTime,
+      idleTime,
+      idleWarningTime,
+      lastActivityAt: session ? Date.now() : null,
+      expiresAt: session && closeOnIdleTime ? Date.now() + idleTime : null,
+      remainingMs: session && closeOnIdleTime ? idleTime : 0,
+    }),
+  );
   const lastActivityAtRef = useRef<number>(Date.now());
   const signOutInFlightRef = useRef(false);
   const warningRaisedRef = useRef(false);
@@ -78,6 +105,16 @@ export function AuthSessionProvider({
     lastActivityAtRef.current = Date.now();
     warningRaisedRef.current = false;
     setIdleWarning(defaultIdleWarning);
+    setIdleStatus(
+      createIdleStatus({
+        enabled: closeOnIdleTime,
+        idleTime,
+        idleWarningTime,
+        lastActivityAt: nextSession ? lastActivityAtRef.current : null,
+        expiresAt: nextSession && closeOnIdleTime ? lastActivityAtRef.current + idleTime : null,
+        remainingMs: nextSession && closeOnIdleTime ? idleTime : 0,
+      }),
+    );
 
     if (nextSession) {
       persistSession(nextSession);
@@ -91,6 +128,13 @@ export function AuthSessionProvider({
     setSessionState(null);
     warningRaisedRef.current = false;
     setIdleWarning(defaultIdleWarning);
+    setIdleStatus(
+      createIdleStatus({
+        enabled: closeOnIdleTime,
+        idleTime,
+        idleWarningTime,
+      }),
+    );
     clearPersistedSession();
   };
 
@@ -163,12 +207,32 @@ export function AuthSessionProvider({
     if (!closeOnIdleTime || !session) {
       setIdleWarning(defaultIdleWarning);
       warningRaisedRef.current = false;
+      setIdleStatus(
+        createIdleStatus({
+          enabled: closeOnIdleTime,
+          idleTime,
+          idleWarningTime,
+          lastActivityAt: session ? Date.now() : null,
+          expiresAt: null,
+          remainingMs: 0,
+        }),
+      );
       return;
     }
 
     lastActivityAtRef.current = Date.now();
     warningRaisedRef.current = false;
     setIdleWarning(defaultIdleWarning);
+    setIdleStatus(
+      createIdleStatus({
+        enabled: true,
+        idleTime,
+        idleWarningTime,
+        lastActivityAt: lastActivityAtRef.current,
+        expiresAt: lastActivityAtRef.current + idleTime,
+        remainingMs: idleTime,
+      }),
+    );
 
     const handleActivity = () => {
       if (warningRaisedRef.current) {
@@ -176,6 +240,16 @@ export function AuthSessionProvider({
       }
 
       lastActivityAtRef.current = Date.now();
+      setIdleStatus(
+        createIdleStatus({
+          enabled: true,
+          idleTime,
+          idleWarningTime,
+          lastActivityAt: lastActivityAtRef.current,
+          expiresAt: lastActivityAtRef.current + idleTime,
+          remainingMs: idleTime,
+        }),
+      );
     };
 
     const events: Array<keyof WindowEventMap> = ["mousedown", "mousemove", "keydown", "scroll", "touchstart"];
@@ -183,6 +257,18 @@ export function AuthSessionProvider({
 
     const interval = window.setInterval(() => {
       const remainingMs = idleTime - (Date.now() - lastActivityAtRef.current);
+      const expiresAt = remainingMs > 0 ? Date.now() + remainingMs : Date.now();
+
+      setIdleStatus(
+        createIdleStatus({
+          enabled: true,
+          idleTime,
+          idleWarningTime,
+          lastActivityAt: lastActivityAtRef.current,
+          expiresAt,
+          remainingMs: Math.max(0, remainingMs),
+        }),
+      );
 
       if (remainingMs <= 0) {
         void signOutNow();
@@ -218,8 +304,9 @@ export function AuthSessionProvider({
       signOutNow,
       hasAccess: (requirements: AccessRequirements) => hasAccess(session, requirements),
       idleWarning,
+      idleStatus,
     }),
-    [session, idleWarning],
+    [session, idleWarning, idleStatus],
   );
 
   return <AuthSessionContext.Provider value={value}>{children}</AuthSessionContext.Provider>;
