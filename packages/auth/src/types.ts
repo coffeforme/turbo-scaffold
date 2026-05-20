@@ -27,6 +27,15 @@ export interface AuthIdleWarningState {
   remainingMs: number;
 }
 
+export interface AuthIdleStatus {
+  enabled: boolean;
+  idleTime: number;
+  idleWarningTime: number;
+  expiresAt: number | null;
+  lastActivityAt: number | null;
+  remainingMs: number;
+}
+
 export interface AuthProvider<TLoginInput = void, TSession extends AuthSession = AuthSession> {
   readonly name: string;
   initialize?(): Promise<void>;

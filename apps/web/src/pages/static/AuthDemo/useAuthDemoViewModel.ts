@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import {
   type AzureProviderConfig,
   type CustomApiProviderConfig,
@@ -7,6 +7,7 @@ import {
   useAuthSession,
 } from "@repo/auth";
 import { useUploadManager } from "@repo/ui";
+import { useAuthSessionRuntime } from "../../../components/AuthSessionRuntimeProvider";
 
 const splitScopes = (value: string) =>
   value
@@ -15,7 +16,8 @@ const splitScopes = (value: string) =>
     .filter(Boolean);
 
 export function useAuthDemoViewModel() {
-  const { session, setSession: persistSession, clearSession, refreshSession } = useAuthSession();
+  const { session, setSession: persistSession, clearSession, refreshSession, idleStatus, idleWarning } = useAuthSession();
+  const { idlePreset, setIdlePreset, warningPreset, setWarningPreset, idleConfig } = useAuthSessionRuntime();
   const {
     providerKind,
     setProviderKind,
@@ -37,6 +39,12 @@ export function useAuthDemoViewModel() {
   const { openUploadPicker, addUploads } = useUploadManager();
 
   const isAuthenticated = Boolean(session?.user);
+
+  useEffect(() => {
+    if (!isAuthenticated && successMessage?.startsWith("Authenticated with ")) {
+      setSuccessMessage(null);
+    }
+  }, [isAuthenticated, successMessage]);
 
   const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -318,6 +326,13 @@ export function useAuthDemoViewModel() {
 
   return {
     session,
+    idleStatus,
+    idleWarning,
+    idlePreset,
+    setIdlePreset,
+    warningPreset,
+    setWarningPreset,
+    idleConfig,
     providerKind,
     setProviderKind,
     firebaseConfig,

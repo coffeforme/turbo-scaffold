@@ -87,6 +87,10 @@
   color: $color-ink;
 }
 
+.detailRow strong {
+  color: $color-primary-strong;
+}
+
 .codeBlock {
   margin: 0;
   padding: $space-4;

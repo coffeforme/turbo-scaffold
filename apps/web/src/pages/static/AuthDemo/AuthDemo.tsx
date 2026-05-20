@@ -46,9 +46,24 @@ function CodePreview({ code }: { code: string }) {
   return <pre className={styles.codeBlock}>{code}</pre>;
 }
 
+function formatRemainingTime(milliseconds: number) {
+  const totalSeconds = Math.max(0, Math.ceil(milliseconds / 1000));
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+
+  return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+}
+
 const AuthDemo = () => {
   const {
     session,
+    idleStatus,
+    idleWarning,
+    idlePreset,
+    setIdlePreset,
+    warningPreset,
+    setWarningPreset,
+    idleConfig,
     providerKind,
     setProviderKind,
     firebaseConfig,
@@ -103,6 +118,35 @@ const AuthDemo = () => {
                   <option value="azure">Azure SSO</option>
                   <option value="firebase">Firebase Auth</option>
                   <option value="mixed">Mixed: Azure + API authorization</option>
+                </Select>
+              </div>
+
+              <div className={styles.providerField}>
+                <Label htmlFor="idle-preset">Idle Sign-Out</Label>
+                <Select
+                  id="idle-preset"
+                  value={idlePreset}
+                  onChange={(event) => setIdlePreset(event.target.value as typeof idlePreset)}
+                >
+                  <option value="disabled">Disabled</option>
+                  <option value="30s">30 seconds demo</option>
+                  <option value="2m">2 minutes demo</option>
+                  <option value="12h">12 hours default</option>
+                </Select>
+              </div>
+
+              <div className={styles.providerField}>
+                <Label htmlFor="warning-preset">Idle Warning</Label>
+                <Select
+                  disabled={idlePreset === "disabled"}
+                  id="warning-preset"
+                  value={warningPreset}
+                  onChange={(event) => setWarningPreset(event.target.value as typeof warningPreset)}
+                >
+                  <option value="5s">5 seconds</option>
+                  <option value="10s">10 seconds</option>
+                  <option value="30s">30 seconds</option>
+                  <option value="5m">5 minutes</option>
                 </Select>
               </div>
             </div>
@@ -205,6 +249,18 @@ const AuthDemo = () => {
                 </p>
                 <p className={styles.detailRow}>
                   <strong>ID token:</strong> {session?.idToken ? "Available" : "Not loaded"}
+                </p>
+                <p className={styles.detailRow}>
+                  <strong>Idle sign-out:</strong> {idleStatus.enabled ? "Enabled" : "Disabled"}
+                </p>
+                <p className={styles.detailRow}>
+                  <strong>Idle timeout:</strong> {idleStatus.enabled ? formatRemainingTime(idleStatus.remainingMs) : "Not tracking"}
+                </p>
+                <p className={styles.detailRow}>
+                  <strong>Warning window:</strong> {idleStatus.enabled ? `${formatRemainingTime(idleConfig.idleWarningTime)} before sign-out` : "Not applicable"}
+                </p>
+                <p className={styles.detailRow}>
+                  <strong>Idle warning state:</strong> {idleWarning.isOpen ? "Prompt visible" : "Monitoring"}
                 </p>
               </div>
 
