@@ -1,10 +1,24 @@
 # `@repo/math`
 
-Small shared utility package for math helpers.
+Small framework-agnostic math helper package.
 
-## Current Scope
+## Purpose
 
-This package is intentionally tiny right now. It is a good place for framework-agnostic math helpers that can be reused without pulling in app or UI concerns.
+Use this package for tiny reusable math helpers that should stay free of app, UI, or state dependencies.
+
+## Tech Highlights
+
+- pure TypeScript helpers
+- no runtime framework dependency
+
+## Consumed By
+
+- `apps/web`
+
+## Implementation References
+
+- `src/add.ts`
+- `src/subtract.ts`
 
 ## AI Context
 
@@ -12,6 +26,9 @@ This package is intentionally tiny right now. It is a good place for framework-a
 package: "@repo/math"
 purpose: "Tiny framework-agnostic math helpers."
 entrypoints:
+  - "src/add.ts"
+  - "src/subtract.ts"
+look_here_first:
   - "src/add.ts"
   - "src/subtract.ts"
 structure:

@@ -1,10 +1,26 @@
 # `@repo/eslint-config`
 
-Shared ESLint configuration package for the workspace.
+Shared linting baseline for workspace apps and packages.
+
+## Purpose
+
+Use this package to keep lint rules aligned across the monorepo instead of redefining TypeScript and formatting-friendly rules per project.
+
+## Tech Highlights
+
+- shared ESLint baseline
+- TypeScript-aware linting
+- Prettier-friendly configuration
+
+## Consumed By
+
+- lintable apps and packages across the repo
+
+## Implementation References
+
+- config entrypoint: `index.js`
 
 ## Usage
-
-Consume this package from an app or package-level ESLint config to keep linting rules aligned across the monorepo.
 
 ```js
 module.exports = {
@@ -19,8 +35,10 @@ package: "@repo/eslint-config"
 purpose: "Shared linting baseline reused across apps and packages."
 entrypoints:
   - "index.js"
-structure:
+look_here_first:
   - "index.js"
+structure:
+  - "index.js: shared ESLint preset"
   - "package.json"
 runtime_dependencies:
   - "eslint"
@@ -28,7 +46,7 @@ runtime_dependencies:
   - "@typescript-eslint/parser"
   - "eslint-config-prettier"
 used_by:
-  - "Lintable apps and packages across the repo"
+  - "Workspace apps and packages with ESLint"
 capabilities:
   - "Shared TypeScript lint rules"
   - "Prettier-friendly config"

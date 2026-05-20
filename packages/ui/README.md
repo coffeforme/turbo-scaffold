@@ -1,38 +1,61 @@
 # `@repo/ui`
 
-Shared design system and component library for the workspace.
+Shared design system and component library for the workspace, including interactive mechanisms that are demonstrated in both the web app and Storybook.
+
+## Purpose
+
+Use this package for reusable UI artifacts that should stay consistent across apps and remain easy to document, preview, and maintain.
+
+## Tech Highlights
+
+- Atomic Design-inspired structure
+- SCSS Modules for component styling
+- shared tokens and mixins under `styles`
+- Storybook-backed component demos
+- higher-order mechanisms for overlays, upload flows, and preview/code switching
+
+## Consumed By
+
+- `apps/web`
+- `apps/storybook`
+
+## Implementation References
+
+- package entrypoints: `index.ts`, `components/index.ts`
+- styling foundation: `styles/_tokens.scss`, `styles/_mixins.scss`
+- implementation folders:
+  - `components/atoms`
+  - `components/molecules`
+  - `components/organisms`
+  - `components/mechanisms`
+- component showcase app: `apps/storybook`
+- story authoring guide: `apps/storybook/README.md`
 
 ## Structure
 
-The package is organized by component depth:
-
-- `atoms` for primitives like buttons, inputs, labels, text, select, textarea, and rating
+- `atoms` for primitives like buttons, inputs, labels, text, select, textarea, upload input, and rating
 - `molecules` for composed blocks like cards, counters, and tables
-- `organisms` for larger feature-ready sections like forms, navigation, charts, and error states
+- `organisms` for larger feature-ready sections like forms, navigation, charts, hierarchy tables, and error states
 - `mechanisms` for interaction-heavy system components like modal flows, preview/code flip containers, and the upload manager
-
-## Styling
-
-`@repo/ui` uses SCSS modules for component styles and keeps shared visual tokens in `styles/_tokens.scss` and common patterns in `styles/_mixins.scss`.
-
-## Consuming the Package
-
-Import from the package entrypoint or the component barrel:
-
-```ts
-import { Button, Card, Header } from "@repo/ui";
-```
 
 ## Key Mechanisms
 
-`@repo/ui` includes a few higher-order UI mechanisms that are meant to be reused across pages instead of reimplemented ad hoc.
+- `Modal` supports `backdropMode="blur" | "transparent" | "plain"` plus `overlayOpacity`
+- `ConfirmDialog` composes `Modal` and inherits the same backdrop behavior
+- `FlipContainer` switches between live preview and implementation view
+- `UploadManagerProvider` supports `internal`, `controlled`, or `zustand` state strategies
+- `UploadManagerPanel` supports minimized and resume views for global upload tracking
+- `UploadInput` can be used directly or through the manager
 
-- `Modal` supports `backdropMode="blur" | "transparent" | "plain"` plus `overlayOpacity` for stronger visual control.
-- `ConfirmDialog` composes `Modal` and inherits the same backdrop behavior for destructive or confirm flows.
-- `FlipContainer` lets a section switch between a live preview and an implementation view.
-- `UploadManagerProvider` can run in `internal`, `controlled`, or `zustand` mode, which makes uploads available across the app while still allowing teams to choose their state strategy.
-- `UploadManagerPanel` is the floating system view that shows tracked uploads, including where in the app the upload started.
-- `UploadInput` is the reusable file-input atom that can be used directly or through the manager.
+## Storybook
+
+Story files live beside the components they document inside `packages/ui`.
+
+Examples:
+
+- `packages/ui/components/atoms/Button/button.stories.tsx`
+- `packages/ui/components/mechanisms/UploadManager/uploadManager.stories.tsx`
+- `packages/ui/components/organisms/HierarchyTable/hierarchyTable.stories.tsx`
 
 ## AI Context
 
@@ -68,4 +91,9 @@ capabilities:
   - "Flip-container preview/code switching with a fixed top-right SVG toggle"
   - "Upload manager with internal, controlled, or Zustand-backed state and source metadata per upload"
   - "Shared SCSS tokens and mixins"
+storybook_refs:
+  - "apps/storybook/README.md"
+  - "packages/ui/components/**/*.stories.tsx"
+implementation_refs:
+  - "apps/web/src/pages/static/Components/Components.tsx"
 ```

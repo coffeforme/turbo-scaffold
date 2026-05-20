@@ -27,14 +27,8 @@ Use this package when a hook belongs to product behavior rather than to a low-le
 
 ## What Lives Here
 
-This package composes the lower-level workspace packages into feature-ready hooks.
-
 - `src/data` contains app-facing hooks for forms and page data
 - `src/api` contains hooks that talk to backend-oriented APIs
-
-## Guidance
-
-Keep hooks here when they combine state, API, and view concerns for consumers like `apps/web`. If a hook is just a generic React utility, it likely belongs somewhere else.
 
 ## AI Context
 
@@ -46,9 +40,13 @@ entrypoints:
 look_here_first:
   - "src/data"
   - "src/api"
+  - "src/view-models"
+  - "src/pages"
 structure:
   - "src/data: feature and form hooks"
   - "src/api: hooks that call backend-facing APIs"
+  - "src/view-models: feature-facing view models"
+  - "src/pages: page-level view models"
 runtime_dependencies:
   - "@repo/api"
   - "@repo/state"
@@ -62,4 +60,7 @@ capabilities:
   - "Contact and feedback view-model hooks"
   - "Home page view-model hook"
   - "API-facing request hooks"
+implementation_refs:
+  - "apps/web/src/pages/static/Home/Home.tsx"
+  - "apps/web/src/pages/static/AuthDemo/AuthDemo.tsx"
 ```

@@ -1,12 +1,24 @@
 # `@repo/utils`
 
-General-purpose shared utility package.
+General-purpose shared utility package for helpers that do not belong to a more focused domain package.
 
-## Usage
+## Purpose
 
-This package is the fallback place for helpers that are genuinely generic and do not belong to a more specific domain package.
+Use this package as the fallback home for truly generic helpers. If a helper becomes clearly tied to auth, UI, state, API, or another domain, move it there.
 
-Prefer moving code into a focused package when the utility becomes clearly tied to auth, UI, state, API, or another domain.
+## Tech Highlights
+
+- framework-agnostic utility surface
+- lightweight shared dependency option
+- clean place to prevent duplication before a stronger domain fit emerges
+
+## Consumed By
+
+- any package that needs generic helpers
+
+## Implementation References
+
+- `src/index.ts`
 
 ## AI Context
 
@@ -14,6 +26,8 @@ Prefer moving code into a focused package when the utility becomes clearly tied 
 package: "@repo/utils"
 purpose: "General reusable helpers that do not belong to a more specific domain package."
 entrypoints:
+  - "src/index.ts"
+look_here_first:
   - "src/index.ts"
 structure:
   - "src/index.ts"

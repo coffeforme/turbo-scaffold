@@ -1,8 +1,28 @@
 # Storybook
 
-This app hosts the component showcase for the monorepo.
+Dedicated UI showcase app for the monorepo. It runs separately from the main web app while loading stories colocated with artifacts in `packages/ui`.
 
-Storybook runs from `apps/storybook`, but the stories themselves live next to the shared UI components in `packages/ui`.
+## Purpose
+
+Use Storybook for onboarding, component discovery, isolated UI review, and maintenance of shared artifacts without needing to boot full application flows.
+
+## Tech Highlights
+
+- Storybook app hosted in `apps/storybook`
+- stories colocated with `@repo/ui` components
+- autodocs-friendly story structure
+- supports atoms, molecules, organisms, and mechanisms
+
+## Consumed By
+
+- `packages/ui`
+- developers working on shared UI artifacts
+
+## Implementation References
+
+- Storybook app config: `apps/storybook/.storybook`
+- UI artifact source: `packages/ui/components`
+- package docs: `packages/ui/README.md`
 
 ## Quick Start
 
@@ -12,13 +32,7 @@ Run Storybook from the repo root with:
 pnpm --filter storybook dev
 ```
 
-## Run Storybook
-
-```sh
-pnpm --filter storybook dev
-```
-
-To generate the static build:
+Build the static version with:
 
 ```sh
 pnpm --filter storybook build
@@ -47,8 +61,6 @@ packages/ui/**/*.stories.tsx
 
 ## Story File Pattern
 
-Use this structure for new stories:
-
 ```tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import { MyComponent } from "./myComponent";
@@ -68,50 +80,35 @@ export const Default: Story = {
 };
 ```
 
-## Naming Conventions
+## References
 
-- Component file: `myComponent.tsx`
-- Story file: `myComponent.stories.tsx`
-- Story title:
-  - `Atoms/Button`
-  - `Molecules/Counter`
-  - `Organisms/FeedbackForm`
-
-Keep the Storybook title aligned with the existing Atomic Design folders in `packages/ui/components`.
-
-## Practical Tips
-
-- Prefer colocated stories over central story folders.
-- Start with a `Default` story first.
-- Add `tags: ["autodocs"]` so Storybook docs pages are generated automatically.
-- Use `args` for simple prop-driven components.
-- Use a `render` function when the component needs local interaction state.
-- Keep stories focused on component behavior, not app-level data fetching or routing.
-
-## Current Examples
-
-You can use these as references:
-
-- `packages/ui/components/atoms/Button/button.stories.tsx`
-- `packages/ui/components/atoms/Rating/rating.stories.tsx`
-- `packages/ui/components/molecules/Counter/counter.stories.tsx`
-- `packages/ui/components/organisms/Header/header.stories.tsx`
-- `packages/ui/components/organisms/FeedbackForm/feedbackForm.stories.tsx`
-
-## Storybook References
-
-Official Storybook docs for enhancing stories:
-
-- Writing stories with args:
+- Args:
   https://storybook.js.org/docs/writing-stories/args
 - Controls and `argTypes`:
   https://storybook.js.org/docs/essentials/controls
-- Interaction patterns and interactive stories:
+- Interaction patterns:
   https://storybook.js.org/docs/writing-stories/args
 
-These are especially useful when you want to:
+## AI Context
 
-- add richer controls for props
-- make stories interactive without app wiring
-- document multiple component states cleanly
-- improve autodocs output
+```yaml
+app: "storybook"
+purpose: "Dedicated UI showcase app loading colocated stories from packages/ui."
+entrypoints:
+  - ".storybook/main.ts"
+  - ".storybook/preview.ts"
+look_here_first:
+  - ".storybook"
+  - "../../packages/ui/components"
+used_by:
+  - "packages/ui"
+  - "Developers onboarding into the design system"
+capabilities:
+  - "Local component showcase"
+  - "Static Storybook build"
+  - "Autodocs-ready artifact documentation"
+  - "Colocated stories beside implementation files"
+integration_refs:
+  - "packages/ui/README.md"
+  - "packages/ui/components/**/*.stories.tsx"
+```

@@ -1,16 +1,31 @@
 # `@repo/api`
 
-`@repo/api` provides a small API client abstraction over pluggable HTTP providers.
+Provider-based API client surface for browser-facing packages that should not care whether requests are executed through `fetch`, Axios, or a custom transport.
 
-## What It Solves
+## Purpose
 
-Use this package when you want application code to depend on a single API client shape while still choosing how requests are executed underneath.
+Use this package when feature code should depend on one stable API contract while transport concerns stay replaceable and centralized.
 
-Current options:
+## Tech Highlights
 
-- `createFetchApiClient(baseUrl)` for the native `fetch` provider
-- `createAxiosApiClient(baseUrl)` for the Axios provider
-- `createApiClientWithProvider(provider)` when you want to inject your own `HttpProvider`
+- fetch-backed client factory
+- axios-backed client factory
+- custom `HttpProvider` injection
+- request option forwarding for headers and auth metadata
+- clean fit with `@repo/auth` custom backend providers
+
+## Consumed By
+
+- `@repo/auth`
+- `@repo/hooks`
+- browser apps or packages that want a provider-based API abstraction
+
+## Implementation References
+
+- entrypoint: `src/index.ts`
+- transport contracts and implementations: `@repo/infrastructure`
+- custom auth backend example: `apps/auth-api`
+- auth integration example: `packages/auth/src/providers/CustomApiAuthProvider.ts`
 
 ## Quick Start
 
@@ -18,11 +33,10 @@ Current options:
 import { createFetchApiClient } from "@repo/api";
 
 const api = createFetchApiClient("https://api.example.com");
-
 const profile = await api.get<{ id: string; email: string }>("/me");
 ```
 
-## Available Factories
+## Factories
 
 ### Fetch
 
@@ -52,9 +66,7 @@ const provider = new FetchHttpProvider("https://api.example.com");
 const api = createApiClientWithProvider(provider);
 ```
 
-## Passing Request Options
-
-The `ApiClient` forwards request options to the underlying provider. That makes it easy to attach headers for authenticated requests:
+## Request Options
 
 ```ts
 const api = createFetchApiClient("https://api.example.com");
@@ -66,33 +78,6 @@ await api.get("/auth/session", {
 });
 ```
 
-## Custom Auth Backend Example
-
-The new `@repo/auth` custom provider uses the fetch-based client from this package:
-
-```ts
-import { CustomApiAuthProvider } from "@repo/auth";
-
-const auth = new CustomApiAuthProvider({
-  baseUrl: "https://api.example.com",
-  endpoints: {
-    login: "/auth/login",
-    logout: "/auth/logout",
-    session: "/auth/session",
-    refresh: "/auth/refresh",
-  },
-});
-
-await auth.signIn({
-  email: "user@example.com",
-  password: "secret",
-});
-```
-
-That keeps backend authentication flows aligned with the same provider abstraction used elsewhere in the workspace.
-
-For local testing, the repo includes a sample Express implementation in `apps/auth-api` that exposes the default `CustomAuthEndpoints`.
-
 ## AI Context
 
 ```yaml
@@ -100,8 +85,11 @@ package: "@repo/api"
 purpose: "Single API client surface with swappable HTTP transport providers."
 entrypoints:
   - "src/index.ts"
-structure:
+look_here_first:
   - "src/index.ts"
+  - "../infrastructure/src/http"
+structure:
+  - "src/index.ts: API client factories and shared surface"
 runtime_dependencies:
   - "@repo/infrastructure"
 used_by:
@@ -113,7 +101,7 @@ capabilities:
   - "Axios-backed API client factory"
   - "Custom provider injection"
   - "Request option forwarding for auth headers"
-integration_notes:
-  - "CustomApiAuthProvider relies on this package."
-  - "apps/auth-api implements the default custom auth endpoints for local testing."
+implementation_refs:
+  - "packages/auth/src/providers/CustomApiAuthProvider.ts"
+  - "apps/auth-api/src/index.ts"
 ```

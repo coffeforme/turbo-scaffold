@@ -1,18 +1,27 @@
 # `@repo/infrastructure`
 
-Low-level provider implementations used by higher-level packages like `@repo/api`.
+Low-level adapter package for transport providers and other implementation details that higher-level packages should consume instead of duplicating.
 
-## What Belongs Here
+## Purpose
 
-Use this package for transport adapters and low-level provider details that higher-level packages should consume rather than reimplement.
+Use this package when code is too close to transport, provider wiring, or environment-specific adapter logic to belong in feature packages.
 
-Current focus areas:
+## Tech Highlights
 
 - fetch HTTP provider
 - axios HTTP provider
 - shared `HttpProvider` contracts
+- legacy auth-related provider pieces kept below the newer `@repo/auth` layer
 
-The auth-related code here should be treated as lower-level or legacy support compared with the newer abstractions in `@repo/auth`.
+## Consumed By
+
+- `@repo/api`
+
+## Implementation References
+
+- HTTP providers: `src/http`
+- shared types: `src/types.ts`
+- legacy auth helpers: `src/auth`
 
 ## AI Context
 
