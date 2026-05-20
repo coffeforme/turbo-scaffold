@@ -4,6 +4,11 @@ Template scaffold for professional, highly decoupled web applications with React
 
 ## Quick Start
 
+Prerequisites:
+
+- [Node.js](https://nodejs.org/) installed
+- [`pnpm`](https://pnpm.io/installation) installed globally or through your preferred package manager setup
+
 Install dependencies:
 
 ```sh

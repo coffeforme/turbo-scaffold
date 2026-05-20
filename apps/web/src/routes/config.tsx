@@ -5,6 +5,7 @@ import AuthDemo from "../pages/static/AuthDemo/AuthDemo";
 import ComponentsPage from "../pages/static/Components/Components";
 import Dashboard from "../pages/authenticated/Dashboard";
 import Home from "../pages/static/Home/Home";
+import TodosPage from "../pages/static/Todos/Todos";
 import Profile from "../pages/authenticated/Profile";
 import { routes } from "./index";
 import type { RouteAccessConfig } from "./RestrictedRoute";
@@ -40,6 +41,13 @@ export const appRoutes: AppRouteDefinition[] = [
     label: "Components",
     description: "Atoms to mechanisms",
     element: <ComponentsPage />,
+    showInNav: true,
+  },
+  {
+    path: routes.todos,
+    label: "TODOs",
+    description: "ViewModel + persistence",
+    element: <TodosPage />,
     showInNav: true,
   },
   {

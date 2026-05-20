@@ -1,6 +1,29 @@
 # `@repo/hooks`
 
-Shared business and UI hooks consumed by the web app.
+Shared feature hooks that compose state, API, and UI concerns into app-facing behavior.
+
+## Purpose
+
+Use this package when a hook belongs to product behavior rather than to a low-level utility or a single package implementation detail.
+
+## Tech Highlights
+
+- form hooks built on shared state
+- view-model hooks for page-facing consumption
+- API-facing hooks built on `@repo/api`
+- app-ready feature composition for `apps/web`
+
+## Consumed By
+
+- `apps/web`
+
+## Implementation References
+
+- feature/data hooks: `src/data`
+- view models: `src/view-models`
+- API hooks: `src/api`
+- page view models: `src/pages`
+- primary consumer: `apps/web`
 
 ## What Lives Here
 
@@ -36,5 +59,7 @@ capabilities:
   - "Home page feature hooks"
   - "Contact form hooks"
   - "Feedback form hooks"
+  - "Contact and feedback view-model hooks"
+  - "Home page view-model hook"
   - "API-facing request hooks"
 ```

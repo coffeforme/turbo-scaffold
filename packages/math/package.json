@@ -10,6 +10,10 @@
       "types": "./src/add.ts",
       "default": "./dist/add.js"
     },
+    "./ceilMinutes": {
+      "types": "./src/ceilMinutes.ts",
+      "default": "./dist/ceilMinutes.js"
+    },
     "./subtract": {
       "types": "./src/subtract.ts",
       "default": "./dist/subtract.js"

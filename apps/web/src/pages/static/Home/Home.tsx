@@ -8,41 +8,25 @@ import {
   Textarea,
 } from "@repo/ui";
 import { add } from "@repo/math/add";
-import { useHome } from "@repo/hooks";
-import { useStateProvider } from "../../../components/StateProvider";
-import {
-  useAgnosticCounter,
-  useAgnosticContactForm,
-  useAgnosticFeedbackForm,
-  setStateManagerType,
-  getCurrentManagerType,
-} from "@repo/state";
+import { useHomeViewModel } from "./useHomeViewModel";
 import styles from "./Home.module.scss";
 
 const Home = () => {
   const viteLogo = `${import.meta.env.BASE_URL}vite.svg`;
   const typescriptLogo = `${import.meta.env.BASE_URL}typescript.svg`;
-  const { providerType, setProviderType } = useStateProvider();
-  const { counter, contactForm, feedbackForm } = useHome(providerType === "zustand");
-
-  const agnosticCounter = useAgnosticCounter();
-  const agnosticContact = useAgnosticContactForm();
-  const agnosticFeedback = useAgnosticFeedbackForm();
-
-  const handleProviderChange = (type: "redux" | "zustand") => {
-    setProviderType(type);
-    setStateManagerType(type);
-  };
-
-  const handleAgnosticContactSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    agnosticContact.submitForm();
-  };
-
-  const handleAgnosticFeedbackSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    agnosticFeedback.submitForm();
-  };
+  const {
+    providerType,
+    handleProviderChange,
+    currentManagerType,
+    counter,
+    contactForm,
+    feedbackForm,
+    agnosticCounter,
+    agnosticContact,
+    agnosticFeedback,
+    handleAgnosticContactSubmit,
+    handleAgnosticFeedbackSubmit,
+  } = useHomeViewModel();
 
   return (
     <div className={styles.page}>
@@ -86,7 +70,7 @@ const Home = () => {
         </div>
         <p className={styles.muted}>
           Currently using: <strong>{providerType === "redux" ? "Redux Toolkit" : "Zustand"}</strong>{" "}
-          (Agnostic: <strong>{getCurrentManagerType() === "redux" ? "Redux" : "Zustand"}</strong>)
+          (Agnostic: <strong>{currentManagerType === "redux" ? "Redux" : "Zustand"}</strong>)
         </p>
       </div>
 
