@@ -1,5 +1,5 @@
-import cors from 'cors';
-import express from 'express';
+import cors from "cors";
+import express from "express";
 
 type SessionRecord = {
   accessToken: string;
@@ -35,35 +35,45 @@ const issueTokens = () => {
 };
 
 const buildIdentity = (body: Record<string, unknown>) => {
-  const provider = typeof body.provider === 'string' ? body.provider : 'custom-api';
+  const provider =
+    typeof body.provider === "string" ? body.provider : "custom-api";
   const externalUser =
-    typeof body.externalUser === 'object' && body.externalUser ? body.externalUser : null;
+    typeof body.externalUser === "object" && body.externalUser
+      ? body.externalUser
+      : null;
   const fallbackEmail =
-    provider === 'azure' || provider === 'mixed-auth' ? 'member@contoso.com' : 'user@example.com';
+    provider === "azure" || provider === "mixed-auth"
+      ? "member@contoso.com"
+      : "user@example.com";
   const email =
-    typeof body.email === 'string'
+    typeof body.email === "string"
       ? body.email
-      : externalUser && 'email' in externalUser && typeof externalUser.email === 'string'
+      : externalUser &&
+          "email" in externalUser &&
+          typeof externalUser.email === "string"
         ? externalUser.email
         : fallbackEmail;
 
-  const isAdmin = email.includes('admin');
+  const isAdmin = email.includes("admin");
 
   return {
     id: email,
     email,
     name:
-      externalUser && 'name' in externalUser && typeof externalUser.name === 'string'
+      externalUser &&
+      "name" in externalUser &&
+      typeof externalUser.name === "string"
         ? externalUser.name
         : isAdmin
-          ? 'Admin User'
-          : 'Workspace User',
-    roles: isAdmin ? ['admin', 'user'] : ['user'],
+          ? "Admin User"
+          : "Workspace User",
+    roles: isAdmin ? ["admin", "user"] : ["user"],
     permissions: isAdmin
-      ? ['view', 'upload', 'create', 'delete']
-      : ['view', 'upload', 'create'],
+      ? ["view", "upload", "create", "delete"]
+      : ["view", "upload", "create"],
     claims: {
-      tenant: provider === 'azure' || provider === 'mixed-auth' ? 'contoso' : 'local',
+      tenant:
+        provider === "azure" || provider === "mixed-auth" ? "contoso" : "local",
       provider,
       canDelete: isAdmin,
     },
@@ -78,7 +88,10 @@ const createSession = (body: Record<string, unknown>) => {
   const session: SessionRecord = {
     accessToken: tokens.accessToken,
     refreshToken: tokens.refreshToken,
-    idToken: typeof body.externalIdToken === 'string' ? body.externalIdToken : tokens.idToken,
+    idToken:
+      typeof body.externalIdToken === "string"
+        ? body.externalIdToken
+        : tokens.idToken,
     expiresAt,
     user,
   };
@@ -96,27 +109,29 @@ const createSession = (body: Record<string, unknown>) => {
 };
 
 const readBearerToken = (authorization?: string) => {
-  if (!authorization?.startsWith('Bearer ')) {
+  if (!authorization?.startsWith("Bearer ")) {
     return null;
   }
 
-  return authorization.slice('Bearer '.length);
+  return authorization.slice("Bearer ".length);
 };
 
-app.get('/health', (_request, response) => {
+app.get("/health", (_request, response) => {
   response.json({ ok: true });
 });
 
-app.post('/auth/login', (request, response) => {
+app.post("/auth/login", (request, response) => {
   const payload = request.body as Record<string, unknown>;
-  const email = typeof payload.email === 'string' ? payload.email : null;
-  const password = typeof payload.password === 'string' ? payload.password : null;
+  const email = typeof payload.email === "string" ? payload.email : null;
+  const password =
+    typeof payload.password === "string" ? payload.password : null;
   const hasExternalToken =
-    typeof payload.externalAccessToken === 'string' || typeof payload.externalIdToken === 'string';
+    typeof payload.externalAccessToken === "string" ||
+    typeof payload.externalIdToken === "string";
 
   if (!hasExternalToken && (!email || !password)) {
     response.status(400).json({
-      message: 'Provide email/password or an external provider token.',
+      message: "Provide email/password or an external provider token.",
     });
     return;
   }
@@ -124,8 +139,8 @@ app.post('/auth/login', (request, response) => {
   response.json(createSession(payload));
 });
 
-app.post('/auth/logout', (request, response) => {
-  const token = readBearerToken(request.header('authorization'));
+app.post("/auth/logout", (request, response) => {
+  const token = readBearerToken(request.header("authorization"));
 
   if (token && sessions.has(token)) {
     const session = sessions.get(token)!;
@@ -136,11 +151,11 @@ app.post('/auth/logout', (request, response) => {
   response.status(204).send();
 });
 
-app.get('/auth/session', (request, response) => {
-  const token = readBearerToken(request.header('authorization'));
+app.get("/auth/session", (request, response) => {
+  const token = readBearerToken(request.header("authorization"));
 
   if (!token || !sessions.has(token)) {
-    response.status(401).json({ message: 'No active session found.' });
+    response.status(401).json({ message: "No active session found." });
     return;
   }
 
@@ -154,11 +169,11 @@ app.get('/auth/session', (request, response) => {
   });
 });
 
-app.post('/auth/refresh', (request, response) => {
+app.post("/auth/refresh", (request, response) => {
   const { refreshToken } = request.body as { refreshToken?: string };
 
   if (!refreshToken || !refreshIndex.has(refreshToken)) {
-    response.status(401).json({ message: 'Invalid refresh token.' });
+    response.status(401).json({ message: "Invalid refresh token." });
     return;
   }
 
@@ -166,7 +181,7 @@ app.post('/auth/refresh', (request, response) => {
   const currentSession = sessions.get(currentAccessToken);
 
   if (!currentSession) {
-    response.status(401).json({ message: 'Session not found.' });
+    response.status(401).json({ message: "Session not found." });
     return;
   }
 

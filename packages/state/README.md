@@ -1,19 +1,32 @@
 # `@repo/state`
 
-Shared state package with parallel Redux Toolkit and Zustand implementations behind one common contract.
+Shared state package that exposes one normalized surface while allowing Redux Toolkit, Zustand, and agnostic manager hooks to coexist.
 
-## What It Solves
+## Purpose
 
-This package lets the app use one normalized state surface while choosing the underlying implementation.
+Use this package when feature code should stay stable even if the underlying state implementation changes.
 
-- `src/redux` contains the Redux Toolkit version
-- `src/zustand` contains the Zustand version
-- `src/managers` contains the agnostic provider and hooks
-- `src/shared` holds contracts, selectors, and shared state types
+## Tech Highlights
+
+- Redux Toolkit implementation
+- Zustand implementation
+- agnostic provider and hook layer
+- runtime switching between Redux and Zustand
+
+## Consumed By
+
+- `@repo/hooks`
+- `apps/web`
+
+## Implementation References
+
+- shared contracts and selectors: `src/shared`
+- Redux implementation: `src/redux`
+- Zustand implementation: `src/zustand`
+- agnostic manager hooks: `src/managers`
+- main demo page: `apps/web/src/pages/static/Home/Home.tsx`
 
 ## Current Features
-
-The package currently supports:
 
 - counter state
 - contact form state
@@ -50,4 +63,6 @@ capabilities:
   - "Feedback form state"
   - "Runtime switching between Redux and Zustand"
   - "Agnostic hooks hiding the underlying implementation"
+implementation_refs:
+  - "apps/web/src/pages/static/Home/Home.tsx"
 ```

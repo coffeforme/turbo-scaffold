@@ -1,17 +1,25 @@
 # `@repo/types`
 
-Placeholder package for workspace-wide TypeScript domain types.
+Shared TypeScript contract package reserved for cross-package domain models and DTOs.
 
-## Intended Role
+## Purpose
 
-Use this package when a contract needs to be shared across multiple packages without dragging runtime code along with it.
+Use this package when a type must be shared across multiple packages without pulling runtime code into the dependency graph.
 
-Good candidates:
+## Tech Highlights
 
-- domain DTOs
-- normalized app contracts
-- shared API payload types
-- reusable entity models
+- TypeScript-only contracts
+- zero runtime dependency
+- clean place for shared domain DTOs and entity models
+
+## Consumed By
+
+- currently minimal usage
+- intended for broad workspace reuse as shared contracts grow
+
+## Implementation References
+
+- add shared domain models directly under `src` when they become cross-package concerns
 
 ## AI Context
 
@@ -19,6 +27,8 @@ Good candidates:
 package: "@repo/types"
 purpose: "Central location for shared TypeScript-only domain contracts."
 entrypoints: []
+look_here_first:
+  - "src"
 structure:
   - "Add shared domain models here before duplicating contracts across packages."
 runtime_dependencies: []

@@ -1,22 +1,33 @@
 # `@repo/persistence`
 
-Shared persistence helpers for browser storage.
+Shared browser persistence helpers for app and package state that should survive page changes, sessions, or cookie boundaries.
 
-## What It Provides
+## Purpose
 
-This package exposes three browser-focused persistence utilities:
+Use this package instead of calling `localStorage`, `sessionStorage`, or `document.cookie` directly inside feature code.
 
-- `localStorageStore` for longer-lived client preferences
-- `sessionStorageStore` for tab-scoped or session-scoped state
-- `cookieStorage` for cookie-based persistence when path, expiry, or browser/server boundaries matter
+## Tech Highlights
 
-There is also a backward-compatible `storage` export that maps to `localStorageStore`.
+- typed `localStorageStore`
+- typed `sessionStorageStore`
+- `cookieStorage` with expiry and path options
+- graceful no-op behavior when browser APIs are unavailable
+
+## Consumed By
+
+- `@repo/auth`
+- browser-facing packages that need persisted client state
+
+## Implementation References
+
+- `src/index.ts`
+- auth session usage: `packages/auth/src/sessionStorage.ts`
 
 ## Recommended Usage
 
-- Use `localStorageStore` for UI preferences like theme, dismissals, or cached view settings.
-- Use `sessionStorageStore` for auth session snapshots and state that should clear with the browser tab or session.
-- Use `cookieStorage` when you need cookie semantics like expiry, `SameSite`, path scoping, or interoperability with backend expectations.
+- `localStorageStore` for longer-lived client preferences
+- `sessionStorageStore` for auth sessions and tab-scoped state
+- `cookieStorage` when cookie semantics or backend interoperability matter
 
 ## Example
 
@@ -40,8 +51,10 @@ package: "@repo/persistence"
 purpose: "Reusable browser persistence helpers with explicit localStorage, sessionStorage, and cookie APIs."
 entrypoints:
   - "src/index.ts"
-structure:
+look_here_first:
   - "src/index.ts"
+structure:
+  - "src/index.ts: browser persistence helpers"
 runtime_dependencies: []
 used_by:
   - "@repo/auth"
@@ -57,4 +70,6 @@ recommended_usage:
   localStorageStore: "Longer-lived client preferences"
   sessionStorageStore: "Session-scoped auth and tab-bound state"
   cookieStorage: "Cookie-bound data with expiry or backend/browser interoperability"
+implementation_refs:
+  - "packages/auth/src/sessionStorage.ts"
 ```

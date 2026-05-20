@@ -1,6 +1,43 @@
-# My Turborepo
+# Turbo Monorepo Scaffold
 
-Template scaffold for professional, highly decoupled web applications with React + Vite, shared UI, flexible state management, reusable infrastructure packages, and a dedicated Storybook app to start developing quickly.
+Professional scaffold for decoupled web applications with React, Vite, Turbo, shared packages, provider-based auth, flexible state management, and Storybook-backed UI development.
+
+## Table of Contents
+
+- [Purpose](#purpose)
+- [Core Ideas](#core-ideas)
+- [Tech Highlights](#tech-highlights)
+- [Quick Start](#quick-start)
+- [Workspace Layout](#workspace-layout)
+- [Package Docs](#package-docs)
+- [Storybook](#storybook)
+- [Auth and API Demo Surfaces](#auth-and-api-demo-surfaces)
+- [Scaffold Integration](#scaffold-integration)
+- [Commit Conventions](#commit-conventions)
+- [AI Context](#ai-context)
+
+## Purpose
+
+This repository is a monorepo-first starting point for teams that want to build web applications with strong package boundaries, shared UI artifacts, and swappable runtime concerns such as state and authentication.
+
+## Core Ideas
+
+- apps and packages should stay clearly separated
+- transport, auth, persistence, and state should be abstracted behind reusable interfaces
+- UI artifacts should be shareable and documented in isolation
+- teams should be able to start with working defaults and evolve implementations without reshaping feature code
+
+This scaffold is opinionated about structure, but flexible about implementation choices inside that structure.
+
+## Tech Highlights
+
+- React + Vite for the main web app
+- Turbo for workspace orchestration
+- TypeScript across apps and packages
+- Sass and SCSS Modules for styling
+- Storybook for UI artifact development
+- Express sample auth API for custom backend flows
+- provider-based API and auth abstractions
 
 ## Quick Start
 
@@ -38,96 +75,43 @@ pnpm build
 
 ### Apps
 
-- `apps/web`: main React + Vite application
+- `apps/web`: main React + Vite application and integration surface for the shared packages
 - `apps/auth-api`: sample Express API for custom and mixed authentication flows
 - `apps/storybook`: isolated component showcase for `@repo/ui`
 
 ### Packages
 
-- `packages/ui`: shared design system components and Sass styles
-- `packages/state`: shared state package with Redux and Zustand implementations
-- `packages/hooks`: shared business and UI hooks
-- `packages/api`: API client helpers with pluggable fetch and axios providers
-- `packages/auth`: shared auth providers for Azure, Firebase, and custom API backends
-- `packages/infrastructure`: infrastructure adapters and providers
-- `packages/persistence`: persistence helpers
-- `packages/math`: sample shared utilities
-- `packages/types`: shared TypeScript types
+- `packages/ui`: shared design system, charts, overlays, upload manager, and Storybook-backed UI artifacts
+- `packages/state`: shared state layer with Redux, Zustand, and agnostic manager hooks
+- `packages/hooks`: app-facing feature hooks composed from API and state
+- `packages/api`: provider-based API client abstraction
+- `packages/auth`: auth providers, session system, and authorization helpers
+- `packages/infrastructure`: low-level HTTP and adapter implementations
+- `packages/persistence`: browser persistence helpers
+- `packages/math`: framework-agnostic math helpers
+- `packages/types`: shared TypeScript contracts
 - `packages/utils`: general utilities
-- `packages/eslint-config`: shared ESLint configuration
-- `packages/typescript-config`: shared TypeScript configuration
+- `packages/eslint-config`: shared linting presets
+- `packages/typescript-config`: shared TypeScript presets
 
-## State Management
+## Package Docs
 
-This workspace supports two state management libraries: **Redux Toolkit** and **Zustand**.
+Each package README includes:
 
-The `@repo/state` package is organized by implementation:
+- a short onboarding-focused purpose section
+- tech highlights for maintenance and implementation choices
+- current consumers
+- implementation pointers
+- an ending `AI Context` block for fast machine-readable refresh
 
-```text
-packages/state/src/
-  shared/    # shared RootState types, selectors, and StateManager contract
-  redux/     # Redux store, slices, hooks, and ReduxStateManager
-  zustand/   # Zustand store, hooks, and ZustandStateManager
-  managers/  # agnostic factory/provider/hooks built on the shared contract
-```
+Useful places to start:
 
-The app includes a runtime toggle on the Home page so you can compare Redux and Zustand with the same features.
-
-### Recommended Usage
-
-Use the agnostic hooks from `@repo/state` when you want components to stay independent from the underlying implementation:
-
-```ts
-import {
-  useAgnosticCounter,
-  useAgnosticContactForm,
-  useAgnosticFeedbackForm,
-} from "@repo/state";
-```
-
-If you want to choose an implementation directly:
-
-```ts
-import {
-  ReduxStateManager,
-  ZustandStateManager,
-  StateManagerFactory,
-} from "@repo/state";
-```
-
-## UI and Styling
-
-The shared UI library lives in `packages/ui` and follows Atomic Design.
-
-Current UI layers:
-
-- Atoms: `Button`, `Input`, `Label`, `Rating`, `Select`, `Textarea`
-- Molecules: `Counter`
-- Organisms: `Header`, `FeedbackForm`
-
-Styling is based on **Sass/SCSS**:
-
-- `packages/ui` uses **SCSS Modules** for reusable component styles
-- `apps/web` uses app-level SCSS for page and layout styling
-- shared tokens and mixins live under `packages/ui/styles`
-
-## API and Auth Providers
-
-This workspace now includes a provider-based auth layer:
-
-- `AzureAuthProvider` for Microsoft / Azure SSO
-- `FirebaseAuthProvider` for Firebase Auth popup flows
-- `CustomApiAuthProvider` for your own backend, implemented on top of `createFetchApiClient` from `@repo/api`
-- `MixedAuthProvider` for SSO identity plus backend authorization claims
-
-All auth providers now persist the normalized session through `@repo/persistence`, so access control can evaluate the last known user, roles, permissions, claims, and tokens from local storage.
-
-The web app includes a dedicated login demo page that exercises those providers through a shared login component, while Home stays focused as the quick view.
-
-Useful package docs:
-
-- `packages/api/README.md`
+- `packages/ui/README.md`
 - `packages/auth/README.md`
+- `packages/state/README.md`
+- `packages/api/README.md`
+- `apps/storybook/README.md`
+- `apps/auth-api/README.md`
 
 ## Storybook
 
@@ -140,19 +124,29 @@ pnpm --filter storybook dev
 pnpm --filter storybook build
 ```
 
-More guidance is available in `apps/storybook/README.md`.
+Storybook authoring guidance lives in `apps/storybook/README.md`.
 
-## Tooling
+## Auth and API Demo Surfaces
 
-This workspace uses:
+The workspace includes a full provider-based auth path:
 
-- TypeScript
-- Vite
-- Turbo
-- Sass
-- ESLint
-- Prettier
-- Storybook
+- Azure SSO
+- Firebase auth
+- custom backend auth
+- mixed SSO plus backend-authorization flow
+
+Demo and implementation references:
+
+- `packages/auth/README.md`
+- `packages/api/README.md`
+- `apps/auth-api/README.md`
+- `apps/web/src/pages/static/AuthDemo/AuthDemo.tsx`
+
+## Scaffold Integration
+
+This repository is also intended to be exposed as a scaffold option in the broader scaffold tooling.
+
+The deeper scaffold-tool alignment notes live in [SCAFFOLD_INTEGRATION.md](S:\coffee\workspaces\code\research\turbo-repo\my-turborepo\SCAFFOLD_INTEGRATION.md).
 
 ## Commit Conventions
 
@@ -173,3 +167,40 @@ git commit -F COMMIT_MESSAGE.txt
 ```
 
 `COMMIT_MESSAGE.txt` is a local draft file used by the repository tooling and is intentionally ignored by git.
+
+## AI Context
+
+```yaml
+repo: "turbo-monorepo-scaffold"
+purpose: "Monorepo scaffold for package-based web applications."
+apps:
+  - "apps/web: main app"
+  - "apps/auth-api: auth demo backend"
+  - "apps/storybook: UI showcase"
+packages:
+  - "@repo/ui: design system"
+  - "@repo/state: Redux, Zustand, agnostic hooks"
+  - "@repo/hooks: feature hooks"
+  - "@repo/api: provider-based API client"
+  - "@repo/auth: auth, sessions, access checks"
+  - "@repo/infrastructure: low-level adapters"
+  - "@repo/persistence: browser storage helpers"
+  - "@repo/math: small helpers"
+  - "@repo/types: shared contracts"
+  - "@repo/utils: generic utilities"
+  - "@repo/eslint-config: lint presets"
+  - "@repo/typescript-config: tsconfig presets"
+look_here_first:
+  - "README.md"
+  - "packages/ui/README.md"
+  - "packages/auth/README.md"
+  - "packages/state/README.md"
+  - "packages/api/README.md"
+tech_highlights:
+  - "React + Vite"
+  - "Turbo"
+  - "TypeScript"
+  - "Sass"
+  - "Storybook"
+  - "Provider-based auth and API"
+```

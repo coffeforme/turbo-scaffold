@@ -1,17 +1,31 @@
 # `@repo/hooks`
 
-Shared business and UI hooks consumed by the web app.
+Shared feature hooks that compose state, API, and UI concerns into app-facing behavior.
+
+## Purpose
+
+Use this package when a hook belongs to product behavior rather than to a low-level utility or a single package implementation detail.
+
+## Tech Highlights
+
+- form hooks built on shared state
+- API-facing hooks built on `@repo/api`
+- app-ready feature composition for `apps/web`
+
+## Consumed By
+
+- `apps/web`
+
+## Implementation References
+
+- feature/data hooks: `src/data`
+- API hooks: `src/api`
+- primary consumer: `apps/web`
 
 ## What Lives Here
 
-This package composes the lower-level workspace packages into feature-ready hooks.
-
 - `src/data` contains app-facing hooks for forms and page data
 - `src/api` contains hooks that talk to backend-oriented APIs
-
-## Guidance
-
-Keep hooks here when they combine state, API, and view concerns for consumers like `apps/web`. If a hook is just a generic React utility, it likely belongs somewhere else.
 
 ## AI Context
 
@@ -37,4 +51,7 @@ capabilities:
   - "Contact form hooks"
   - "Feedback form hooks"
   - "API-facing request hooks"
+implementation_refs:
+  - "apps/web/src/pages/static/Home/Home.tsx"
+  - "apps/web/src/pages/static/AuthDemo/AuthDemo.tsx"
 ```

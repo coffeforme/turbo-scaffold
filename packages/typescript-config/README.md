@@ -1,6 +1,25 @@
 # `@repo/typescript-config`
 
-Shared TypeScript configuration presets for workspace packages and apps.
+Shared TypeScript preset package for apps and packages across the workspace.
+
+## Purpose
+
+Use this package to keep TypeScript project settings aligned instead of copying compiler options into every `tsconfig`.
+
+## Tech Highlights
+
+- reusable `base.json`
+- Vite-oriented `vite.json`
+- low-friction `extends` usage across apps and packages
+
+## Consumed By
+
+- nearly every app and package in the workspace
+
+## Implementation References
+
+- `base.json`
+- `vite.json`
 
 ## Example
 
@@ -11,17 +30,15 @@ Shared TypeScript configuration presets for workspace packages and apps.
 }
 ```
 
-## Available Presets
-
-- `base.json` for general package defaults
-- `vite.json` for Vite-based apps and browser-focused TypeScript settings
-
 ## AI Context
 
 ```yaml
 package: "@repo/typescript-config"
 purpose: "Shared TypeScript presets for apps and packages."
 entrypoints:
+  - "base.json"
+  - "vite.json"
+look_here_first:
   - "base.json"
   - "vite.json"
 structure:

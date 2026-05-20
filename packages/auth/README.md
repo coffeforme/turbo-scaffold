@@ -1,35 +1,59 @@
 # `@repo/auth`
 
-`@repo/auth` provides a shared authentication abstraction for web apps in this workspace.
+Shared authentication and authorization package for the workspace, designed to normalize sessions and access checks across multiple identity providers.
+
+## Purpose
+
+Use this package when apps need one consistent auth surface even though sign-in may come from Azure, Firebase, a custom backend, or a mixed SSO-plus-authorization flow.
+
+## Tech Highlights
+
+- Azure provider built on `@azure/msal-browser`
+- Firebase provider built on `firebase/auth`
+- custom API provider built on `@repo/api`
+- mixed provider for SSO identity plus backend authorization claims
+- persisted normalized sessions via `@repo/persistence`
+- React system providers for provider creation and session state
+- `AccessRight` for hide, disable, redirect, and error effects
+
+## Consumed By
+
+- `apps/web`
+
+## Implementation References
+
+- provider system: `src/react/AuthProviderSystem.tsx`
+- session system: `src/react/AuthSessionProvider.tsx`
+- access checks: `src/react/AccessRight.tsx`, `src/access.ts`
+- provider implementations: `src/providers`
+- persisted session helpers: `src/sessionStorage.ts`
+- web demo page: `apps/web/src/pages/static/AuthDemo/AuthDemo.tsx`
+- custom backend sample: `apps/auth-api/src/index.ts`
 
 ## Architecture
 
 The package is split into three practical layers:
 
-- provider implementations that know how to authenticate with Azure, Firebase, your own backend, or a mixed SSO-plus-authorization flow
+- provider implementations that know how to authenticate with Azure, Firebase, your own backend, or a mixed flow
 - session utilities that normalize and persist the current auth session
 - React helpers that expose the session and provider system to app code
 
-That means app pages can focus on user flows while the package keeps provider-specific details in one place.
-
 ## Included Providers
 
-- `AzureAuthProvider` for Azure AD / Microsoft Entra sign-in with MSAL
-- `FirebaseAuthProvider` for Firebase Auth popup sign-in flows
-- `CustomApiAuthProvider` for your own backend using the fetch-based client from `@repo/api`
-- `MixedAuthProvider` for SSO sign-in followed by backend authorization claims
+- `AzureAuthProvider`
+- `FirebaseAuthProvider`
+- `CustomApiAuthProvider`
+- `MixedAuthProvider`
 
 ## System Provider Layer
 
-`AuthProviderSystem` is the component responsible for creating auth provider instances for the current app session.
+`AuthProviderSystem` owns app-level provider creation for the current runtime session.
 
-It holds:
+It keeps:
 
 - the active provider kind
-- provider-specific configuration for Azure, Firebase, and custom API auth
+- provider configuration
 - helpers to `createProvider()`, `prepareProvider()`, `getActiveProvider()`, and `resetProvider()`
-
-This is the right place for provider creation because it keeps that concern in the app’s system boundary instead of scattering it through pages.
 
 Typical app setup:
 
@@ -45,45 +69,25 @@ export function SystemProviders({ children }: { children: React.ReactNode }) {
 }
 ```
 
-Then page-level code can consume the provider system with:
-
-```ts
-import { useAuthProviderSystem } from "@repo/auth";
-
-const { providerKind, prepareProvider } = useAuthProviderSystem();
-```
-
 ## Session Layer
 
-`AuthSessionProvider` owns the shared normalized session state for the app.
+`AuthSessionProvider` owns the normalized session for the app and is responsible for:
 
-It is responsible for:
-
-- hydrating the current session from persistence on startup
+- hydrating persisted session data on startup
 - exposing `session`, `setSession`, `clearSession`, and `refreshSession`
-- making access checks available through the shared auth context
 - synchronizing session changes with browser storage
-
-Useful exports:
-
-```ts
-import {
-  AuthSessionProvider,
-  useAuthSession,
-  AUTH_SESSION_STORAGE_KEY,
-  clearPersistedSession,
-  getPersistedSession,
-  persistSession,
-} from "@repo/auth";
-```
+- making authorization-aware UI checks possible through the shared context
 
 ## Persistence
 
-All providers persist the normalized `AuthSession` via `@repo/persistence`.
+All providers persist the normalized `AuthSession` through `@repo/persistence`.
 
-By default, the shared auth session is stored in `sessionStorage` through `sessionStorageStore`, which is a better default for browser auth state than `localStorage` because it is scoped to the current browsing session.
+Default behavior:
 
-That includes:
+- storage key: `repo.auth.session`
+- storage backend: `sessionStorageStore`
+
+Stored session data includes:
 
 - access token
 - refresh token
@@ -93,51 +97,9 @@ That includes:
 - permissions
 - claims
 
-## Normalized Session Shape
-
-All providers return the same `AuthSession` structure:
-
-```ts
-type AuthSession = {
-  accessToken?: string | null;
-  refreshToken?: string | null;
-  idToken?: string | null;
-  issuedAt?: number;
-  expiresAt?: number | null;
-  provider: string;
-  user?: {
-    id: string;
-    email?: string | null;
-    name?: string | null;
-    avatarUrl?: string | null;
-    roles?: string[];
-    permissions?: string[];
-    claims?: Record<string, unknown>;
-  } | null;
-};
-```
-
-## Provider Responsibilities
-
-Each provider shares the same contract:
-
-- `signIn()`
-- `signOut()`
-- `getSession()`
-- `getAccessToken()`
-- `isAuthenticated()`
-- optional `initialize()`
-
-What differs is the external system they talk to:
-
-- `AzureAuthProvider` handles MSAL popup login and silent token acquisition
-- `FirebaseAuthProvider` handles popup-based Firebase identity providers
-- `CustomApiAuthProvider` delegates auth to your own backend through `@repo/api`
-- `MixedAuthProvider` composes an identity provider and the custom API provider so SSO can be followed by app-specific authorization claims
-
 ## Access Control
 
-The package also exports:
+The package exports:
 
 - `AuthSessionProvider`
 - `AuthProviderSystem`
@@ -146,24 +108,12 @@ The package also exports:
 - `AccessRight`
 - `hasAccess()`
 
-`AccessRight` can hide content, disable controls, redirect unauthorized users, or render a custom error component based on the shared session and required roles or permissions.
+`AccessRight` can:
 
-## Example
-
-```ts
-import { AzureAuthProvider } from "@repo/auth";
-
-const auth = new AzureAuthProvider({
-  auth: {
-    clientId: "<client-id>",
-    authority: "https://login.microsoftonline.com/common",
-    redirectUri: window.location.origin,
-  },
-});
-
-await auth.initialize?.();
-const session = await auth.signIn();
-```
+- hide content
+- disable controls
+- redirect unauthorized users
+- render a custom error component
 
 ## React Usage Example
 
@@ -198,6 +148,7 @@ entrypoints:
 look_here_first:
   - "src/react/AuthProviderSystem.tsx"
   - "src/react/AuthSessionProvider.tsx"
+  - "src/react/AccessRight.tsx"
   - "src/providers"
   - "src/sessionStorage.ts"
   - "src/access.ts"
@@ -207,7 +158,7 @@ structure:
   - "src/react/AuthSessionProvider.tsx: normalized session state and persistence bridge"
   - "src/react/AccessRight.tsx: component-level authorization effects"
   - "src/sessionStorage.ts: persisted session helpers"
-  - "src/access.ts: role/permission/claim evaluation"
+  - "src/access.ts: role, permission, and claim evaluation"
 runtime_dependencies:
   - "@repo/api"
   - "@repo/persistence"
@@ -225,10 +176,13 @@ capabilities:
   - "Persisted normalized sessions"
   - "Role, permission, and claim checks"
   - "AccessRight, AuthSessionProvider, useAuthSession, useAuthProviderSystem"
+implementation_refs:
+  - "apps/web/src/pages/static/AuthDemo/AuthDemo.tsx"
+  - "apps/auth-api/src/index.ts"
 session_storage_key: "repo.auth.session"
 session_storage_backend: "sessionStorageStore from @repo/persistence"
 app_integration_pattern:
   - "Wrap the app with AuthProviderSystem before AuthSessionProvider"
-  - "Use useAuthProviderSystem in pages that need to create or prepare provider instances"
+  - "Use useAuthProviderSystem where provider instances must be created or prepared"
   - "Use useAuthSession for the current normalized session"
 ```
