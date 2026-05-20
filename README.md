@@ -12,6 +12,7 @@ Professional scaffold for decoupled web applications with React, Vite, Turbo, sh
 - [Package Docs](#package-docs)
 - [Storybook](#storybook)
 - [Auth and API Demo Surfaces](#auth-and-api-demo-surfaces)
+- [Live Demo](#live-demo)
 - [Scaffold Integration](#scaffold-integration)
 - [Commit Conventions](#commit-conventions)
 - [AI Context](#ai-context)
@@ -146,6 +147,12 @@ Demo and implementation references:
 - `packages/api/README.md`
 - `apps/auth-api/README.md`
 - `apps/web/src/pages/static/AuthDemo/AuthDemo.tsx`
+
+## Live Demo
+
+GitHub Pages quick view:
+
+- https://coffeforme.github.io/turbo-scaffold/quick-view
 
 ## Scaffold Integration
 
