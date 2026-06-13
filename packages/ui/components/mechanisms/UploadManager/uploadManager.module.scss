@@ -12,9 +12,9 @@
   z-index: 950;
   width: min(24rem, calc(100vw - 2rem));
   border-radius: 1.25rem;
-  border: 1px solid rgba(15, 118, 110, 0.18);
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 24px 48px -26px rgba(15, 23, 42, 0.34);
+  border: 1px solid color-mix(in srgb, var(--ui-color-primary, #{$color-primary}) 18%, transparent);
+  background: color-mix(in srgb, var(--ui-color-surface, #{$color-surface}) 96%, transparent);
+  box-shadow: 0 24px 48px -26px color-mix(in srgb, var(--ui-color-shadow, #{$color-shadow}) 100%, transparent);
   backdrop-filter: blur(14px);
 }
 
@@ -29,7 +29,7 @@
   right: auto;
   bottom: auto;
   width: 100%;
-  box-shadow: 0 16px 32px -26px rgba(15, 23, 42, 0.25);
+  box-shadow: 0 16px 32px -26px color-mix(in srgb, var(--ui-color-shadow, #{$color-shadow}) 84%, transparent);
 }
 
 .expanded {
@@ -54,7 +54,7 @@
 }
 
 .panelTitle {
-  color: $color-ink;
+  color: var(--ui-color-ink, #{$color-ink});
   font-family: $font-display;
 }
 
@@ -67,7 +67,7 @@
 
 .linkAction {
   background: transparent;
-  color: $color-primary-strong;
+  color: var(--ui-color-primary-strong, #{$color-primary-strong});
 }
 
 .toggle,
@@ -76,8 +76,8 @@
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  background: rgba(15, 118, 110, 0.12);
-  color: $color-primary-strong;
+  background: color-mix(in srgb, var(--ui-color-primary, #{$color-primary}) 12%, transparent);
+  color: var(--ui-color-primary-strong, #{$color-primary-strong});
   transition: transform 160ms ease, background 160ms ease;
 }
 
@@ -88,7 +88,7 @@
 
 .toggle:hover,
 .minimizedTrigger:hover {
-  background: rgba(15, 118, 110, 0.18);
+  background: color-mix(in srgb, var(--ui-color-primary, #{$color-primary}) 18%, transparent);
   transform: translateY(-1px);
 }
 
@@ -99,7 +99,7 @@
   z-index: 950;
   width: 3.25rem;
   height: 3.25rem;
-  box-shadow: 0 20px 36px -22px rgba(15, 23, 42, 0.45);
+  box-shadow: 0 20px 36px -22px color-mix(in srgb, var(--ui-color-shadow, #{$color-shadow}) 100%, transparent);
 }
 
 .inlineMinimizedTrigger {
@@ -116,8 +116,8 @@
   height: 1.2rem;
   padding-inline: 0.2rem;
   border-radius: 999px;
-  background: $color-primary-strong;
-  color: white;
+  background: var(--ui-color-primary-strong, #{$color-primary-strong});
+  color: var(--ui-color-surface, #{$color-surface});
   font-size: 0.7rem;
   font-weight: 700;
   line-height: 1.2rem;
@@ -142,8 +142,8 @@
   gap: $space-2;
   padding: $space-3;
   border-radius: 1rem;
-  background: rgba(248, 250, 252, 0.94);
-  border: 1px solid rgba(90, 106, 133, 0.12);
+  background: color-mix(in srgb, var(--ui-color-surface-soft, #{$color-surface-soft}) 94%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ui-color-border, #{$color-border}) 68%, transparent);
 }
 
 .uploadMeta {
@@ -152,11 +152,11 @@
 }
 
 .fileName {
-  color: $color-ink;
+  color: var(--ui-color-ink, #{$color-ink});
 }
 
 .fileInfo {
-  color: $color-slate;
+  color: var(--ui-color-slate, #{$color-slate});
   font-size: 0.84rem;
 }
 
@@ -165,8 +165,8 @@
   align-items: center;
   padding: 0.28rem 0.6rem;
   border-radius: 999px;
-  background: rgba(15, 118, 110, 0.1);
-  color: $color-primary-strong;
+  background: color-mix(in srgb, var(--ui-color-primary, #{$color-primary}) 10%, transparent);
+  color: var(--ui-color-primary-strong, #{$color-primary-strong});
   font-size: 0.75rem;
   font-weight: 700;
 }
@@ -182,5 +182,5 @@
 .emptyState {
   padding: $space-3;
   border-radius: 1rem;
-  background: rgba(248, 250, 252, 0.94);
+  background: color-mix(in srgb, var(--ui-color-surface-soft, #{$color-surface-soft}) 94%, transparent);
 }

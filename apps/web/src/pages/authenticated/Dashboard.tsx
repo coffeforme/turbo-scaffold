@@ -1,5 +1,5 @@
 import { useAuthSession } from "@repo/auth";
-import { BarChart, Card, DonutChart, Header, Table, Text } from "@repo/ui";
+import { BarChart, Card, DonutChart, ErrorState, Header, Table, Text } from "@repo/ui";
 import styles from "./Dashboard.module.scss";
 
 const activityRows = [
@@ -7,6 +7,22 @@ const activityRows = [
   { metric: "Uploads", count: 37 },
   { metric: "Creations", count: 19 },
 ];
+
+export function DashboardAccessFallback() {
+  return (
+    <div className={styles.page}>
+      <div className={styles.intro}>
+        <Header title="Dashboard" />
+        <Text tone="muted">
+          This area is still part of the authenticated experience, but your current session does not include the
+          `view` permission required to load the dashboard data.
+        </Text>
+      </div>
+
+      <ErrorState />
+    </div>
+  );
+}
 
 const Dashboard = () => {
   const { session } = useAuthSession();
@@ -58,10 +74,10 @@ const Dashboard = () => {
         >
           <DonutChart
             segments={[
-              { label: "View", value: session?.user?.permissions?.includes("view") ? 1 : 0, color: "#0f766e" },
-              { label: "Upload", value: session?.user?.permissions?.includes("upload") ? 1 : 0, color: "#f59e0b" },
-              { label: "Create", value: session?.user?.permissions?.includes("create") ? 1 : 0, color: "#334155" },
-              { label: "Delete", value: session?.user?.permissions?.includes("delete") ? 1 : 0, color: "#b91c1c" },
+              { label: "View", value: session?.user?.permissions?.includes("view") ? 1 : 0, color: "var(--ui-color-primary)" },
+              { label: "Upload", value: session?.user?.permissions?.includes("upload") ? 1 : 0, color: "var(--ui-color-accent)" },
+              { label: "Create", value: session?.user?.permissions?.includes("create") ? 1 : 0, color: "var(--ui-color-slate)" },
+              { label: "Delete", value: session?.user?.permissions?.includes("delete") ? 1 : 0, color: "var(--ui-color-danger)" },
             ]}
             title="Permission coverage"
             totalLabel="Granted"

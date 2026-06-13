@@ -1,27 +1,65 @@
 @use "../../../packages/ui/styles/tokens" as *;
 
+.appFrame {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 100vh;
+  padding: 0 1rem;
+}
+
 .appShell {
   display: grid;
-  gap: $space-6;
-  padding: $space-6 0 $space-8;
+  gap: calc(var(--ui-container-gap, #{$space-4}) * 1.5);
+  width: var(--ui-content-width, 100%);
+  min-width: 0;
+  margin: 0 auto;
+  padding: calc(var(--ui-container-gap, #{$space-4}) * 1.5) 0 calc(var(--ui-container-gap, #{$space-4}) * 2);
+}
+
+.navbarWrap {
+  display: grid;
+  min-width: 0;
+}
+
+.navbarFixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 90;
+}
+
+.navbarFixedInner {
+  width: 100%;
+}
+
+.contentFixed {
+  padding-top: 8.5rem;
 }
 
 .content {
   display: grid;
-  gap: $space-5;
+  gap: calc(var(--ui-container-gap, #{$space-4}) * 1.25);
+  min-width: 0;
 }
 
 .accessMessage {
   display: grid;
   gap: $space-3;
-  padding: $space-6;
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  border-radius: $radius-lg;
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 16px 40px -28px $color-shadow;
+  padding: var(--ui-container-padding, #{$space-6});
+  border: 1px solid color-mix(in srgb, var(--ui-color-border, #{$color-border}) 86%, transparent);
+  border-radius: var(--ui-radius-container, #{$radius-lg});
+  background: color-mix(in srgb, var(--ui-color-surface, #{$color-surface}) 92%, transparent);
+  box-shadow: 0 16px 40px -28px var(--ui-color-shadow, #{$color-shadow});
 }
 
 .accessMessage h2,
 .accessMessage p {
   margin: 0;
+}
+
+@media (max-width: 1100px) {
+  .appFrame {
+    padding: 0 1rem;
+  }
 }

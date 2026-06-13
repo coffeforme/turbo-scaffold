@@ -4,19 +4,19 @@
 .wrap {
   @include card-surface;
   margin-top: $space-8;
-  padding: $space-8;
+  padding: var(--ui-container-padding, #{$space-8});
   text-align: left;
 }
 
 .title {
   margin: 0 0 $space-5;
-  color: $color-ink;
+  color: var(--ui-color-ink, #{$color-ink});
   font-family: $font-display;
   font-size: 1.6rem;
 }
 
 .confirmation {
-  color: $color-slate;
+  color: var(--ui-color-slate, #{$color-slate});
   font-family: $font-body;
 }
 
@@ -31,7 +31,7 @@
 }
 
 .label {
-  color: $color-ink;
+  color: var(--ui-color-ink, #{$color-ink});
   font-family: $font-display;
   font-size: 0.95rem;
   font-weight: 600;
@@ -39,10 +39,10 @@
 
 .select,
 .textarea {
-  border: 1px solid $color-border;
-  border-radius: $radius-md;
-  background: $color-surface;
-  color: $color-ink;
+  border: 1px solid var(--ui-color-border, #{$color-border});
+  border-radius: min(var(--ui-radius-container, #{$radius-md}), #{$radius-md});
+  background: var(--ui-color-surface, #{$color-surface});
+  color: var(--ui-color-ink, #{$color-ink});
   font-family: $font-body;
   font-size: 1rem;
   padding: 0.85rem 1rem;
@@ -67,9 +67,13 @@
 .submitButton {
   appearance: none;
   border: 0;
-  border-radius: 999px;
-  background: linear-gradient(135deg, $color-ink, #1d4d72);
-  color: $color-surface;
+  border-radius: var(--ui-radius-button, 999px);
+  background: linear-gradient(
+    135deg,
+    var(--ui-color-primary, #{$color-primary}),
+    var(--ui-color-primary-strong, #{$color-primary-strong})
+  );
+  color: var(--ui-color-surface, #{$color-surface});
   cursor: pointer;
   font-family: $font-display;
   font-weight: 700;
@@ -87,6 +91,6 @@
 
 .error {
   margin: 0;
-  color: $color-danger;
+  color: var(--ui-color-danger, #{$color-danger});
   font-family: $font-body;
 }

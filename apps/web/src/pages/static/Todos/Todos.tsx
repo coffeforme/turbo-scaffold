@@ -8,6 +8,7 @@ import {
   Header,
   Input,
   Label,
+  MarkdownContent,
   Select,
   Table,
   Text,
@@ -18,15 +19,47 @@ import type { TableColumn } from "@repo/ui";
 import { useTodosViewModel } from "./useTodosViewModel";
 import styles from "./Todos.module.scss";
 
-const implementationSnippet = `const todos = useTodosViewModel();
+const implementationMarkdown = `## MVVM Implementation
 
+This page keeps orchestration in the \`ViewModel\` while the view stays focused on composition.
+
+\`\`\`ts
+const draft = useTodosStore((state) => state.draft);
+const addTodo = useTodosStore((state) => state.addTodo);
+const requestDelete = useTodosStore((state) => state.requestDelete);
+\`\`\`
+
+\`\`\`tsx
 <AccessRight effect="disable" permissions={["create"]}>
-  <Button onClick={todos.addTodo}>Create Todo</Button>
+  <Button onClick={addTodo}>Create Todo</Button>
 </AccessRight>
 
 <AccessRight effect="disable" permissions={["upload"]}>
   <Button onClick={openUploadPicker}>Upload Asset</Button>
-</AccessRight>`;
+</AccessRight>
+\`\`\``;
+
+const mvvmPatternMarkdown = `## MVVM Pattern
+
+- \`useTodosViewModel.ts\` keeps page behavior out of the JSX view.
+- \`TodosStoreProvider\` in \`@repo/state\` owns a dedicated Zustand store for this page.
+- \`useTodosStore(...)\` exposes draft state, task items, and mutations.
+- \`@repo/ui\` provides the form atoms, cards, table, dialog, and flip-container shell.
+- \`AccessRight\` from \`@repo/auth\` disables actions instead of branching the whole UI.
+- \`useUploadManager()\` triggers the shared upload mechanism with page/section metadata.
+
+\`\`\`ts
+const draft = useTodosStore((state) => state.draft);
+const items = useTodosStore((state) => state.items);
+const addTodo = useTodosStore((state) => state.addTodo);
+const clearCompleted = useTodosStore((state) => state.clearCompleted);
+\`\`\`
+
+\`\`\`tsx
+<AccessRight effect="disable" permissions={["create"]}>
+  <Button onClick={addTodo}>Create Todo</Button>
+</AccessRight>
+\`\`\``;
 
 function TodoPriorityBadge({ priority }: { priority: TodoItem["priority"] }) {
   const className =
@@ -215,21 +248,15 @@ function TodosPageContent() {
               </div>
             </Card>
           }
-          back={<pre className={styles.snippet}>{implementationSnippet}</pre>}
+          back={<MarkdownContent className={styles.markdownBlock} markdown={implementationMarkdown} />}
         />
 
         <Card
-          eyebrow="State Pattern"
+          eyebrow="MVVM Pattern"
           title="What This Example Uses"
           description="A small implementation map for developers onboarding into the repo patterns."
         >
-          <div className={styles.stack}>
-            <Text>`useTodosViewModel.ts` keeps page logic out of the JSX view.</Text>
-            <Text>`TodosStoreProvider.tsx` owns a dedicated Zustand store for the page.</Text>
-            <Text>`@repo/ui` provides the cards, form atoms, table, dialog, and flip container.</Text>
-            <Text>`@repo/auth` disables actions through `AccessRight` instead of branching the whole UI.</Text>
-            <Text>`useUploadManager()` triggers the shared upload system with page and section metadata.</Text>
-          </div>
+          <MarkdownContent className={styles.markdownBlock} markdown={mvvmPatternMarkdown} />
         </Card>
       </div>
 

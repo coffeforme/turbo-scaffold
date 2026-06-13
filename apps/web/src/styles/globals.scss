@@ -1,18 +1,41 @@
 :root {
   --font-display: "Space Grotesk", "Segoe UI", sans-serif;
   --font-body: "DM Sans", "Segoe UI", sans-serif;
+  --ui-color-primary: #0f766e;
+  --ui-color-primary-strong: #115e59;
+  --ui-color-primary-soft: #ccfbf1;
+  --ui-color-primary-shadow: rgba(15, 118, 110, 0.75);
+  --ui-color-primary-border-soft: rgba(15, 118, 110, 0.24);
+  --ui-color-primary-border-medium: rgba(15, 118, 110, 0.28);
+  --ui-color-primary-border-strong: rgba(15, 118, 110, 0.5);
+  --ui-color-focus-ring: rgba(15, 118, 110, 0.22);
+  --ui-color-accent: #f59e0b;
+  --ui-color-ink: #132238;
+  --ui-color-slate: #5a6a85;
+  --ui-color-surface: #ffffff;
+  --ui-color-surface-soft: #f4f7fb;
+  --ui-color-border: #d7dfeb;
+  --ui-color-danger: #dc2626;
+  --ui-color-shadow: rgba(15, 23, 42, 0.12);
+  --ui-page-top: #eef4fb;
+  --ui-page-bottom: #f5f7fb;
+  --ui-radius-container: 1.75rem;
+  --ui-radius-button: 999px;
+  --ui-content-width: 100%;
+  --ui-container-padding: 1.5rem;
+  --ui-container-gap: 1rem;
   --color-page: #f5f7fb;
-  --color-ink: #132238;
-  --color-muted: #61708a;
-  --color-surface: rgba(255, 255, 255, 0.9);
-  --color-border: rgba(148, 163, 184, 0.24);
-  --color-accent: #0f766e;
-  --color-accent-soft: rgba(15, 118, 110, 0.14);
+  --color-ink: var(--ui-color-ink);
+  --color-muted: var(--ui-color-slate);
+  --color-surface: color-mix(in srgb, var(--ui-color-surface) 90%, white 10%);
+  --color-border: color-mix(in srgb, var(--ui-color-border) 46%, white 54%);
+  --color-accent: var(--ui-color-primary);
+  --color-accent-soft: color-mix(in srgb, var(--ui-color-primary) 14%, white 86%);
   font-family: var(--font-body);
   color: var(--color-ink);
   background:
-    radial-gradient(circle at top, rgba(15, 118, 110, 0.12), transparent 34%),
-    linear-gradient(180deg, #fbfcfe 0%, var(--color-page) 100%);
+    radial-gradient(circle at top, color-mix(in srgb, var(--ui-color-primary) 12%, transparent) 0%, transparent 34%),
+    linear-gradient(180deg, var(--ui-page-top) 0%, var(--ui-page-bottom) 100%);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -21,6 +44,10 @@
 
 * {
   box-sizing: border-box;
+}
+
+html {
+  scrollbar-gutter: stable;
 }
 
 html,
@@ -32,6 +59,10 @@ body,
 body {
   margin: 0;
   min-width: 320px;
+  color: var(--color-ink);
+  background:
+    radial-gradient(circle at top, color-mix(in srgb, var(--ui-color-primary) 12%, transparent) 0%, transparent 34%),
+    linear-gradient(180deg, var(--ui-page-top) 0%, var(--ui-page-bottom) 100%);
 }
 
 body,
@@ -54,9 +85,10 @@ select {
 }
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, color-mix(in srgb, var(--ui-color-primary) 12%, transparent) 0%, transparent 34%),
+    linear-gradient(180deg, var(--ui-page-top) 0%, var(--ui-page-bottom) 100%);
 }
 
 .logo {
@@ -66,12 +98,12 @@ select {
 }
 
 .logo:hover {
-  filter: drop-shadow(0 0 2rem rgba(15, 118, 110, 0.24));
+  filter: drop-shadow(0 0 2rem var(--ui-color-primary-border-soft));
   transform: translateY(-2px);
 }
 
 .logo.vanilla:hover {
-  filter: drop-shadow(0 0 2rem rgba(245, 158, 11, 0.28));
+  filter: drop-shadow(0 0 2rem color-mix(in srgb, var(--ui-color-accent) 34%, transparent));
 }
 
 .card {
@@ -80,15 +112,11 @@ select {
   border: 1px solid var(--color-border);
   border-radius: 1.75rem;
   background: var(--color-surface);
-  box-shadow: 0 28px 60px -36px rgba(15, 23, 42, 0.35);
+  box-shadow: 0 28px 60px -36px color-mix(in srgb, var(--ui-color-shadow) 100%, transparent);
   backdrop-filter: blur(10px);
 }
 
 @media (max-width: 768px) {
-  #app {
-    padding: 1.25rem;
-  }
-
   .card {
     padding: 1.25rem;
   }

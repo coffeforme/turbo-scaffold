@@ -18,20 +18,20 @@
   width: 62%;
   height: 62%;
   border-radius: 50%;
-  background: white;
+  background: var(--ui-color-surface, white);
   display: grid;
   place-items: center;
   align-content: center;
-  box-shadow: inset 0 0 0 1px rgba(90, 106, 133, 0.08);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ui-color-slate, #{$color-slate}) 12%, transparent);
 }
 
 .totalLabel {
-  color: $color-slate;
+  color: var(--ui-color-slate, #{$color-slate});
   font-size: 0.8rem;
 }
 
 .totalValue {
-  color: $color-ink;
+  color: var(--ui-color-ink, #{$color-ink});
   font-family: $font-display;
   font-size: 1.5rem;
 }
@@ -55,11 +55,11 @@
 }
 
 .legendLabel {
-  color: $color-slate;
+  color: var(--ui-color-slate, #{$color-slate});
 }
 
 .legendValue {
-  color: $color-ink;
+  color: var(--ui-color-ink, #{$color-ink});
   font-family: $font-display;
   font-weight: 700;
 }

@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import styles from "./navbar.module.scss";
 
 export interface NavbarItem {
@@ -12,11 +13,15 @@ interface NavbarProps {
   items: NavbarItem[];
   activeItemId: string;
   onNavigate: (itemId: string) => void;
+  className?: string;
+  style?: CSSProperties;
 }
 
-export function Navbar({ brand, items, activeItemId, onNavigate }: NavbarProps) {
+export function Navbar({ brand, items, activeItemId, onNavigate, className, style }: NavbarProps) {
+  const mergedClassName = className ? `${styles.navbar} ${className}` : styles.navbar;
+
   return (
-    <nav className={styles.navbar} aria-label="Primary navigation">
+    <nav aria-label="Primary navigation" className={mergedClassName} style={style}>
       <div className={styles.brandBlock}>
         <span className={styles.brand}>{brand}</span>
         <span className={styles.caption}>Decoupled app scaffold</span>

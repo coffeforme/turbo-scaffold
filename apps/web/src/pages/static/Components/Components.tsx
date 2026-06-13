@@ -251,9 +251,9 @@ const ComponentsPage = () => {
                   />
                   <DonutChart
                     segments={[
-                      { label: "View", value: 1, color: "#0f766e" },
-                      { label: "Upload", value: 1, color: "#f59e0b" },
-                      { label: "Delete", value: 0, color: "#b91c1c" },
+                      { label: "View", value: 1, color: "var(--ui-color-primary)" },
+                      { label: "Upload", value: 1, color: "var(--ui-color-accent)" },
+                      { label: "Delete", value: 0, color: "var(--ui-color-danger)" },
                     ]}
                     title="Permission coverage"
                     totalLabel="Granted"

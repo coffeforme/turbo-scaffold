@@ -4,8 +4,8 @@
 .card {
   @include card-surface;
   display: grid;
-  gap: $space-4;
-  padding: $space-5;
+  gap: var(--ui-container-gap, #{$space-4});
+  padding: var(--ui-container-padding, #{$space-5});
 }
 
 .header,
@@ -16,7 +16,7 @@
 }
 
 .eyebrow {
-  color: $color-primary-strong;
+  color: var(--ui-color-primary-strong, #{$color-primary-strong});
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -25,11 +25,11 @@
 
 .title {
   margin: 0;
-  color: $color-ink;
+  color: var(--ui-color-ink, #{$color-ink});
   font-family: $font-display;
 }
 
 .description {
   margin: 0;
-  color: $color-slate;
+  color: var(--ui-color-slate, #{$color-slate});
 }

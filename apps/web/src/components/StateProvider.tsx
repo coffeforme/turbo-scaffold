@@ -42,20 +42,11 @@ export const StateProvider: React.FC<StateProviderProps> = ({ children }) => {
     setProviderType,
   };
 
-  if (providerType === 'redux') {
-    return (
-      <StateProviderContext.Provider value={value}>
-        <Provider store={reduxStore}>
-          {children}
-        </Provider>
-      </StateProviderContext.Provider>
-    );
-  } else {
-    // Zustand doesn't need a provider
-    return (
-      <StateProviderContext.Provider value={value}>
+  return (
+    <StateProviderContext.Provider value={value}>
+      <Provider store={reduxStore}>
         {children}
-      </StateProviderContext.Provider>
-    );
-  }
+      </Provider>
+    </StateProviderContext.Provider>
+  );
 };

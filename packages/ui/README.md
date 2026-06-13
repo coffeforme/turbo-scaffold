@@ -12,7 +12,7 @@ Use this package for reusable UI artifacts that should stay consistent across ap
 - SCSS Modules for component styling
 - shared tokens and mixins under `styles`
 - Storybook-backed component demos
-- higher-order mechanisms for overlays, upload flows, and preview/code switching
+- higher-order mechanisms for overlays, upload flows, preview/code switching, and runtime theme controls
 
 ## Consumed By
 
@@ -37,6 +37,7 @@ Use this package for reusable UI artifacts that should stay consistent across ap
 - `molecules` for composed blocks like cards, counters, and tables
 - `organisms` for larger feature-ready sections like forms, navigation, charts, hierarchy tables, and error states
 - `mechanisms` for interaction-heavy system components like modal flows, preview/code flip containers, and the upload manager
+- `mechanisms` also includes the widget bar used to live-tune palette, container density/radius, and navbar layout in the web app shell
 
 ## Key Mechanisms
 
@@ -46,6 +47,7 @@ Use this package for reusable UI artifacts that should stay consistent across ap
 - `UploadManagerProvider` supports `internal`, `controlled`, or `zustand` state strategies
 - `UploadManagerPanel` supports minimized and resume views for global upload tracking
 - `UploadInput` can be used directly or through the manager
+- `WidgetBar` exposes palette selection, dark/Pantone/custom palettes, shared container density and radius controls, button radius, page width percentage, navbar layout controls, and a draggable shell
 
 ## Storybook
 
@@ -55,6 +57,7 @@ Examples:
 
 - `packages/ui/components/atoms/Button/button.stories.tsx`
 - `packages/ui/components/mechanisms/UploadManager/uploadManager.stories.tsx`
+- `packages/ui/components/mechanisms/WidgetBar/widgetBar.stories.tsx`
 - `packages/ui/components/organisms/HierarchyTable/hierarchyTable.stories.tsx`
 
 ## AI Context
@@ -90,10 +93,12 @@ capabilities:
   - "Modal and confirmation mechanisms with blur, transparent, plain, and custom opacity backdrop support"
   - "Flip-container preview/code switching with a fixed top-right SVG toggle"
   - "Upload manager with internal, controlled, or Zustand-backed state and source metadata per upload"
+  - "Widget bar for runtime palette switching, dark/Pantone/custom palettes, shared container density/radius, button radius, page width percentage, navbar layout controls, and draggable positioning"
   - "Shared SCSS tokens and mixins"
 storybook_refs:
   - "apps/storybook/README.md"
   - "packages/ui/components/**/*.stories.tsx"
 implementation_refs:
   - "apps/web/src/pages/static/Components/Components.tsx"
+  - "apps/web/src/App.tsx"
 ```

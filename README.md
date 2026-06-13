@@ -36,6 +36,7 @@ This scaffold is opinionated about structure, but flexible about implementation 
 - Turbo for workspace orchestration
 - TypeScript across apps and packages
 - Sass and SCSS Modules for styling
+- runtime palette and navbar layout controls through shared UI mechanisms
 - Storybook for UI artifact development
 - Express sample auth API for custom backend flows
 - provider-based API and auth abstractions
@@ -118,6 +119,13 @@ Useful places to start:
 - `packages/api/README.md`
 - `apps/storybook/README.md`
 - `apps/auth-api/README.md`
+
+The web app shell also includes a live widget bar that can:
+
+- switch shared UI palettes
+- define a custom palette
+- toggle the navbar between floating and fixed modes
+- adjust navbar margin and padding in real time
 
 ## Storybook
 

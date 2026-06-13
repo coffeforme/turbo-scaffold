@@ -14,19 +14,19 @@
 }
 
 .label {
-  color: $color-slate;
+  color: var(--ui-color-slate, #{$color-slate});
   font-size: 0.92rem;
 }
 
 .value {
-  color: $color-ink;
+  color: var(--ui-color-ink, #{$color-ink});
   font-family: $font-display;
   font-weight: 700;
 }
 
 .track {
   height: 0.8rem;
-  background: rgba(90, 106, 133, 0.14);
+  background: color-mix(in srgb, var(--ui-color-slate, #{$color-slate}) 16%, transparent);
   border-radius: 999px;
   overflow: hidden;
 }
@@ -37,13 +37,17 @@
 }
 
 .primary {
-  background: linear-gradient(135deg, #0f766e, #115e59);
+  background: linear-gradient(
+    135deg,
+    var(--ui-color-primary, #{$color-primary}),
+    var(--ui-color-primary-strong, #{$color-primary-strong})
+  );
 }
 
 .accent {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
+  background: linear-gradient(135deg, var(--ui-color-accent, #{$color-accent}), color-mix(in srgb, var(--ui-color-accent, #{$color-accent}) 76%, black 24%));
 }
 
 .neutral {
-  background: linear-gradient(135deg, #334155, #1e293b);
+  background: linear-gradient(135deg, var(--ui-color-slate, #{$color-slate}), color-mix(in srgb, var(--ui-color-ink, #{$color-ink}) 72%, black 28%));
 }

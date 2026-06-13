@@ -6,11 +6,14 @@ interface CardProps extends PropsWithChildren {
   eyebrow?: string;
   description?: string;
   footer?: ReactNode;
+  className?: string;
 }
 
-export function Card({ title, eyebrow, description, footer, children }: CardProps) {
+export function Card({ title, eyebrow, description, footer, children, className }: CardProps) {
+  const mergedClassName = className ? `${styles.card} ${className}` : styles.card;
+
   return (
-    <section className={styles.card}>
+    <section className={mergedClassName}>
       {title || eyebrow || description ? (
         <header className={styles.header}>
           {eyebrow ? <span className={styles.eyebrow}>{eyebrow}</span> : null}

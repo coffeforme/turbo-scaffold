@@ -5,6 +5,7 @@ import { Navigate } from "react-router-dom";
 export interface RouteAccessConfig {
   effect: "redirect" | "error";
   redirectTo?: string;
+  authenticated?: boolean;
   roles?: string[];
   permissions?: string[];
 }
@@ -17,10 +18,12 @@ interface RestrictedRouteProps {
 
 export function RestrictedRoute({ access, fallback, children }: RestrictedRouteProps) {
   const { session } = useAuthSession();
-  const allowed = hasAccess(session, {
+  const meetsAuthentication = access.authenticated ? Boolean(session?.user) : true;
+  const meetsAuthorization = hasAccess(session, {
     roles: access.roles,
     permissions: access.permissions,
   });
+  const allowed = meetsAuthentication && meetsAuthorization;
 
   if (allowed) {
     return <>{children}</>;

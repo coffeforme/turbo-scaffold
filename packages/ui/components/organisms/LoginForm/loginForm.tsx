@@ -29,6 +29,7 @@ interface LoginFormProps {
   successMessage?: string | null;
   children?: ReactNode;
   submitClassName?: string;
+  className?: string;
 }
 
 export function LoginForm({
@@ -44,9 +45,12 @@ export function LoginForm({
   successMessage,
   children,
   submitClassName,
+  className,
 }: LoginFormProps) {
+  const mergedClassName = className ? `${styles.card} ${className}` : styles.card;
+
   return (
-    <section className={styles.card}>
+    <section className={mergedClassName}>
       <div className={styles.header}>
         {providerLabel ? <span className={styles.badge}>{providerLabel}</span> : null}
         <h2 className={styles.title}>{title}</h2>

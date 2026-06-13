@@ -1,0 +1,368 @@
+@use "../../../styles/tokens" as *;
+@use "../../../styles/mixins" as *;
+
+.widgetBar {
+  @include card-surface;
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  z-index: 120;
+  inline-size: min(18rem, calc(100vw - 2rem));
+  display: grid;
+  align-content: start;
+  gap: $space-3;
+  padding: $space-3;
+  overflow: auto;
+  max-block-size: 70vh;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ui-color-primary-border-medium, rgba(15, 118, 110, 0.28))
+    color-mix(in srgb, var(--ui-color-surface-soft, #{$color-surface-soft}) 72%, white 28%);
+}
+
+.collapsed {
+  inline-size: 6.3rem;
+  padding: $space-2;
+  justify-items: center;
+  max-block-size: 70vh;
+}
+
+.collapsedDragHandle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  width: 100%;
+  min-block-size: 2rem;
+  padding: 0.35rem 0.45rem;
+  border: 1px solid var(--ui-color-border, #{$color-border});
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ui-color-surface-soft, #{$color-surface-soft}) 82%, white 18%);
+  color: var(--ui-color-ink, #{$color-ink});
+  cursor: grab;
+}
+
+.collapsedDragHandle:active {
+  cursor: grabbing;
+}
+
+.widgetBar::-webkit-scrollbar {
+  width: 0.62rem;
+}
+
+.widgetBar::-webkit-scrollbar-track {
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ui-color-surface-soft, #{$color-surface-soft}) 72%, white 28%);
+}
+
+.widgetBar::-webkit-scrollbar-thumb {
+  border: 2px solid color-mix(in srgb, var(--ui-color-surface-soft, #{$color-surface-soft}) 72%, white 28%);
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    var(--ui-color-primary-border-medium, rgba(15, 118, 110, 0.28)),
+    var(--ui-color-primary, #{$color-primary})
+  );
+}
+
+.section {
+  display: grid;
+  gap: $space-2;
+}
+
+.headerRow {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: $space-3;
+}
+
+.headerCopy {
+  display: grid;
+  gap: $space-2;
+}
+
+.dragHandle {
+  cursor: grab;
+  user-select: none;
+}
+
+.dragHandle:active {
+  cursor: grabbing;
+}
+
+.field,
+.colorField {
+  display: grid;
+  gap: $space-2;
+}
+
+.exportButton {
+  justify-self: start;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--ui-color-border, #{$color-border});
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ui-color-surface-soft, #{$color-surface-soft}) 84%, white 16%);
+  color: var(--ui-color-ink, #{$color-ink});
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.secondaryAction {
+  justify-self: stretch;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid var(--ui-color-border, #{$color-border});
+  border-radius: $radius-md;
+  background: color-mix(in srgb, var(--ui-color-surface-soft, #{$color-surface-soft}) 84%, white 16%);
+  color: var(--ui-color-ink, #{$color-ink});
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.groupHeader {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.paletteChooser {
+  display: grid;
+  gap: $space-2;
+}
+
+.paletteActions {
+  display: grid;
+  gap: $space-2;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.paletteList {
+  display: grid;
+  gap: $space-2;
+}
+
+.paletteOption {
+  display: grid;
+  gap: $space-2;
+  padding: 0.75rem;
+  border: 1px solid var(--ui-color-border, #{$color-border});
+  border-radius: $radius-md;
+  background: color-mix(in srgb, var(--ui-color-surface, #{$color-surface}) 96%, white 4%);
+  text-align: left;
+  cursor: pointer;
+  transition: transform 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.paletteOption:hover {
+  transform: translateY(-1px);
+  border-color: var(--ui-color-primary-border-soft, rgba(15, 118, 110, 0.24));
+}
+
+.paletteOptionActive {
+  border-color: var(--ui-color-primary-border-medium, rgba(15, 118, 110, 0.28));
+  box-shadow: 0 12px 30px -22px var(--ui-color-primary-shadow, rgba(15, 118, 110, 0.75));
+}
+
+.paletteStrip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  overflow: hidden;
+  min-height: 2rem;
+  border-radius: $radius-sm;
+}
+
+.paletteSwatch {
+  min-height: 2rem;
+}
+
+.paletteMeta {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.paletteLabel {
+  color: var(--ui-color-ink, #{$color-ink});
+  font-family: $font-display;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.paletteDescription {
+  color: var(--ui-color-slate, #{$color-slate});
+  font-size: 0.74rem;
+  line-height: 1.4;
+}
+
+.paletteGrid {
+  display: grid;
+  gap: $space-3;
+}
+
+.colorFieldHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-2;
+}
+
+.colorValue {
+  color: var(--ui-color-slate, #{$color-slate});
+  font-size: 0.7rem;
+  font-family: $font-body;
+  text-transform: uppercase;
+}
+
+.colorControl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: $space-3;
+}
+
+.colorSpinner {
+  inline-size: 2.15rem;
+  block-size: 2.15rem;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.colorSpinner::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.colorSpinner::-webkit-color-swatch {
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 999px;
+  box-shadow: 0 0 0 1px var(--ui-color-border, #{$color-border});
+}
+
+.colorTrack {
+  block-size: 0.8rem;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28);
+}
+
+.compactGrid {
+  display: grid;
+  gap: $space-2;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.collapseToggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  min-inline-size: 2rem;
+  min-block-size: 2rem;
+  padding: 0.35rem 0.65rem;
+  border: 1px solid var(--ui-color-border, #{$color-border});
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ui-color-surface-soft, #{$color-surface-soft}) 82%, white 18%);
+  color: var(--ui-color-ink, #{$color-ink});
+  cursor: pointer;
+}
+
+.toggleIcon {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.toggleLabel {
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.collapsedPreview {
+  display: flex;
+  gap: 0.3rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.collapsedSwatch {
+  inline-size: 1rem;
+  block-size: 1rem;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.82);
+}
+
+.collapsedMeta,
+.collapsedStats {
+  display: grid;
+  gap: 0.25rem;
+  justify-items: center;
+  inline-size: 100%;
+}
+
+.collapsedChip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: 3.7rem;
+  padding: 0.18rem 0.45rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ui-color-surface-soft, #{$color-surface-soft}) 80%, white 20%);
+  color: var(--ui-color-ink, #{$color-ink});
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.collapsedStats {
+  color: var(--ui-color-slate, #{$color-slate});
+  font-size: 0.66rem;
+}
+
+.srOnly {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.resizeHandle {
+  justify-self: center;
+  inline-size: 4.5rem;
+  block-size: 0.8rem;
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--ui-color-slate, #{$color-slate}) 24%, transparent),
+    color-mix(in srgb, var(--ui-color-primary, #{$color-primary}) 34%, transparent)
+  );
+  cursor: ns-resize;
+}
+
+@media (max-width: 1100px) {
+  .widgetBar {
+    position: static;
+    top: auto;
+    left: auto;
+    inline-size: 100%;
+    max-block-size: none;
+  }
+
+  .resizeHandle {
+    display: none;
+  }
+
+  .collapsed {
+    inline-size: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .compactGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .paletteActions {
+    grid-template-columns: 1fr;
+  }
+}

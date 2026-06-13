@@ -4,6 +4,8 @@
 .navbar {
   @include card-surface;
   display: flex;
+  width: 100%;
+  min-width: 0;
   justify-content: space-between;
   align-items: center;
   gap: $space-4;
@@ -16,31 +18,36 @@
 }
 
 .brand {
-  color: $color-ink;
+  color: var(--ui-color-ink, #{$color-ink});
   font-family: $font-display;
   font-size: 1.1rem;
   font-weight: 700;
 }
 
 .caption {
-  color: $color-slate;
+  color: var(--ui-color-slate, #{$color-slate});
   font-size: 0.9rem;
 }
 
 .actions {
-  display: flex;
-  justify-content: flex-end;
-  flex-wrap: wrap;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  min-width: 0;
+  flex: 1 1 auto;
   gap: $space-3;
 }
 
 .navItem {
-  min-width: 10.5rem;
+  position: relative;
+  min-width: 0;
+  width: 100%;
+  min-block-size: 5.1rem;
   padding: $space-3 $space-4;
   border: 1px solid transparent;
-  border-radius: $radius-md;
-  background: rgba(244, 247, 251, 0.9);
-  color: $color-ink;
+  border-radius: min(var(--ui-radius-button, #{$radius-md}), #{$radius-md});
+  background: color-mix(in srgb, var(--ui-color-surface-soft, #{$color-surface-soft}) 88%, white 12%);
+  color: var(--ui-color-ink, #{$color-ink});
   display: grid;
   gap: 0.2rem;
   text-align: left;
@@ -50,7 +57,7 @@
 
 .navItem:hover {
   transform: translateY(-1px);
-  border-color: rgba(15, 118, 110, 0.24);
+  border-color: var(--ui-color-primary-border-soft, rgba(15, 118, 110, 0.24));
 }
 
 .navItem:focus-visible {
@@ -58,31 +65,44 @@
 }
 
 .active {
-  background: linear-gradient(135deg, rgba(204, 251, 241, 0.95), rgba(255, 255, 255, 0.98));
-  border-color: rgba(15, 118, 110, 0.28);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--ui-color-primary-soft, #{$color-primary-soft}) 92%, white 8%),
+    color-mix(in srgb, var(--ui-color-surface, #{$color-surface}) 96%, white 4%)
+  );
+  border-color: var(--ui-color-primary-border-medium, rgba(15, 118, 110, 0.28));
 }
 
 .label {
   font-family: $font-display;
   font-size: 0.95rem;
   font-weight: 700;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .labelRow {
   display: flex;
   align-items: center;
   gap: $space-2;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  min-width: 0;
+  padding-right: 4.8rem;
 }
 
 .badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  position: absolute;
+  top: $space-3;
+  right: $space-4;
   padding: 0.15rem 0.5rem;
   border-radius: 999px;
-  background: rgba(245, 158, 11, 0.18);
-  color: #9a6700;
+  background: color-mix(in srgb, var(--ui-color-accent, #{$color-accent}) 18%, white 82%);
+  color: color-mix(in srgb, var(--ui-color-accent, #{$color-accent}) 62%, black 38%);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.03em;
@@ -90,8 +110,11 @@
 }
 
 .description {
-  color: $color-slate;
+  color: var(--ui-color-slate, #{$color-slate});
   font-size: 0.8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 @media (max-width: 768px) {
@@ -101,10 +124,14 @@
   }
 
   .actions {
-    justify-content: stretch;
+    grid-auto-flow: row;
+    grid-template-columns: 1fr;
+    grid-auto-columns: unset;
   }
 
   .navItem {
     min-width: 0;
+    width: 100%;
+    min-block-size: auto;
   }
 }
