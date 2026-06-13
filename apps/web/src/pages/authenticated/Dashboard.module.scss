@@ -2,7 +2,8 @@
 
 .page {
   display: grid;
-  gap: $space-6;
+  gap: calc(var(--ui-container-gap, #{$space-4}) * 1.5);
+  min-width: 0;
 }
 
 .intro {
@@ -13,20 +14,27 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: $space-5;
+  gap: calc(var(--ui-container-gap, #{$space-4}) * 1.25);
+  min-width: 0;
 }
 
 .stats {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: $space-4;
+  gap: var(--ui-container-gap, #{$space-4});
+  min-width: 0;
 }
 
 .statValue {
-  color: $color-ink;
+  color: var(--ui-color-ink, #{$color-ink});
   font-family: $font-display;
   font-size: 2rem;
   font-weight: 700;
+}
+
+.grid > *,
+.stats > * {
+  min-width: 0;
 }
 
 @media (max-width: 960px) {

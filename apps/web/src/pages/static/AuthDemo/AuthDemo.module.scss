@@ -3,7 +3,7 @@
 
 .page {
   display: grid;
-  gap: $space-6;
+  gap: calc(var(--ui-container-gap, #{$space-4}) * 1.5);
 }
 
 .intro {
@@ -13,7 +13,7 @@
 
 .lead {
   margin: 0;
-  color: $color-slate;
+  color: var(--ui-color-slate, #{$color-slate});
   max-width: 62rem;
 }
 
@@ -21,7 +21,7 @@
 .sessionCard,
 .accessCard {
   display: grid;
-  gap: $space-4;
+  gap: var(--ui-container-gap, #{$space-4});
 }
 
 .providerHeader {
@@ -41,40 +41,52 @@
 
 .muted {
   margin: 0;
-  color: $color-slate;
+  color: var(--ui-color-slate, #{$color-slate});
 }
 
 .grid {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
-  gap: $space-6;
+  gap: calc(var(--ui-container-gap, #{$space-4}) * 1.5);
   align-items: start;
 }
 
 .actions {
   display: flex;
-  gap: $space-3;
+  gap: calc(var(--ui-container-gap, #{$space-4}) * 0.75);
   flex-wrap: wrap;
-  margin: $space-4 0;
+  margin: var(--ui-container-gap, #{$space-4}) 0;
 }
 
 .connectedButton {
-  background: linear-gradient(135deg, #15803d, #166534);
-  box-shadow: 0 16px 30px -20px rgba(21, 128, 61, 0.72);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--ui-color-primary, #{$color-primary}) 72%, var(--ui-color-accent, #{$color-accent}) 28%),
+    var(--ui-color-primary-strong, #{$color-primary-strong})
+  );
+  box-shadow: 0 16px 30px -20px var(--ui-color-primary-shadow, rgba(15, 118, 110, 0.75));
 }
 
 .disconnectedButton {
-  background: linear-gradient(135deg, #0f766e, #115e59);
+  background: linear-gradient(135deg, var(--ui-color-primary, #{$color-primary}), var(--ui-color-primary-strong, #{$color-primary-strong}));
 }
 
 .neutralButton {
-  background: linear-gradient(135deg, #334155, #1e293b);
-  box-shadow: 0 16px 30px -20px rgba(30, 41, 59, 0.62);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--ui-color-slate, #{$color-slate}) 58%, var(--ui-color-ink, #{$color-ink}) 42%),
+    var(--ui-color-ink, #{$color-ink})
+  );
+  box-shadow: 0 16px 30px -20px color-mix(in srgb, var(--ui-color-shadow, #{$color-shadow}) 100%, transparent);
 }
 
 .dangerButton {
-  background: linear-gradient(135deg, #b91c1c, #991b1b);
-  box-shadow: 0 16px 30px -20px rgba(153, 27, 27, 0.62);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--ui-color-danger, #{$color-danger}) 82%, var(--ui-color-ink, #{$color-ink}) 18%),
+    var(--ui-color-danger, #{$color-danger})
+  );
+  box-shadow: 0 16px 30px -20px color-mix(in srgb, var(--ui-color-danger, #{$color-danger}) 56%, transparent);
 }
 
 .details {
@@ -84,19 +96,19 @@
 
 .detailRow {
   margin: 0;
-  color: $color-ink;
+  color: var(--ui-color-ink, #{$color-ink});
 }
 
 .detailRow strong {
-  color: $color-primary-strong;
+  color: var(--ui-color-primary-strong, #{$color-primary-strong});
 }
 
 .codeBlock {
   margin: 0;
-  padding: $space-4;
-  border-radius: $radius-md;
-  background: #0f172a;
-  color: #d8f3ff;
+  padding: var(--ui-container-padding, #{$space-4});
+  border-radius: var(--ui-radius-container, #{$radius-md});
+  background: color-mix(in srgb, var(--ui-color-ink, #132238) 92%, black 8%);
+  color: color-mix(in srgb, var(--ui-color-surface, white) 88%, white 12%);
   font-size: 0.85rem;
   overflow: auto;
   white-space: pre-wrap;
@@ -104,9 +116,9 @@
 
 .accessGrid {
   display: flex;
-  gap: $space-3;
+  gap: calc(var(--ui-container-gap, #{$space-4}) * 0.75);
   flex-wrap: wrap;
-  margin-top: $space-4;
+  margin-top: var(--ui-container-gap, #{$space-4});
 }
 
 .accessButton {
@@ -114,21 +126,21 @@
 }
 
 .uploadField {
-  margin-top: $space-4;
+  margin-top: var(--ui-container-gap, #{$space-4});
 }
 
 .customError {
-  padding: $space-3 $space-4;
-  border: 1px solid rgba(220, 38, 38, 0.18);
-  border-radius: $radius-md;
-  background: rgba(254, 242, 242, 0.92);
-  color: $color-danger;
+  padding: calc(var(--ui-container-gap, #{$space-4}) * 0.75) var(--ui-container-padding, #{$space-4});
+  border: 1px solid color-mix(in srgb, var(--ui-color-danger, #{$color-danger}) 18%, transparent);
+  border-radius: var(--ui-radius-container, #{$radius-md});
+  background: color-mix(in srgb, var(--ui-color-danger, #{$color-danger}) 10%, var(--ui-color-surface, white) 90%);
+  color: var(--ui-color-danger, #{$color-danger});
 }
 
 .redirectHint {
   display: inline-flex;
   align-items: center;
-  color: $color-slate;
+  color: var(--ui-color-slate, #{$color-slate});
   min-height: 2.5rem;
 }
 

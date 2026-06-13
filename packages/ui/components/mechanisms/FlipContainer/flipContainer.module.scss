@@ -6,7 +6,7 @@
   position: relative;
   display: grid;
   gap: $space-4;
-  padding: $space-6;
+  padding: var(--ui-container-padding, #{$space-6});
 }
 
 .header {
@@ -43,7 +43,7 @@
   width: 2.85rem;
   height: 2.85rem;
   border: 0;
-  border-radius: 0.9rem;
+  border-radius: min(var(--ui-radius-button, 999px), 0.9rem);
   background: transparent;
   color: $color-ink;
   box-shadow: none;
@@ -91,35 +91,77 @@
 }
 
 .inner {
-  position: relative;
-  min-height: 22rem;
-  transform-style: preserve-3d;
-  transition: transform 420ms ease;
+  display: grid;
+  min-height: var(--flip-min-height, auto);
 }
 
-.flipped {
-  transform: rotateY(180deg);
+.innerActiveHeight {
+  position: relative;
+  display: block;
 }
 
 .face {
-  position: absolute;
-  inset: 0;
+  grid-area: 1 / 1;
   display: grid;
+  grid-template-rows: auto auto;
   gap: $space-4;
-  align-content: start;
-  padding: $space-5;
-  border-radius: $radius-lg;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(240, 249, 255, 0.94));
-  border: 1px solid rgba(15, 118, 110, 0.14);
+  padding: var(--ui-container-padding, #{$space-5});
+  border-radius: var(--ui-radius-container, #{$radius-lg});
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--ui-color-surface, #{$color-surface}) 96%, white 4%),
+    color-mix(in srgb, var(--ui-color-primary-soft, #{$color-primary-soft}) 18%, var(--ui-color-surface-soft, #{$color-surface-soft}) 82%)
+  );
+  border: 1px solid var(--ui-color-primary-border-soft, rgba(15, 118, 110, 0.14));
   backface-visibility: hidden;
-  overflow: auto;
+  transition:
+    transform 420ms ease,
+    opacity 220ms ease,
+    visibility 220ms ease;
 }
 
 .back {
-  background: #0f172a;
-  border-color: rgba(148, 163, 184, 0.22);
-  color: #dbeafe;
+  background: color-mix(in srgb, var(--ui-color-ink, #{$color-ink}) 92%, black 8%);
+  border-color: color-mix(in srgb, var(--ui-color-slate, #{$color-slate}) 40%, white 60%);
+  color: color-mix(in srgb, var(--ui-color-surface, #{$color-surface}) 88%, white 12%);
   transform: rotateY(180deg);
+}
+
+.faceContent {
+  min-width: 0;
+}
+
+.faceActive {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.faceHidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.face.faceHidden:not(.back) {
+  transform: rotateY(-180deg);
+}
+
+.face.back.faceActive {
+  transform: rotateY(0deg);
+}
+
+.innerActiveHeight .face {
+  width: 100%;
+}
+
+.innerActiveHeight .faceActive {
+  position: relative;
+}
+
+.innerActiveHeight .faceHidden {
+  position: absolute;
+  inset: 0;
 }
 
 .faceBadge {
@@ -128,8 +170,8 @@
   align-items: center;
   padding: 0.35rem 0.7rem;
   border-radius: 999px;
-  background: rgba(15, 118, 110, 0.12);
-  color: $color-ink;
+  background: color-mix(in srgb, var(--ui-color-primary, #{$color-primary}) 12%, transparent);
+  color: var(--ui-color-ink, #{$color-ink});
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -137,8 +179,8 @@
 }
 
 .back .faceBadge {
-  background: rgba(148, 163, 184, 0.16);
-  color: #dbeafe;
+  background: color-mix(in srgb, var(--ui-color-slate, #{$color-slate}) 18%, transparent);
+  color: inherit;
 }
 
 @media (max-width: 768px) {
@@ -152,6 +194,6 @@
   }
 
   .inner {
-    min-height: 24rem;
+    min-height: var(--flip-min-height-mobile, var(--flip-min-height, auto));
   }
 }

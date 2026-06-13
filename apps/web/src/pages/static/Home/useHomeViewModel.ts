@@ -1,7 +1,5 @@
-import { useHomeViewModel as usePackageHomeViewModel } from "@repo/hooks";
 import {
   getCurrentManagerType,
-  setStateManagerType,
   useAgnosticContactForm,
   useAgnosticCounter,
   useAgnosticFeedbackForm,
@@ -10,14 +8,12 @@ import { useStateProvider } from "../../../components/StateProvider";
 
 export function useHomeViewModel() {
   const { providerType, setProviderType } = useStateProvider();
-  const home = usePackageHomeViewModel(providerType === "zustand");
   const agnosticCounter = useAgnosticCounter();
   const agnosticContact = useAgnosticContactForm();
   const agnosticFeedback = useAgnosticFeedbackForm();
 
   const handleProviderChange = (type: "redux" | "zustand") => {
     setProviderType(type);
-    setStateManagerType(type);
   };
 
   const handleAgnosticContactSubmit = (event: React.FormEvent) => {
@@ -34,9 +30,6 @@ export function useHomeViewModel() {
     providerType,
     handleProviderChange,
     currentManagerType: getCurrentManagerType(),
-    counter: home.counter,
-    contactForm: home.contactForm,
-    feedbackForm: home.feedbackForm,
     agnosticCounter,
     agnosticContact,
     agnosticFeedback,

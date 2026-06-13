@@ -1,13 +1,11 @@
 import {
   Button,
-  Counter,
   FeedbackForm,
   Header,
   Input,
   Label,
   Textarea,
 } from "@repo/ui";
-import { add } from "@repo/math/add";
 import { useHomeViewModel } from "./useHomeViewModel";
 import styles from "./Home.module.scss";
 
@@ -18,9 +16,6 @@ const Home = () => {
     providerType,
     handleProviderChange,
     currentManagerType,
-    counter,
-    contactForm,
-    feedbackForm,
     agnosticCounter,
     agnosticContact,
     agnosticFeedback,
@@ -150,75 +145,6 @@ const Home = () => {
           submitted={agnosticFeedback.submitted}
           error={agnosticFeedback.error}
           onSubmit={handleAgnosticFeedbackSubmit}
-        />
-      </div>
-
-      <div className="card">
-        <div className={styles.counterRow}>
-          <Counter value={counter.value} onIncrement={counter.increase} />
-          <span className={styles.valueBadge}>{add(1, counter.value)}</span>
-        </div>
-
-        <div className={styles.contactWrap}>
-          <h2>Contact Us</h2>
-          {contactForm.submitted ? (
-            <div>
-              <p className={styles.success}>Thank you for your message!</p>
-              <Button onClick={contactForm.resetForm}>Send Another Message</Button>
-            </div>
-          ) : (
-            <form className={styles.contactForm} onSubmit={contactForm.handleSubmit}>
-              <div className={styles.field}>
-                <Label htmlFor="name">Name</Label>
-                <Input
-                  id="name"
-                  type="text"
-                  value={contactForm.formData.name}
-                  onChange={(e) => contactForm.updateField("name", e.target.value)}
-                  required
-                  disabled={contactForm.submitting}
-                />
-              </div>
-              <div className={styles.field}>
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={contactForm.formData.email}
-                  onChange={(e) => contactForm.updateField("email", e.target.value)}
-                  required
-                  disabled={contactForm.submitting}
-                />
-              </div>
-              <div className={styles.field}>
-                <Label htmlFor="message">Message</Label>
-                <Textarea
-                  id="message"
-                  value={contactForm.formData.message}
-                  onChange={(e) => contactForm.updateField("message", e.target.value)}
-                  required
-                  disabled={contactForm.submitting}
-                  rows={4}
-                />
-              </div>
-              <div className={styles.inlineActions}>
-                <Button type="submit" disabled={contactForm.submitting}>
-                  {contactForm.submitting ? "Sending..." : "Send Message"}
-                </Button>
-                {contactForm.error && <p className={styles.error}>Error: {contactForm.error}</p>}
-              </div>
-            </form>
-          )}
-        </div>
-
-        <FeedbackForm
-          formData={feedbackForm.formData}
-          updateField={feedbackForm.updateField}
-          resetForm={feedbackForm.resetForm}
-          submitting={feedbackForm.submitting}
-          submitted={feedbackForm.submitted}
-          error={feedbackForm.error}
-          onSubmit={feedbackForm.handleSubmit}
         />
       </div>
     </div>

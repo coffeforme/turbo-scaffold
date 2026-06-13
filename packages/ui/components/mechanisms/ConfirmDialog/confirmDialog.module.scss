@@ -8,5 +8,9 @@
 }
 
 .confirm {
-  background: linear-gradient(135deg, #b91c1c, #dc2626);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--ui-color-danger, #{$color-danger}) 82%, var(--ui-color-ink, #{$color-ink}) 18%),
+    var(--ui-color-danger, #{$color-danger})
+  );
 }

@@ -12,6 +12,7 @@ Use Storybook for onboarding, component discovery, isolated UI review, and maint
 - stories colocated with `@repo/ui` components
 - autodocs-friendly story structure
 - supports atoms, molecules, organisms, and mechanisms
+- showcases runtime-tunable mechanisms such as the widget bar for palette, radius, container, page-width, and navbar controls
 
 ## Consumed By
 
@@ -50,6 +51,7 @@ packages/ui/components/atoms/Button/button.stories.tsx
 
 packages/ui/components/organisms/FeedbackForm/feedbackForm.tsx
 packages/ui/components/organisms/FeedbackForm/feedbackForm.stories.tsx
+packages/ui/components/mechanisms/WidgetBar/widgetBar.stories.tsx
 ```
 
 Storybook is configured to load:
@@ -108,6 +110,7 @@ capabilities:
   - "Static Storybook build"
   - "Autodocs-ready artifact documentation"
   - "Colocated stories beside implementation files"
+  - "Mechanism demos for palette, button/container radius, page width, container density, and layout controls"
 integration_refs:
   - "packages/ui/README.md"
   - "packages/ui/components/**/*.stories.tsx"

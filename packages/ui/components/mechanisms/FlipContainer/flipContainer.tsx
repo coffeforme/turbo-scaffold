@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { useState, type CSSProperties, type ReactNode } from "react";
 import styles from "./flipContainer.module.scss";
 
 interface FlipContainerProps {
@@ -8,6 +8,9 @@ interface FlipContainerProps {
   backLabel?: string;
   front: ReactNode;
   back: ReactNode;
+  className?: string;
+  minHeight?: number | string;
+  heightMode?: "largest-face" | "active-face";
 }
 
 export function FlipContainer({
@@ -17,11 +20,28 @@ export function FlipContainer({
   backLabel = "Implementation",
   front,
   back,
+  className,
+  minHeight,
+  heightMode = "largest-face",
 }: FlipContainerProps) {
   const [isFlipped, setIsFlipped] = useState(false);
+  const shellClassName = className ? `${styles.shell} ${className}` : styles.shell;
+  const innerClassName = [
+    styles.inner,
+    heightMode === "active-face" ? styles.innerActiveHeight : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const shellStyle =
+    minHeight === undefined
+      ? undefined
+      : ({
+          "--flip-min-height": typeof minHeight === "number" ? `${minHeight}px` : minHeight,
+        } as CSSProperties);
 
   return (
-    <section className={styles.shell}>
+    <section className={shellClassName} style={shellStyle}>
       <button
         aria-label={isFlipped ? `Show ${frontLabel}` : `Show ${backLabel}`}
         className={`${styles.toggle} ${isFlipped ? styles.toggleActive : ""}`}
@@ -43,14 +63,14 @@ export function FlipContainer({
       </div>
 
       <div className={styles.viewport}>
-        <div className={`${styles.inner} ${isFlipped ? styles.flipped : ""}`}>
-          <div className={styles.face}>
+        <div className={innerClassName}>
+          <div className={`${styles.face} ${isFlipped ? styles.faceHidden : styles.faceActive}`}>
             <span className={styles.faceBadge}>{frontLabel}</span>
-            {front}
+            <div className={styles.faceContent}>{front}</div>
           </div>
-          <div className={`${styles.face} ${styles.back}`}>
+          <div className={`${styles.face} ${styles.back} ${isFlipped ? styles.faceActive : styles.faceHidden}`}>
             <span className={styles.faceBadge}>{backLabel}</span>
-            {back}
+            <div className={styles.faceContent}>{back}</div>
           </div>
         </div>
       </div>

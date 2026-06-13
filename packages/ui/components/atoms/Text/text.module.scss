@@ -6,19 +6,19 @@
 }
 
 .default {
-  color: $color-ink;
+  color: var(--ui-color-ink, #{$color-ink});
 }
 
 .muted {
-  color: $color-slate;
+  color: var(--ui-color-slate, #{$color-slate});
 }
 
 .success {
-  color: $color-primary-strong;
+  color: var(--ui-color-primary-strong, #{$color-primary-strong});
 }
 
 .danger {
-  color: $color-danger;
+  color: var(--ui-color-danger, #{$color-danger});
 }
 
 .sm {

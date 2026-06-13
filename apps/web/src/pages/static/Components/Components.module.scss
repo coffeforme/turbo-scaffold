@@ -2,7 +2,7 @@
 
 .page {
   display: grid;
-  gap: $space-6;
+  gap: calc(var(--ui-container-gap, #{$space-4}) * 1.5);
 }
 
 .intro {
@@ -13,7 +13,7 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: $space-5;
+  gap: calc(var(--ui-container-gap, #{$space-4}) * 1.25);
 }
 
 .formGrid,
@@ -24,12 +24,12 @@
 
 .surfaceStack {
   display: grid;
-  gap: $space-5;
+  gap: calc(var(--ui-container-gap, #{$space-4}) * 1.25);
 }
 
 .mechanismStack {
   display: grid;
-  gap: $space-4;
+  gap: var(--ui-container-gap, #{$space-4});
 }
 
 .previewPanelWrap {
@@ -39,7 +39,7 @@
 .chartGrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: $space-4;
+  gap: var(--ui-container-gap, #{$space-4});
 }
 
 .ratingRow {
@@ -50,16 +50,16 @@
 
 .actions {
   display: flex;
-  gap: $space-3;
+  gap: calc(var(--ui-container-gap, #{$space-4}) * 0.75);
   flex-wrap: wrap;
 }
 
 .codeBlock {
   margin: 0;
-  padding: $space-4;
-  border-radius: 1rem;
-  background: #0f172a;
-  color: #dbeafe;
+  padding: var(--ui-container-padding, #{$space-4});
+  border-radius: var(--ui-radius-container, 1rem);
+  background: color-mix(in srgb, var(--ui-color-ink, #132238) 92%, black 8%);
+  color: color-mix(in srgb, var(--ui-color-surface, white) 86%, white 14%);
   font-size: 0.85rem;
   overflow: auto;
   white-space: pre-wrap;

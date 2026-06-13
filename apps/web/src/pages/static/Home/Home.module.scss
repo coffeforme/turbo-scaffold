@@ -3,7 +3,7 @@
 
 .page {
   display: grid;
-  gap: $space-8;
+  gap: calc(var(--ui-container-gap, #{$space-4}) * 2);
 }
 
 .hero {
@@ -19,7 +19,7 @@
 
 .panel {
   @include card-surface;
-  padding: $space-6;
+  padding: var(--ui-container-padding, #{$space-6});
 }
 
 .togglePanel {
@@ -29,7 +29,7 @@
 
 .panelTitle {
   margin: 0;
-  color: $color-ink;
+  color: var(--ui-color-ink, #{$color-ink});
   font-family: $font-display;
 }
 
@@ -47,15 +47,19 @@
 
 .muted {
   margin: 0;
-  color: $color-slate;
+  color: var(--ui-color-slate, #{$color-slate});
 }
 
 .agnosticPanel {
   @include card-surface;
   display: grid;
-  gap: $space-6;
-  padding: $space-6;
-  background: linear-gradient(180deg, rgba(236, 253, 245, 0.95), rgba(244, 247, 251, 0.96));
+  gap: calc(var(--ui-container-gap, #{$space-4}) * 1.5);
+  padding: var(--ui-container-padding, #{$space-6});
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--ui-color-primary-soft, #{$color-primary-soft}) 74%, var(--ui-color-surface, #{$color-surface}) 26%),
+    color-mix(in srgb, var(--ui-color-surface-soft, #{$color-surface-soft}) 88%, white 12%)
+  );
 }
 
 .counterRow {
@@ -67,12 +71,12 @@
 
 .contactWrap {
   display: grid;
-  gap: $space-4;
+  gap: var(--ui-container-gap, #{$space-4});
 }
 
 .contactForm {
   display: grid;
-  gap: $space-4;
+  gap: var(--ui-container-gap, #{$space-4});
 }
 
 .field {
@@ -89,12 +93,12 @@
 
 .success {
   margin: 0;
-  color: $color-primary-strong;
+  color: var(--ui-color-primary-strong, #{$color-primary-strong});
 }
 
 .error {
   margin: 0;
-  color: $color-danger;
+  color: var(--ui-color-danger, #{$color-danger});
 }
 
 .valueBadge {
@@ -104,8 +108,8 @@
   min-width: 2.5rem;
   padding: 0.55rem 0.8rem;
   border-radius: 999px;
-  background: $color-primary-soft;
-  color: $color-primary-strong;
+  background: var(--ui-color-primary-soft, #{$color-primary-soft});
+  color: var(--ui-color-primary-strong, #{$color-primary-strong});
   font-family: $font-display;
   font-weight: 700;
 }
@@ -113,6 +117,6 @@
 @media (max-width: 768px) {
   .panel,
   .agnosticPanel {
-    padding: $space-5;
+    padding: max(1rem, calc(var(--ui-container-padding, #{$space-5}) - 0.25rem));
   }
 }

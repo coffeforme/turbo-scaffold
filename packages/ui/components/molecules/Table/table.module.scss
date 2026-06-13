@@ -11,7 +11,7 @@
 
 .caption {
   margin-bottom: $space-3;
-  color: $color-slate;
+  color: var(--ui-color-slate, #{$color-slate});
   font-size: 0.92rem;
   text-align: left;
 }
@@ -19,17 +19,17 @@
 .table th,
 .table td {
   padding: 0.9rem 1rem;
-  border-bottom: 1px solid rgba(90, 106, 133, 0.15);
+  border-bottom: 1px solid color-mix(in srgb, var(--ui-color-border, #{$color-border}) 72%, transparent);
 }
 
 .table th {
-  color: $color-ink;
+  color: var(--ui-color-ink, #{$color-ink});
   font-family: $font-display;
   font-size: 0.92rem;
 }
 
 .table td {
-  color: $color-slate;
+  color: var(--ui-color-slate, #{$color-slate});
 }
 
 .left {
@@ -45,6 +45,6 @@
 }
 
 .empty {
-  color: $color-slate;
+  color: var(--ui-color-slate, #{$color-slate});
   text-align: center;
 }

@@ -1,13 +1,17 @@
 @use "./tokens" as *;
 
 @mixin card-surface {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(244, 247, 251, 0.96));
-  border: 1px solid $color-border;
-  border-radius: $radius-lg;
-  box-shadow: 0 20px 45px -28px $color-shadow;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--ui-color-surface, #{$color-surface}) 96%, white 4%),
+    color-mix(in srgb, var(--ui-color-surface-soft, #{$color-surface-soft}) 92%, white 8%)
+  );
+  border: 1px solid var(--ui-color-border, #{$color-border});
+  border-radius: var(--ui-radius-container, #{$radius-lg});
+  box-shadow: 0 20px 45px -28px var(--ui-color-shadow, #{$color-shadow});
 }
 
 @mixin focus-ring {
-  outline: 3px solid rgba(15, 118, 110, 0.22);
+  outline: 3px solid var(--ui-color-focus-ring, rgba(15, 118, 110, 0.22));
   outline-offset: 2px;
 }

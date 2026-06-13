@@ -98,6 +98,7 @@ const AuthDemo = () => {
         <FlipContainer
           back={<CodePreview code={providerSelectorCode} />}
           description="The active auth provider is created by the shared auth system provider instead of this page."
+          heightMode="active-face"
           front={
             <div className={styles.providerHeader}>
               <p className={styles.muted}>

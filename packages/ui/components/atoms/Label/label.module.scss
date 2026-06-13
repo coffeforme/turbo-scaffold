@@ -4,7 +4,7 @@
   display: inline-flex;
   align-items: center;
   gap: $space-2;
-  color: $color-ink;
+  color: var(--ui-color-ink, #{$color-ink});
   font-family: $font-display;
   font-size: 0.95rem;
   font-weight: 600;

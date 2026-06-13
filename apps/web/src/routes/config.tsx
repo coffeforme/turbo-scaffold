@@ -1,9 +1,8 @@
-import { ErrorState } from "@repo/ui";
 import type { ReactNode } from "react";
 import About from "../pages/static/About";
 import AuthDemo from "../pages/static/AuthDemo/AuthDemo";
 import ComponentsPage from "../pages/static/Components/Components";
-import Dashboard from "../pages/authenticated/Dashboard";
+import Dashboard, { DashboardAccessFallback } from "../pages/authenticated/Dashboard";
 import Home from "../pages/static/Home/Home";
 import TodosPage from "../pages/static/Todos/Todos";
 import Profile from "../pages/authenticated/Profile";
@@ -68,7 +67,7 @@ export const appRoutes: AppRouteDefinition[] = [
       effect: "error",
       permissions: ["view"],
     },
-    fallback: <ErrorState />,
+    fallback: <DashboardAccessFallback />,
   },
   {
     path: routes.profile,
@@ -79,7 +78,7 @@ export const appRoutes: AppRouteDefinition[] = [
     showInNav: true,
     access: {
       effect: "redirect",
-      permissions: ["view"],
+      authenticated: true,
       redirectTo: routes.quickView,
     },
     fallback: <section>Redirecting to Quick View...</section>,

@@ -39,11 +39,11 @@
 }
 
 .active {
-  color: $color-accent;
+  color: var(--ui-color-accent, #{$color-accent});
 }
 
 .inactive {
-  color: #cbd5e1;
+  color: color-mix(in srgb, var(--ui-color-slate, #{$color-slate}) 38%, var(--ui-color-surface, #{$color-surface}) 62%);
 }
 
 .disabled {
